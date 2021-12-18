@@ -1,3 +1,8 @@
+drop table purchase_per_package_validity;
+drop trigger new_package_validity;
+drop trigger new_purchase_validity;
+
+
 create table purchase_per_package_validity (
 	PACKAGEID int,
     VALIDITYID int,
@@ -10,7 +15,7 @@ create trigger new_package_validity
 after insert on validity
 for each row
 begin
-	insert into purcahse_per_package_validity value (new.ID, new.PACKAGEID, 0);
+	insert into purchase_per_package_validity value (new.ID, new.PACKAGEID, 0);
 end; //
 
 delimiter ;
