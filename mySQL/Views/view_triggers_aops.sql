@@ -19,14 +19,16 @@ delimiter ;
 delimiter //
 
 create trigger new_purchase_order_opproduct
-after insert on telcoservice_db.order
+after update on telcoservice_db.order
 for each row
 begin
-	update avarage_OpProducts_per_ServPackage AOPS
-		set AVERAGEPRODUCTS = SELECT count(OPTIONALPRODUCTID)/count(PACKAGEID) as AVG_OPPROD
-							  FROM telcoservice_db.order O  left JOIN orderoptionalcomposition OpComp on O.ID = OpComp.ORDERID
-							  WHERE AOPS.PACKAGEID = new.PACKAGEID
-							  GROUP BY O.PACKAGEID;
-end;
+	if ( old.isvalid != ACCEPTED and new.isvalid = ACCEPTED ) then
+		update avarage_OpProducts_per_ServPackage AOPS
+			set AVERAGEPRODUCTS = ( SELECT count(OPTIONALPRODUCTID)/count(PACKAGEID) as AVG_OPPROD
+								    FROM telcoservice_db.order O  left JOIN orderoptionalcomposition OpComp on O.ID = OpComp.ORDERID
+								    WHERE AOPS.PACKAGEID = new.PACKAGEID
+								    GROUP BY O.PACKAGEID );
+	end if;
+end; //
 
 delimiter ;
