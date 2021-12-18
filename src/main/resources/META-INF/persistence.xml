@@ -11,5 +11,7 @@
         <class>it.polimi.db2.telcoservice_sc42.entities.Validity</class>
         <class>it.polimi.db2.telcoservice_sc42.entities.FixedPhoneService</class>
         <class>it.polimi.db2.telcoservice_sc42.entities.InternetService</class>
+        <class>it.polimi.db2.telcoservice_sc42.entities.OptionalProduct</class>
+
     </persistence-unit>
 </persistence>
