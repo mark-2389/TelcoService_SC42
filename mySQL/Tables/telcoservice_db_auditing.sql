@@ -7,7 +7,7 @@ DROP TABLE IF EXISTS `auditing`;
 CREATE TABLE `auditing` (
 
   `USERNAME` varchar(255) NOT NULL,
-  `EMAIL` varchar(127) NOT NULL,
+  `EMAIL` varchar(255) NOT NULL,
   `AMOUNT` decimal(6, 2) NOT NULL,
   `REJECTION_DATE` date DEFAULT ( current_date ),
   `REJECTION_TIME` time DEFAULT ( current_time ),
@@ -17,8 +17,20 @@ CREATE TABLE `auditing` (
   PRIMARY KEY (`USERNAME`, `REJECTION_DATE`, `REJECTION_TIME`),
 
   -- Foreign keys for consistency on Client table
-  CONSTRAINT `auditing_ibfk_1` FOREIGN KEY (`USERNAME`, 'EMAIL')
-   REFERENCES `client` (`USERNAME`, 'EMAIL')
+   -- CONSTRAINT `auditing_ibfk_1` FOREIGN KEY (`USERNAME`, `EMAIL`)
+   -- REFERENCES `client` (`USERNAME`, `EMAIL`)
+   --   ON DELETE NO ACTION
+   --   ON UPDATE CASCADE
+   
+    -- Foreign keys for consistency on Client table
+    CONSTRAINT `auditing_ibfk_1` FOREIGN KEY (`USERNAME`)
+    REFERENCES `client` (`USERNAME`)
+      ON DELETE NO ACTION
+      ON UPDATE CASCADE,
+      
+	-- Foreign keys for consistency on Client table
+ 	CONSTRAINT `auditing_ibfk_2` FOREIGN KEY (`EMAIL`)
+    REFERENCES `client` (`EMAIL`)
       ON DELETE NO ACTION
       ON UPDATE CASCADE
 );

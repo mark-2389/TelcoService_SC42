@@ -6,10 +6,10 @@ for each row
 BEGIN
    -- if the user was insolvent but after an update the new number of
    -- rejections is 0 then the user should become solvent
-   IF ( old.insolvent = 'insolvent' AND old.number_rejection > 0 AND new.number_rejection = 0 ) THEN
+   IF ( old.INSOLVENT = 'INSOLVENT' AND old.NUMBER_REJECTIONS > 0 AND new.NUMBER_REJECTIONS = 0 ) THEN
       UPDATE telcoservice_db.client
-         SET insolvent = 'solvent'
-         WHERE id = new.id;
+         SET INSOLVENT = 'SOLVENT'
+         WHERE USERNAME = new.USERNAME;
    END IF;
 END; //
 
