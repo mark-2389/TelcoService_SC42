@@ -1,6 +1,6 @@
--- Total value of sales per package with and without the optional products
+-- Total value of sales per package with optional products
 
-create table value_per_package_op(
+create table value_per_package_op (
 	PACKAGEID int,
 	TOTAL bigint
 );

@@ -22,12 +22,19 @@ create trigger new_purchase_order_opproduct
 after update on telcoservice_db.order
 for each row
 begin
+	
 	if ( old.isvalid != ACCEPTED and new.isvalid = ACCEPTED ) then
+    
+		create temporary table prod_per_order ( SELECT O.ID as ID, count(OPTIONALPRODUCTID) as NUM_PROD
+												FROM telcoservice_db.order O  LEFT JOIN orderoptionalcomposition OpComp on O.ID = OpComp.ORDERID
+												WHERE AOPS.PACKAGEID = new.PACKAGEID
+												GROUP BY O.ID );
+                                            
 		update avarage_OpProducts_per_ServPackage AOPS
-			set AVERAGEPRODUCTS = ( SELECT count(OPTIONALPRODUCTID)/count(PACKAGEID) as AVG_OPPROD
-								    FROM telcoservice_db.order O  left JOIN orderoptionalcomposition OpComp on O.ID = OpComp.ORDERID
-								    WHERE AOPS.PACKAGEID = new.PACKAGEID
-								    GROUP BY O.PACKAGEID );
+			set AVERAGEPRODUCTS = ( SELECT avg( NUM_PROD )
+									FROM prod_per_order PPO )
+			where AOPS.PACKAGEID = new.PACKAGEID; 
+            
 	end if;
 end; //
 

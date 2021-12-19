@@ -1,4 +1,4 @@
--- Total value of sales per package with and without the optional products
+-- Total value of sales per package without the optional products
 
 create table value_per_package_without(
 	PACKAGEID int,
