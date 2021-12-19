@@ -37,7 +37,7 @@ public class Order implements Serializable {
     @ManyToOne
     @JoinColumns({
             @JoinColumn(name = "validityId", referencedColumnName = "id"),
-            @JoinColumn(name = "packageId", referencedColumnName = "packageId")
+            @JoinColumn(name = "packageId", referencedColumnName = "packageId", updatable = false, insertable = false )
     })
     private Validity validity;
 
@@ -45,7 +45,7 @@ public class Order implements Serializable {
     // an order refers to a package only, but the same package can be part
     // of multiple orders.
     @ManyToOne
-    @JoinColumn(name = "packageId", updatable = false, insertable = false)
+    @JoinColumn(name = "packageId", referencedColumnName = "Id")
     private ServicePackage servicePackage;
 
 

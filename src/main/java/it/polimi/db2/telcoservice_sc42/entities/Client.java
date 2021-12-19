@@ -14,7 +14,7 @@ public class Client implements Serializable {
     //TODO: consider adding an id.
     private String username;
     private String password;
-    private String mail;
+    private String email;
 
     @Column(name = "number_rejection")
     private Integer numberOfRejections;
@@ -47,11 +47,11 @@ public class Client implements Serializable {
     }
 
     public String getMail() {
-        return mail;
+        return email;
     }
 
-    public void setMail(String mail) {
-        this.mail = mail;
+    public void setMail(String email) {
+        this.email = email;
     }
 
     public int getNumberOfRejections() {

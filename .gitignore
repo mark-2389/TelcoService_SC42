@@ -8,6 +8,8 @@
 /dataSources.local.xml
 
 /.idea/
+TelcoService_SC42.iml
+# Artifacts are excluded
 /out/
 /target/
-TelcoService_SC42.iml
+/diagrams/
