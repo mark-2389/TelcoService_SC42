@@ -9,7 +9,7 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.PersistenceException;
 
 import it.polimi.db2.telcoservice_sc42.entities.Client;
-
+import org.thymeleaf.TemplateEngine;
 /**
  * Session Bean implementation class LoginService
  */
@@ -24,12 +24,6 @@ public class LoginService {
      * Default constructor.
      */
     public LoginService() {
-        try {
-            ;
-        } catch (Exception e) {
-            System.out.println("LoginService");
-            e.printStackTrace();
-        }
     }
 
     public Client checkCredentials(String usrn, String pwd) {
