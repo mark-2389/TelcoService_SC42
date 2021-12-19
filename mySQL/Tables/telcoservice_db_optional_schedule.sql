@@ -1,0 +1,22 @@
+CREATE DATABASE  IF NOT EXISTS `telcoservice_db`;
+USE `telcoservice_db`;
+
+DROP TABLE IF EXISTS `optional_schedule`;
+CREATE TABLE `optional_schedule` (
+  `USERNAME` varchar(255) NOT NULL,
+  `OPTIONAL_PRODUCT_ID` int NOT NULL,
+  `ACTIVATION_DATE` date DEFAULT NULL,
+  `DEACTIVATION_DATE` date DEFAULT NULL,
+
+  PRIMARY KEY (`USERNAME`,`OPTIONAL_PRODUCT_ID`),
+
+  CONSTRAINT `optional_schedule_ibfk_1` FOREIGN KEY (`USERNAME`)
+   REFERENCES `client` (`USERNAME`)
+      ON DELETE CASCADE
+      ON UPDATE CASCADE,
+
+  CONSTRAINT `optional_schedule_ibfk_2` FOREIGN KEY (`OPTIONAL_PRODUCT_ID`)
+   REFERENCES `optional_product` (`ID`)
+      ON DELETE CASCADE
+      ON UPDATE CASCADE
+);
