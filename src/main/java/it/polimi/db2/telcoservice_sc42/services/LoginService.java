@@ -9,7 +9,6 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.PersistenceException;
 
 import it.polimi.db2.telcoservice_sc42.entities.Client;
-import org.thymeleaf.TemplateEngine;
 /**
  * Session Bean implementation class LoginService
  */
@@ -26,15 +25,15 @@ public class LoginService {
     public LoginService() {
     }
 
-    public Client checkCredentials(String usrn, String pwd) {
-        List<Client> uList = null;
+    public Client checkCredentials(String username, String pwd) {
+        List<Client> uList;
 
         try {
-            uList = em.createNamedQuery("Client.withCredentials", Client.class).setParameter(1, usrn).setParameter(2, pwd)
+            uList = em.createNamedQuery("Client.withCredentials", Client.class).setParameter(1, username).setParameter(2, pwd)
                     .getResultList();
         } catch (PersistenceException e) {
             System.out.println("Could not verify credentials");
-            System.out.println(e);
+            e.printStackTrace();
             return null;
         }
 
