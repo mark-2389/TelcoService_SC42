@@ -6,6 +6,9 @@
 # Datasource local storage ignored files
 /dataSources/
 /dataSources.local.xml
+
+/.idea/
+/TelcoService_SC42.iml
 # Artifacts are excluded
 /out/
 /target/
