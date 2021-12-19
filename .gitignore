@@ -10,3 +10,5 @@
 /out/
 /target/
 /diagrams/
+/.idea/
+/TelcoService_SC42.iml
