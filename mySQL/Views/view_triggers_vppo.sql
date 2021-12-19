@@ -1,7 +1,7 @@
 -- Total value of sales per package with optional products
 
 create table value_per_package_op (
-	PACKAGEID int,
+	PACKAGE_ID int,
 	TOTAL bigint
 );
 
@@ -26,12 +26,12 @@ create trigger new_purchase_value_op
 after update on telcoservice_db.order
 for each row
 begin
-	if ( old.isvalid != ACCEPTED and new.isvalid = ACCEPTED ) then
+    if ( old.is_valid != 'ACCEPTED' and new.is_valid = 'ACCEPTED' ) then
 		update value_per_package_op VPPO
-			set VPPO.TOTAL = VPPO.TOTAL + ( SELECT O.TOTALCOST
+			set VPPO.TOTAL = VPPO.TOTAL + ( SELECT O.TOTAL_COST
 											FROM telcoservice_db.order O
 											WHERE O.id = new.id )
-			where VPP.packageid = new.packageid;
+			where VPPO.PACKAGE_ID = new.PACKAGE_ID;
 	end if;
 end; //
 

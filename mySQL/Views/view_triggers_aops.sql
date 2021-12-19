@@ -1,39 +1,39 @@
 -- Average number of optional products sold together with each service package
 
-create table avarage_OpProducts_per_ServPackage (
-		PACKAGEID int,
-        AVERAGEPRODUCTS int
+create table average_OpProducts_per_ServPackage (
+		PACKAGE_ID int,
+        AVERAGE_PRODUCTS int
 );
 
 delimiter //
 
-create trigger new_package_opproduct
+create trigger new_package_opProduct
 after insert on service_package
 for each row
 begin
-	insert into avarage_OpProducts_per_ServPackage value (new.ID, 0);
+	insert into average_OpProducts_per_ServPackage value (new.ID, 0);
 end; //
 
 delimiter ;
 
 delimiter //
 
-create trigger new_purchase_order_opproduct
+create trigger new_purchase_order_opProduct
 after update on telcoservice_db.order
 for each row
 begin
 	
-	if ( old.isvalid != ACCEPTED and new.isvalid = ACCEPTED ) then
+	if ( old.is_valid != 'ACCEPTED' and new.is_valid = 'ACCEPTED' ) then
     
-		create temporary table prod_per_order ( SELECT O.ID as ID, count(OPTIONALPRODUCTID) as NUM_PROD
-												FROM telcoservice_db.order O  LEFT JOIN orderoptionalcomposition OpComp on O.ID = OpComp.ORDERID
-												WHERE AOPS.PACKAGEID = new.PACKAGEID
+		create temporary table prod_per_order ( SELECT O.ID as ID, count(OPTIONAL_PRODUCT_ID) as NUM_PROD
+												FROM telcoservice_db.order O  LEFT JOIN order_optional_composition OpComp on O.ID = OpComp.ORDER_ID
+												WHERE O.PACKAGE_ID = new.PACKAGE_ID
 												GROUP BY O.ID );
                                             
-		update avarage_OpProducts_per_ServPackage AOPS
-			set AVERAGEPRODUCTS = ( SELECT avg( NUM_PROD )
+		update average_OpProducts_per_ServPackage AOPS
+			set AVERAGE_PRODUCTS = ( SELECT avg( NUM_PROD )
 									FROM prod_per_order PPO )
-			where AOPS.PACKAGEID = new.PACKAGEID; 
+			where AOPS.PACKAGE_ID = new.PACKAGE_ID;
             
 	end if;
 end; //

@@ -1,7 +1,7 @@
 -- Total value of sales per package without the optional products
 
 create table value_per_package_without(
-	PACKAGEID int,
+	PACKAGE_ID int,
 	TOTAL bigint
 );
 
@@ -26,12 +26,12 @@ create trigger new_purchase_value
 after update on telcoservice_db.order
 for each row
 begin
-	if ( old.isvalid != ACCEPTED and new.isvalid = ACCEPTED ) then
+    if ( old.is_valid != 'ACCEPTED' and new.is_valid = 'ACCEPTED' ) then
 		update value_per_package_without VPP
 			set VPP.TOTAL = VPP.TOTAL + ( SELECT V.MONTHLY_FEE * V.PERIOD 
-											FROM telcoservice_db.order O join validity V on (O.validityid, O.packageid) = (V.id, V.packageid)
-											WHERE O.id = new.id and o.packageid = new.packageid )
-			where VPP.packageid = new.packageid;
+											FROM telcoservice_db.order O join validity V on (O.VALIDITY_ID, O.PACKAGE_ID) = (V.id, V.PACKAGE_ID)
+											WHERE O.id = new.id and o.PACKAGE_ID = new.PACKAGE_ID )
+			where VPP.PACKAGE_ID = new.PACKAGE_ID;
 	end if;
 end; //
 
