@@ -6,16 +6,17 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "InternetService")
+@Table(name = "internet_service")
 public class InternetService extends Service {
     private static final long serialVersionUID = 1L;
 
+    @Column(name = "is_mobile")
     private boolean isMobile;
 
     @Column(name = "gb")
     private Integer gigaByte;
 
-    @Column(name = "gbfee")
+    @Column(name = "gb_fee")
     private float gigaByteFee;
 
     public boolean isMobile() {

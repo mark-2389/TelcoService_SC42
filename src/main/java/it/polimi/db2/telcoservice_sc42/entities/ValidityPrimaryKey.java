@@ -5,10 +5,10 @@ import java.io.Serializable;
 public class ValidityPrimaryKey implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @SuppressWarnings("unused")
+    @SuppressWarnings({"unused", "FieldCanBeLocal"})
     private Integer id;
 
-    @SuppressWarnings("unused")
+    @SuppressWarnings({"unused", "FieldCanBeLocal"})
     private Integer packageId;
 
     public ValidityPrimaryKey(int id, int packageId) {
@@ -16,19 +16,15 @@ public class ValidityPrimaryKey implements Serializable {
         this.packageId = packageId;
     }
 
-    public ValidityPrimaryKey() {
-
-    }
+    public ValidityPrimaryKey() { }
 
     @Override
     public boolean equals(Object obj) {
-        // TODO Auto-generated method stub
         return super.equals(obj);
     }
 
     @Override
     public int hashCode() {
-        // TODO Auto-generated method stub
         return super.hashCode();
     }
 

@@ -24,23 +24,23 @@ public class OptionalProduct {
 
     @ManyToMany
     @JoinTable
-            (name = "orderOptionalComposition",
-                    joinColumns = @JoinColumn(name="optionalProductId"),
-                    inverseJoinColumns = @JoinColumn(name="orderId"))
+            (name = "order_optional_composition",
+                    joinColumns = @JoinColumn(name="optional_product_id"),
+                    inverseJoinColumns = @JoinColumn(name="order_id"))
     private Collection<Order> orders;
 
     @ManyToMany
     @JoinTable
-    	(name = "optionalProductComposition",
-    	joinColumns = @JoinColumn(name="optionalProductId"),
-    	inverseJoinColumns = @JoinColumn(name="packageId"))
+    	(name = "optional_product_composition",
+    	joinColumns = @JoinColumn(name="optional_product_id"),
+    	inverseJoinColumns = @JoinColumn(name="package_id"))
     private Collection<ServicePackage> packages;
 
 
     @ManyToMany
     @JoinTable
-            (name = "optionalsschedule",
-                    joinColumns = @JoinColumn(name="optionalProductId"),
+            (name = "optional_schedule",
+                    joinColumns = @JoinColumn(name="optional_product_id"),
                     inverseJoinColumns = @JoinColumn(name="username"))
     private Collection<Client> clients;
 

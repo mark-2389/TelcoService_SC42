@@ -6,19 +6,22 @@ import java.util.List;
 
 @Entity
 @IdClass(ValidityPrimaryKey.class)
-class Validity implements Serializable {
+public class Validity implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
     private Integer id;
+
     @Id
+    @Column(name = "PACKAGE_ID")
     private Integer packageId;
+
     private Integer period;
 
-    @Column(name = "monthly_fee")
+    @Column(name = "MONTHLY_FEE")
     private Float monthlyFee;
 
-    @Column(name = "expiration_date")
+    @Column(name = "EXPIRATION_DATE")
     private String expirationDate;
 
     @OneToMany(mappedBy="validity", fetch=FetchType.LAZY)

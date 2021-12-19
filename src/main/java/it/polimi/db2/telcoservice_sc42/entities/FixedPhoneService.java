@@ -1,16 +1,21 @@
 package it.polimi.db2.telcoservice_sc42.entities;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "FixedPhoneService")
+@Table(name = "fixed_phone_service")
 public class FixedPhoneService extends Service {
     private static final long serialVersionUID = 1L;
 
     private Integer minutes;
     private Integer sms;
+
+    @Column(name = "minutes_fee")
     private float minutesFee;
+
+    @Column(name = "sms_fee")
     private float smsFee;
 
 

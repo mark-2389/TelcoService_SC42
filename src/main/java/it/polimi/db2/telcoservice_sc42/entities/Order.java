@@ -2,8 +2,9 @@ package it.polimi.db2.telcoservice_sc42.entities;
 
 import java.io.Serializable;
 import jakarta.persistence.*;
-import java.sql.Date;
+
 import java.sql.Time;
+import java.util.Date;
 
 
 @Entity
@@ -15,29 +16,33 @@ public class Order implements Serializable {
     @Id
     private Integer id;
 
-    @Column(name = "hourcreation")
+    @Column(name = "HOUR_CREATION")
     private Time creationHour;
 
-    @Column(name = "datecreation")
+    @Temporal(TemporalType.DATE)
+    @Column(name = "DATE_CREATION")
     private Date creationDate;
 
-    @Column(name = "number_rejection")
+    @Column(name = "NUMBER_REJECTIONS")
     private Integer numberOfRejections;
 
-    @Column(name = "DATESUBSCRPTION")
+    @Temporal(TemporalType.DATE)
+    @Column(name = "DATE_SUBSCRIPTION")
     private Date subscriptionDate;
+
+    @Column(name = "TOTAL_COST")
     private Double totalCost;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "isvalid")
+    @Column(name = "IS_VALID")
     private OrderStatus status;
 
     // an order refers to one validity period, but the same validity
     // period can be assigned to multiple orders.
     @ManyToOne
     @JoinColumns({
-            @JoinColumn(name = "validityId", referencedColumnName = "id"),
-            @JoinColumn(name = "packageId", referencedColumnName = "packageId", updatable = false, insertable = false )
+            @JoinColumn(name = "VALIDITY_ID", referencedColumnName = "ID"),
+            @JoinColumn(name = "PACKAGE_ID", referencedColumnName = "PACKAGE_ID", updatable = false, insertable = false )
     })
     private Validity validity;
 
@@ -45,13 +50,13 @@ public class Order implements Serializable {
     // an order refers to a package only, but the same package can be part
     // of multiple orders.
     @ManyToOne
-    @JoinColumn(name = "packageId", referencedColumnName = "Id")
+    @JoinColumn(name = "PACKAGE_ID", referencedColumnName = "ID")
     private ServicePackage servicePackage;
 
 
     // An order has just one client but a client can do different orders.
     @ManyToOne
-    @JoinColumn(name = "client")
+    @JoinColumn(name = "CLIENT")
     private Client client;
 
 

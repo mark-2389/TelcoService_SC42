@@ -1,6 +1,7 @@
 package it.polimi.db2.telcoservice_sc42.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Collection;
 
 import jakarta.persistence.*;
@@ -11,7 +12,7 @@ import jakarta.persistence.*;
         strategy = InheritanceType.JOINED
 )
 @DiscriminatorColumn(
-        name="type",
+        name="TYPE",
         discriminatorType = DiscriminatorType.STRING
 )
 public class Service implements Serializable {
@@ -19,20 +20,27 @@ public class Service implements Serializable {
 
     @Id
     private Integer id;
-    private String type;
+
+    @Column(columnDefinition = "ENUM('FIXED_PHONE', 'MOBILE_PHONE', 'FIXED_INTERNET', 'MOBILE_INTERNET')")
+    @Enumerated(EnumType.STRING)
+    private ServiceType type;
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "expiration_date")
+    private Date expirationDate;
 
     @ManyToMany
     @JoinTable
-            (name = "servicecomposition",
-                    joinColumns = @JoinColumn(name="serviceid"),
-                    inverseJoinColumns = @JoinColumn(name="packageid"))
+            (name = "service_composition",
+                    joinColumns = @JoinColumn(name="SERVICE_ID"),
+                    inverseJoinColumns = @JoinColumn(name="PACKAGE_ID"))
     private Collection<ServicePackage> packages;
 
     @ManyToMany
     @JoinTable
-            (name = "serviceschedule",
-                    joinColumns = @JoinColumn(name="serviceid"),
-                    inverseJoinColumns = @JoinColumn(name="username"))
+            (name = "service_schedule",
+                    joinColumns = @JoinColumn(name="SERVICE_ID"),
+                    inverseJoinColumns = @JoinColumn(name="USERNAME"))
     private Collection<Client> clients;
 
 
@@ -45,17 +53,16 @@ public class Service implements Serializable {
         this.id = id;
     }
 
-    public String getType() {
+    public ServiceType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(ServiceType type) {
         this.type = type;
     }
 
     public Collection<Client> getClients() {
         return clients;
     }
-
 
 }
