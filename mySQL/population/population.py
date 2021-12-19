@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-
+import os
+import re
 
 def generate_header(db_name) -> str:
     """
@@ -139,7 +140,14 @@ def generate_insert(table_name, generator, number_of_iterations, keys=[]):
     res = []
 
     for i in range(number_of_iterations):
-        res.append(generator(i))
+        val = generator(i)
+
+        # if the value reutrned by the generator is null we want to return
+        if val == None:
+            return generate_insert_command(table_name, res, keys)
+
+        # otherwise we append the value and continue the loop
+        res.append(val)
 
 
     return generate_insert_command(table_name, res, keys)
@@ -171,7 +179,39 @@ def output_insert(filename, table_name, generator, number_of_iterations, keys=[]
         inserted. If an empty string is passed the command used to switch to the
         database is omitted. The default value is "".
     """
+
+    filename = sanitise_filename(filename)
+
     with open(filename, 'w') as fp:
         str = "" if db_name == "" else generate_header(db_name)
         str += generate_insert(table_name, generator, number_of_iterations, keys)
         fp.write(str)
+
+
+
+def sanitise_filename(filename):
+    while os.path.isfile(filename):
+        print(filename)
+        file = filename.rsplit('/', 1) # path, file
+        path = file[0]
+        file = file[1]
+
+        no_extension = file.split('.')
+        extension = no_extension[1]
+        no_extension = no_extension[0]
+
+        print(no_extension)
+        numbers = re.findall(r"\([0-9]+\)", no_extension)
+        print(numbers)
+
+        if len(numbers) == 0:
+            filename = path + "/" + no_extension + "(1)." + extension
+        else:
+            version = numbers[-1].replace("(", "")
+            version = version.replace(")", "")
+            name_no_version = re.split(r"\([0-9]+\)", no_extension)[0]
+            filename = path + "/" + name_no_version + '({})'.format(int(version) + 1) + '.' + extension
+
+
+    print(filename)
+    return filename
