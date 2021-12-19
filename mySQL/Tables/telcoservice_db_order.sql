@@ -6,8 +6,8 @@ DROP TABLE IF EXISTS `order`;
 CREATE TABLE `order` (
   `ID` int AUTO_INCREMENT PRIMARY KEY ,
   `CLIENT` varchar(255),
-  `HOUR_CREATION` time DEFAULT current_time,
-  `DATE_CREATION` date DEFAULT current_date,
+  `HOUR_CREATION` time DEFAULT ( current_time ),
+  `DATE_CREATION` date DEFAULT ( current_date ),
   `VALIDITY_ID` int,
   `PACKAGE_ID` int,  -- The service_package we are referring to
   `DATE_SUBSCRIPTION` date, -- The date of activation of the services
