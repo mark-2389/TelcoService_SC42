@@ -1,7 +1,6 @@
 package it.polimi.db2.telcoservice_sc42;
 
 import java.io.*;
-import java.sql.DriverManager;
 
 import it.polimi.db2.telcoservice_sc42.entities.Client;
 import it.polimi.db2.telcoservice_sc42.services.LoginService;
@@ -9,7 +8,6 @@ import jakarta.ejb.EJB;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
-import org.thymeleaf.TemplateEngine;
 
 
 @WebServlet(name = "helloServlet", value = "/hello-servlet")
