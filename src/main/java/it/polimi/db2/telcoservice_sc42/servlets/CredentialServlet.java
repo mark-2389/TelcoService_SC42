@@ -1,6 +1,7 @@
 package it.polimi.db2.telcoservice_sc42.servlets;
 
 import it.polimi.db2.telcoservice_sc42.entities.Client;
+import it.polimi.db2.telcoservice_sc42.exception.NonUniqueClientException;
 import it.polimi.db2.telcoservice_sc42.services.ClientService;
 import jakarta.ejb.EJB;
 import jakarta.servlet.*;
@@ -48,6 +49,7 @@ public class CredentialServlet extends HttpServlet {
             client = clientService.addClient(username, email, password);
         } catch ( NonUniqueClientException e ) {
             response.sendRedirect(getServletContext().getContextPath() + "/index.jsp");
+            return;
         }
 
 
@@ -58,6 +60,7 @@ public class CredentialServlet extends HttpServlet {
         out.write("email");
         out.write(" = ");
         out.write(client.getEmail());
+        out.write("\n");
         out.write("password");
         out.write(" = ");
         out.write(client.getPassword());

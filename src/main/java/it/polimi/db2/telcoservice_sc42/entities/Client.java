@@ -3,7 +3,6 @@ package it.polimi.db2.telcoservice_sc42.entities;
 import java.io.Serializable;
 import jakarta.persistence.*;
 import jakarta.persistence.Enumerated;
-import jdk.tools.jlink.internal.plugins.StripNativeCommandsPlugin;
 
 import java.util.List;
 
@@ -19,11 +18,11 @@ public class Client implements Serializable {
     private String email;
 
     @Column(name = "NUMBER_REJECTIONS")
-    private Integer numberOfRejections;
+    private Integer numberOfRejections = 0;
 
     @Column(columnDefinition = "ENUM('SOLVENT', 'INSOLVENT')")
     @Enumerated(EnumType.STRING)
-    private UserStatus insolvent;
+    private UserStatus insolvent = UserStatus.SOLVENT;
 
     // A client can do many orders.
     @OneToMany(mappedBy="client", fetch=FetchType.LAZY)
