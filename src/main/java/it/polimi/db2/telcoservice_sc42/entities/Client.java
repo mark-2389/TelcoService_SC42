@@ -6,7 +6,7 @@ import jakarta.persistence.Enumerated;
 import java.util.List;
 
 @Entity
-@NamedQuery(name = "Client.withCredentials", query = "SELECT r FROM client r  WHERE r.username = ?1 and r.password = ?2")
+@NamedQuery(name = "Client.withCredentials", query = "SELECT r FROM Client r  WHERE r.username = ?1 and r.password = ?2")
 public class Client implements Serializable {
     private static final long serialVersionUID = 1L;
 

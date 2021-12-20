@@ -3,7 +3,7 @@ package it.polimi.db2.telcoservice_sc42;
 import java.io.*;
 
 import it.polimi.db2.telcoservice_sc42.entities.Client;
-import it.polimi.db2.telcoservice_sc42.services.LoginService;
+import it.polimi.db2.telcoservice_sc42.services.ClientService;
 import jakarta.ejb.EJB;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
@@ -14,7 +14,7 @@ import jakarta.servlet.annotation.*;
 public class HelloServlet extends HttpServlet {
 
     @EJB(name = "it.polimi.db2.telcoservice_sc42.services/LoginService")
-    private LoginService loginService;
+    private ClientService clientService;
 
     public HelloServlet() {
         super();
@@ -42,7 +42,7 @@ public class HelloServlet extends HttpServlet {
         String password = req.getParameter("password");
 
 
-        Client client = loginService.checkCredentials(username, password);
+        Client client = clientService.checkCredentials(username, password);
 
 
         out.write("username");

@@ -6,7 +6,7 @@
     <enterprise-beans>
         <session>
             <ejb-name>LoginService</ejb-name>
-            <ejb-class>it.polimi.db2.telcoservice_sc42.services.LoginService</ejb-class>
+            <ejb-class>it.polimi.db2.telcoservice_sc42.services.ClientService</ejb-class>
             <session-type>Stateless</session-type>
             <transaction-type>Container</transaction-type>
         </session>

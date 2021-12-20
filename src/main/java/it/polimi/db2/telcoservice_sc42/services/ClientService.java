@@ -14,7 +14,7 @@ import it.polimi.db2.telcoservice_sc42.entities.Client;
  */
 @Stateless
 @LocalBean
-public class LoginService {
+public class ClientService {
 
     @PersistenceContext(unitName = "TelcoService_EJB")
     private EntityManager em;
@@ -22,7 +22,20 @@ public class LoginService {
     /**
      * Default constructor.
      */
-    public LoginService() {
+    public ClientService() {
+    }
+
+    /**
+     * Check if
+     * @param username
+     * @return
+     */
+    public Boolean isRegistered(String username) {
+        List<Client> clients = em.createQuery("SELECT c FROM Client c WHERE c.username = ?1", Client.class)
+                                 .setParameter(1, username)
+                                 .getResultList();
+
+        return !clients.isEmpty();
     }
 
     public Client checkCredentials(String username, String pwd) {
