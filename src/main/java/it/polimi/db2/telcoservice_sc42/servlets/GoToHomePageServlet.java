@@ -11,11 +11,14 @@ public class GoToHomePageServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // If the user is not logged in (not present in session) redirect to the login
-        String loginPath = getServletContext().getContextPath() + "/WEB-INF/home.jsp";
+        String loginPath = getServletContext().getContextPath() + "/home.jsp";
         HttpSession session = request.getSession();
-        //if (session.isNew() || session.getAttribute("user") == null) {
+
+        if (session.isNew() || session.getAttribute("user") == null) {
             response.sendRedirect(loginPath);
-        //    return;
+        }
+
+        return;
     }
 
     @Override
