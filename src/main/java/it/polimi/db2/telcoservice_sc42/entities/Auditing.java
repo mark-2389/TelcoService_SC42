@@ -13,7 +13,6 @@ public class Auditing implements Serializable {
     private static final long serialVersionUID = 1L;
     //todo check for JPA annotations
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @ManyToOne
     @JoinColumn (name = "username")
@@ -27,12 +26,10 @@ public class Auditing implements Serializable {
     @Column(name = "AMOUNT", nullable = false, precision = 2)
     private BigDecimal amount;
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "REJECTION_DATE", nullable = false)
     private Date rejectionDate;
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "REJECTION_TIME", nullable = false)
     private Time rejectionTime;

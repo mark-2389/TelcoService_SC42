@@ -9,11 +9,11 @@ public class ValidityPrimaryKey implements Serializable {
     private Integer id;
 
     @SuppressWarnings({"unused", "FieldCanBeLocal"})
-    private Integer packageId;
+    private Integer servicePackage;
 
-    public ValidityPrimaryKey(int id, int packageId) {
+    public ValidityPrimaryKey(int id, int servicePackage) {
         this.id = id;
-        this.packageId = packageId;
+        this.servicePackage = servicePackage;
     }
 
     public ValidityPrimaryKey() { }

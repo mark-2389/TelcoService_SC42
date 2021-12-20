@@ -9,7 +9,7 @@
 <br/>
 
 <div class="form">
-    <form action="hello-servlet" method="POST">
+    <form action="login" method="POST">
         <div class="form">
             <%--@declare id="username"--%><label for="username">Username:</label>
             <input type="text" name="username" required>
@@ -26,13 +26,13 @@
 
 
 <div class="form">
-    <form action="hello-servlet" method="POST">
+    <form action="login" method="POST">
         <div class="form">
             <%--@declare id="username"--%><label for="username">Username:</label>
             <input type="text" name="username" required>
         </div>
         <div class="form">
-            <%--@declare id="password"--%><label for="mail">Mail:</label>
+            <%--@declare id="password"--%><label for="username">Mail:</label>
             <input type="text" name="mail" required>
         </div>
         <div class="form">

@@ -10,13 +10,13 @@ import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
 
-@WebServlet(name = "helloServlet", value = "/hello-servlet")
-public class HelloServlet extends HttpServlet {
+@WebServlet(name = "loginServlet", value = "/login")
+public class LoginServlet extends HttpServlet {
 
     @EJB(name = "it.polimi.db2.telcoservice_sc42.services/LoginService")
     private ClientService clientService;
 
-    public HelloServlet() {
+    public LoginServlet() {
         super();
     }
 
