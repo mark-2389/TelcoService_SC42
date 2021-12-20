@@ -13,8 +13,9 @@ public class Validity implements Serializable {
     private Integer id;
 
     @Id
-    @Column(name = "PACKAGE_ID")
-    private Integer packageId;
+    @ManyToOne
+    @JoinColumn (name = "PACKAGE_ID")
+    private ServicePackage servicePackage;
 
     private Integer period;
 
@@ -30,15 +31,11 @@ public class Validity implements Serializable {
     public int getId() {
         return id;
     }
+
     public void setId(int id) {
         this.id = id;
     }
-    public int getServiceId() {
-        return packageId;
-    }
-    public void setServiceId(int serviceId) {
-        this.packageId = serviceId;
-    }
+
     public int getPeriod() {
         return period;
     }
@@ -56,5 +53,13 @@ public class Validity implements Serializable {
     }
     public void setExpirationDate(String expirationDate) {
         this.expirationDate = expirationDate;
+    }
+
+    public ServicePackage getServicePackage() {
+        return servicePackage;
+    }
+
+    public void setServicePackage(ServicePackage servicePackage) {
+        this.servicePackage = servicePackage;
     }
 }
