@@ -1,9 +1,4 @@
-package it.polimi.db2;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+package it.polimi.db2.telcoservice_sc42.entities;
 
 import java.io.Serializable;
 import java.sql.Date;

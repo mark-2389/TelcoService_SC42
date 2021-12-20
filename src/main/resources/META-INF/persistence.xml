@@ -12,7 +12,7 @@
         <class>it.polimi.db2.telcoservice_sc42.entities.FixedPhoneService</class>
         <class>it.polimi.db2.telcoservice_sc42.entities.InternetService</class>
         <class>it.polimi.db2.telcoservice_sc42.entities.OptionalProduct</class>
-        <class>it.polimi.db2.Auditing</class>
+        <class>it.polimi.db2.telcoservice_sc42.entities.Auditing</class>
         <properties>
             <property name="toplink.jdbc.url" value="jdbc:mysql://localhost:3306/telcoservice_db"/>
             <property name="toplink.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>

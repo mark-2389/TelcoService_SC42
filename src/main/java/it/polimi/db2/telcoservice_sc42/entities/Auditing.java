@@ -1,6 +1,5 @@
-package it.polimi.db2;
+package it.polimi.db2.telcoservice_sc42.entities;
 
-import it.polimi.db2.telcoservice_sc42.entities.Client;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
