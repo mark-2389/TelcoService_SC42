@@ -26,10 +26,19 @@ public class ClientService {
     public ClientService() {
     }
 
-    public Client addClient(String username, String mail, String password) throws NonUniqueClientException {
+    /**
+     * Add a client to the database if it doesn't already exists.
+     *
+     * @param username the username of the Client.
+     * @param email the mail of the Client.
+     * @param password the password of the Client.
+     * @return the client added to the database.
+     * @throws NonUniqueClientException if the client already exists.
+     */
+    public Client addClient(String username, String email, String password) throws NonUniqueClientException {
         if ( isRegistered(username) ) { throw new NonUniqueClientException(); }
 
-        Client newClient = new Client(username, mail, password);
+        Client newClient = new Client(username, email, password);
         em.persist(newClient);
         em.flush();
 
