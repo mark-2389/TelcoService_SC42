@@ -5,13 +5,13 @@ DROP TABLE IF EXISTS `validity`;
 
 CREATE TABLE `validity` (
 
-  `ID` int,
-  `PACKAGE_ID` int,
-  `PERIOD` int,
-  `MONTHLY_FEE` decimal(6,2) DEFAULT 0.00,
-  `EXPIRATION_DATE` date DEFAULT NULL,  -- NULL = it never expires
-  -- TODO consider adding a VALID field
-  -- TODO consider adding a TOTAL_COST field as MONTHLY_FEE * PERIOD to help triggers and order tuples
+    `ID` int,
+    `PACKAGE_ID` int,
+    `PERIOD` int,
+    `MONTHLY_FEE` decimal(6,2) DEFAULT 0.00,
+    `TOTAL_COST` decimal(6,2) DEFAULT ( `PERIOD` * `MONTHLY_FEE` ),
+    `EXPIRATION_DATE` date DEFAULT NULL,  -- NULL = it never expires
+    -- TODO consider adding a VALID field
 
-  PRIMARY KEY (`ID`,`PACKAGE_ID`)
+    PRIMARY KEY (`ID`,`PACKAGE_ID`)
 );
