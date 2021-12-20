@@ -10,44 +10,15 @@ import java.sql.Date;
 import java.sql.Time;
 
 public class AuditingPK implements Serializable {
-    @Column(name = "USERNAME", nullable = false, length = 255)
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+    @SuppressWarnings({"unused", "FieldCanBeLocal"})
     private String username;
 
-    @Column(name = "REJECTION_DATE", nullable = false)
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SuppressWarnings({"unused", "FieldCanBeLocal"})
     private Date rejectionDate;
 
-    @Column(name = "REJECTION_TIME", nullable = false)
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SuppressWarnings({"unused", "FieldCanBeLocal"})
     private Time rejectionTime;
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public Date getRejectionDate() {
-        return rejectionDate;
-    }
-
-    public void setRejectionDate(Date rejectionDate) {
-        this.rejectionDate = rejectionDate;
-    }
-
-    public Time getRejectionTime() {
-        return rejectionTime;
-    }
-
-    public void setRejectionTime(Time rejectionTime) {
-        this.rejectionTime = rejectionTime;
-    }
 
     @Override
     public boolean equals(Object o) {

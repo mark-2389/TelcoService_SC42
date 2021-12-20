@@ -11,8 +11,9 @@ import java.sql.Time;
 @Entity
 @IdClass(AuditingPK.class)
 public class Auditing implements Serializable {
+    private static final long serialVersionUID = 1L;
     //todo check for JPA annotations
-    
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @ManyToOne
