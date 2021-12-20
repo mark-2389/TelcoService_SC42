@@ -2,6 +2,7 @@ package it.polimi.db2.telcoservice_sc42.services;
 
 import java.util.List;
 
+import it.polimi.db2.telcoservice_sc42.exception.NonUniqueClientException;
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
@@ -25,10 +26,20 @@ public class ClientService {
     public ClientService() {
     }
 
+    public Client addClient(String username, String mail, String password) throws NonUniqueClientException {
+        if ( isRegistered(username) ) { throw new NonUniqueClientException(); }
+
+        Client newClient = new Client(username, mail, password);
+        em.persist(newClient);
+        em.flush();
+
+        return newClient;
+    }
+
     /**
-     * Check if
-     * @param username
-     * @return
+     * Check if the Client with the given username is already registered.
+     * @param username the username of the Client.
+     * @return true if the Client is already registered, false otherwise.
      */
     public Boolean isRegistered(String username) {
         List<Client> clients = em.createQuery("SELECT c FROM Client c WHERE c.username = ?1", Client.class)
