@@ -3,6 +3,8 @@ package it.polimi.db2.telcoservice_sc42.entities;
 import java.io.Serializable;
 import jakarta.persistence.*;
 import jakarta.persistence.Enumerated;
+import jdk.tools.jlink.internal.plugins.StripNativeCommandsPlugin;
+
 import java.util.List;
 
 @Entity
@@ -28,6 +30,12 @@ public class Client implements Serializable {
     private List<Order> orders;
 
     public Client() {
+    }
+
+    public Client(String username, String email, String password) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
     }
 
     public String getUsername() {
