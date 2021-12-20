@@ -1,4 +1,4 @@
-package it.polimi.db2.telcoservice_sc42;
+package it.polimi.db2.telcoservice_sc42.servlets;
 
 import java.io.*;
 
@@ -33,17 +33,16 @@ public class LoginServlet extends HttpServlet {
         handleRequest(request, response);
     }
 
-    public void handleRequest(HttpServletRequest req, HttpServletResponse res) throws IOException {
+    public void handleRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        PrintWriter out = res.getWriter();
-        res.setContentType("text/plain");
+        PrintWriter out = response.getWriter();
+        response.setContentType("text/plain");
 
-        String username = req.getParameter("username");
-        String password = req.getParameter("password");
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
 
 
         Client client = clientService.checkCredentials(username, password);
-
 
         out.write("username");
         out.write(" = ");
