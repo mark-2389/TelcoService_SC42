@@ -2,10 +2,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>JSP - Hello World</title>
+    <title>HOME PAGE</title>
 </head>
 <body>
-<h1><%= "Hello World!" %> </h1>
+<h1><%= "HOME" %> </h1>
 <br/>
 
 <div class="form">

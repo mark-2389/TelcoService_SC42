@@ -67,6 +67,8 @@ public class CredentialServlet extends HttpServlet {
         out.write("\n");
         out.close();
 
+        System.out.println(getServletContext().getContextPath());
+
     }
 
     public void destroy() {
