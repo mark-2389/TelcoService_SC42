@@ -7,7 +7,6 @@
 <body>
 <h1><%= "Hello World!" %> </h1>
 <br/>
-<a href="hello-servlet">HelloServlet</a>
 
 <div class="form">
     <form action="hello-servlet" method="POST">

@@ -190,6 +190,24 @@ def output_insert(filename, table_name, generator, number_of_iterations, keys=[]
 
 
 def sanitise_filename(filename):
+    """
+    Generate a new filename if the filename passed as argument aleady exists.
+
+    If the filename passed as parameter already exists the function tries to
+    generate a new valid filename. Initially the function appends a (1) at the
+    end of the filename (e.g. output/client.sql -> output/client(1).sql).
+    If the number at the end is already present, it is incremented
+    (e.g. output/client(1).sql -> output/client(2).sql). 
+
+    Parameters
+    ----------
+    filename: str
+        The name of a file with its path.
+
+    Returns
+    -------
+    A non existing filename.
+    """
     while os.path.isfile(filename):
         print(filename)
         file = filename.rsplit('/', 1) # path, file
@@ -200,9 +218,7 @@ def sanitise_filename(filename):
         extension = no_extension[1]
         no_extension = no_extension[0]
 
-        print(no_extension)
         numbers = re.findall(r"\([0-9]+\)", no_extension)
-        print(numbers)
 
         if len(numbers) == 0:
             filename = path + "/" + no_extension + "(1)." + extension
@@ -213,5 +229,4 @@ def sanitise_filename(filename):
             filename = path + "/" + name_no_version + '({})'.format(int(version) + 1) + '.' + extension
 
 
-    print(filename)
     return filename
