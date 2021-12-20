@@ -46,6 +46,7 @@
 </div>
 
 <a href="HomePage">Continue without browsing</a>
+<a href="HTML/home.jsp">Continue without browsing</a>
 
 
 </body>
