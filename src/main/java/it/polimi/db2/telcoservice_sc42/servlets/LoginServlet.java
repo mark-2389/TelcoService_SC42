@@ -3,6 +3,8 @@ package it.polimi.db2.telcoservice_sc42.servlets;
 import java.io.*;
 
 import it.polimi.db2.telcoservice_sc42.entities.Client;
+import it.polimi.db2.telcoservice_sc42.exception.ClientNotFoundException;
+import it.polimi.db2.telcoservice_sc42.exception.NonUniqueClientException;
 import it.polimi.db2.telcoservice_sc42.services.ClientService;
 import jakarta.ejb.EJB;
 import jakarta.servlet.ServletException;
@@ -24,7 +26,7 @@ public class LoginServlet extends HttpServlet {
 
     }
 
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         System.out.println("POST called");
         handleRequest(req, resp);
     }
@@ -34,26 +36,34 @@ public class LoginServlet extends HttpServlet {
     }
 
     public void handleRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
-        PrintWriter out = response.getWriter();
-        response.setContentType("text/plain");
-
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
+        Client client;
 
-        Client client = clientService.checkCredentials(username, password);
+        try {
+            client = clientService.checkCredentials(username, password);
+        } catch (NonUniqueClientException | ClientNotFoundException exception) {
+            String caller = getCaller(request);
 
-        out.write("username");
-        out.write(" = ");
-        out.write(client.getUsername());
-        out.write("\n");
-        out.write("password");
-        out.write(" = ");
-        out.write(client.getPassword());
-        out.write("\n");
-        out.close();
+            if ( caller != null )
+                response.sendRedirect(request.getServletContext().getContextPath() + "/" + caller);
+            return;
+        }
+        request.getSession().setAttribute("username", client.getUsername());
+        response.sendRedirect(request.getServletContext().getContextPath() + "/HTML/home.jsp");
+    }
 
+    private String getCaller(HttpServletRequest request) {
+        if ( request.getParameterValues("landingLoginForm") != null ) {
+            return "index.jsp";
+        }
+
+        if ( request.getParameterValues("loginForm") != null ) {
+            return "HTML/login.jsp";
+        }
+
+        return null;
     }
 
     public void destroy() {

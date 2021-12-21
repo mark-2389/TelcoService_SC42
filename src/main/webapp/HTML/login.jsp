@@ -11,6 +11,21 @@
     <title> LOGIN </title>
 </head>
 <body>
-
+    <h1> Login </h1>
+    <div class="form">
+        <form action="../login" method="POST">
+            <div class="form">
+                <%--@declare id="username"--%><label for="username">Username:</label>
+                <input type="text" name="username" required>
+            </div>
+            <div class="form">
+                <%--@declare id="password"--%><label for="password">Password:</label>
+                <input type="password" name="password" required>
+            </div>
+            <div class="form">
+                <input type="submit" class="btn" value="login" name="loginForm">
+            </div>
+        </form>
+    </div>
 </body>
 </html>
