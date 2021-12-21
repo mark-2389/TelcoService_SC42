@@ -2,6 +2,7 @@ package it.polimi.db2.telcoservice_sc42.services;
 
 import java.util.List;
 
+import it.polimi.db2.telcoservice_sc42.exception.ClientNotFoundException;
 import it.polimi.db2.telcoservice_sc42.exception.NonUniqueClientException;
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
@@ -58,26 +59,35 @@ public class ClientService {
         return !clients.isEmpty();
     }
 
-    public Client checkCredentials(String username, String pwd) {
+    /**
+     * Check if the user with the specified credentials is present in the database.
+     *
+     * @param username the username of the client.
+     * @param pwd the password of the client.
+     * @return the specified client if it's found on the database, null otherwise.
+     * @throws ClientNotFoundException if the Client with the specified credentials doesn't exist.
+     * @throws NonUniqueClientException if more Clients with the specified credentials exist.
+     */
+    public Client checkCredentials(String username, String pwd) throws ClientNotFoundException, NonUniqueClientException {
         List<Client> uList;
 
         try {
-            uList = em.createNamedQuery("Client.withCredentials", Client.class).setParameter(1, username).setParameter(2, pwd)
-                    .getResultList();
+            uList = em.createNamedQuery("Client.withCredentials", Client.class)
+                      .setParameter(1, username).setParameter(2, pwd)
+                      .getResultList();
         } catch (PersistenceException e) {
             System.out.println("Could not verify credentials");
             e.printStackTrace();
-            return null;
+            throw new ClientNotFoundException("PersistenceException");
         }
 
         System.out.println("DB returned: " + uList);
 
         if (uList.isEmpty())
-            return null;
+            throw new ClientNotFoundException();
         else if (uList.size() == 1)
             return uList.get(0);
-        System.out.println("More than one user registered with same credentials");
-        return null;
+        throw new NonUniqueClientException();
     }
 
 }

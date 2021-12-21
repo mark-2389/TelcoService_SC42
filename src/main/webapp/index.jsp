@@ -7,8 +7,7 @@
 <body>
 <h1><%= "Hello World!" %> </h1>
 <br/>
-
-<div class="form">
+<div class="landingLoginForm">
     <form action="login" method="POST">
         <div class="form">
             <%--@declare id="username"--%><label for="username">Username:</label>
@@ -19,7 +18,7 @@
             <input type="password" name="password" required>
         </div>
         <div class="form">
-            <input type="submit" class="btn" value="login">
+            <input type="submit" class="btn" value="login" name="landingLoginForm">
         </div>
     </form>
 </div>
@@ -46,8 +45,6 @@
 </div>
 
 <a href="HomePage">Continue without browsing</a>
-<a href="HTML/home.jsp">Continue without browsing</a>
-
 
 </body>
 </html>
