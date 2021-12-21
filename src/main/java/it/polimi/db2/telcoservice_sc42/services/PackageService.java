@@ -17,15 +17,36 @@ public class PackageService {
     public PackageService() {
     }
 
+    /**
+     * The method retrieves the associated servicePackage, given a certain orderId
+     * @param orderId the id of the given order
+     * @return the servicePackage related to the order
+     */
     public ServicePackage findServicePackageByOrder(int orderId){
         Order order = em.find(Order.class, orderId);
         return order.getPackage();
     }
 
+    /**
+     * The method retrieves the specific servicePackage with the corresponding id
+     * @param packageId the id of the package to be retrieved
+     * @return the service package with the correspongin id
+     */
     public ServicePackage findServicePackageById(int packageId){
         return em.find(ServicePackage.class, packageId);
     }
 
+    /**
+     * The method is invoked when we are creating a new ServicePackage. It provides the functionalities to associate the package to the services it offers.
+     * Moreover it all manages to create and set all the validityPeriods for such new servicePackage
+     * @param id the id of the servicePackage to be created
+     * @param name the name of the servicePackage to be created
+     * @param expirationDate the expirationDate of the servicePackage to be created
+     * @param services a list of services that the new ServicePackage offers
+     * @param periods a list of periods that the new ServicePackage allows
+     * @param monthlyFees a list of monthlyFees, each of them corresponds to a period in the same position
+     * @param dates a list of expirationDates for each new validity to be created
+     */
     public void createServicePackage(int id, String name, Date expirationDate, List<Service> services, List<Integer> periods, List<Float> monthlyFees, List<Date> dates ){
         if ( periods.size() != monthlyFees.size() || monthlyFees.size() != dates.size() )  return;
         int size = periods.size();
@@ -46,5 +67,5 @@ public class PackageService {
             em.persist(validity);
         }
     }
-    
+
 }
