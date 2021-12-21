@@ -68,6 +68,7 @@ public class Client implements Serializable {
     public void setNumberOfRejections(int numberOfRejections) {
         this.numberOfRejections = numberOfRejections;
     }
+
     public UserStatus getInsolvent() {
         return insolvent;
     }
@@ -76,4 +77,20 @@ public class Client implements Serializable {
         this.insolvent = insolvent;
     }
 
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
+
+    public void addOrder(Order order){
+        getOrders().add(order);
+        order.setClient(this);
+    }
+
+    public void removeOrder(Order order){
+        getOrders().remove(order);
+    }
 }
