@@ -29,7 +29,7 @@ public class OrderService {
      * @param username the username of the Client
      * @return the list of orders of the client
      */
-    public List<Order> findOrderByClient(String username) {
+    public List<Order> findOrdersByClient(String username) {
         Client client = em.find(Client.class, username);
         return client.getOrders();
     }
@@ -52,19 +52,23 @@ public class OrderService {
      */
     public void createOrder (Client client, Validity validityId, ServicePackage packageId, Date dateSubscription ) {
         Client costumer = em.find(Client.class, client);
-        Order order = new Order( costumer, validityId, packageId, dateSubscription );
+        ServicePackage servicePackage = em.find(ServicePackage.class, packageId);
+
+        Order order = new Order( costumer, validityId, servicePackage, dateSubscription );
 
         // for debugging: let's check if mission is managed
         System.out.println("Method createOrder before client.addMission(mission)");
         System.out.println("Is order object managed?  " + em.contains(order));
 
-        client.addOrder(order); // updates both sides of the relationship
+        costumer.addOrder(order); // updates both sides of the relationship
+        servicePackage.addOrder(order); // updates both sides of the relationship
 
         // for debugging: let's check if mission is managed
         System.out.println("Method createOrder AFTER client.addMission(mission)");
         System.out.println("Is order object managed?  " + em.contains(order));
 
-        em.persist(client); // makes also order object managed via cascading
+        em.persist(costumer); // makes also order object managed via cascading
+        em.persist(servicePackage); // makes also order object managed via cascading
 
         System.out.println("Method createOrder after em.persist()");
         System.out.println("Is order object managed?  " + em.contains(order));

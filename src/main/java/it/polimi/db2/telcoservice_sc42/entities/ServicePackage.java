@@ -24,10 +24,26 @@ public class ServicePackage implements Serializable {
     private List<Order> orders;
 
     @ManyToMany(mappedBy = "packages")
-    private Collection<Service> services;
+    private List<Service> services;
 
     @OneToMany(mappedBy = "servicePackage", fetch = FetchType.EAGER)
     private List<Validity> validities;
+
+    public ServicePackage(){
+
+    }
+
+    public ServicePackage(Integer id, String name) {
+        this.id = id;
+        this.name = name;
+        this.expirationDate = null;
+    }
+
+    public ServicePackage(Integer id, String name, Date expirationDate) {
+        this.id = id;
+        this.name = name;
+        this.expirationDate = expirationDate;
+    }
 
     public Integer getId() {
         return id;
@@ -59,5 +75,29 @@ public class ServicePackage implements Serializable {
 
     public void setValidities(List<Validity> validities) {
         this.validities = validities;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
+
+    public List<Service> getServices() {
+        return services;
+    }
+
+    public void setServices(List<Service> services) {
+        this.services = services;
+    }
+
+    public void addOrder(Order order){
+        getOrders().add(order);
+    }
+
+    public void addValidity(Validity validity) {
+        getValidities().add(validity);
     }
 }
