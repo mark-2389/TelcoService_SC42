@@ -5,7 +5,7 @@
     <title>JSP - Hello World</title>
 </head>
 <body>
-<h1><%= "Hello World!" %> </h1>
+<h1><%= "Telco Service" %> </h1>
 <br/>
 <div class="landingLoginForm">
     <form action="login" method="POST">
@@ -39,7 +39,7 @@
             <input type="password" name="password" required>
         </div>
         <div class="form">
-            <input type="submit" class="btn" value="register">
+            <input type="submit" class="btn" value="register" name="landingRegister">
         </div>
     </form>
 </div>

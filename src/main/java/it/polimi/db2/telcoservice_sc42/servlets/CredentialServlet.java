@@ -1,6 +1,5 @@
 package it.polimi.db2.telcoservice_sc42.servlets;
 
-import it.polimi.db2.telcoservice_sc42.entities.Client;
 import it.polimi.db2.telcoservice_sc42.exception.NonUniqueClientException;
 import it.polimi.db2.telcoservice_sc42.services.ClientService;
 import jakarta.ejb.EJB;
@@ -9,7 +8,6 @@ import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 @WebServlet(name = "credentialServlet", value = "/register")
 public class CredentialServlet extends HttpServlet {
@@ -21,10 +19,10 @@ public class CredentialServlet extends HttpServlet {
     }
 
     public void init() throws ServletException {
-
+        super.init();
     }
 
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         System.out.println("POST called");
         handleRequest(req, resp);
     }
@@ -34,41 +32,39 @@ public class CredentialServlet extends HttpServlet {
     }
 
     public void handleRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
-        PrintWriter out = response.getWriter();
         response.setContentType("text/plain");
 
         String username = request.getParameter("username");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
-
-        Client client;
-
         try {
-            client = clientService.addClient(username, email, password);
+            clientService.addClient(username, email, password);
         } catch ( NonUniqueClientException e ) {
-            response.sendRedirect(getServletContext().getContextPath() + "/index.jsp");
+            System.out.println("Client already in database");
+
+            String caller = getCaller(request);
+
+            if ( caller != null ) {
+                response.sendRedirect(getServletContext().getContextPath() + "/" + caller);
+            }
+
             return;
         }
 
+        response.sendRedirect(getServletContext().getContextPath() + "/index.jsp");
+    }
 
-        out.write("username");
-        out.write(" = ");
-        out.write(client.getUsername());
-        out.write("\n");
-        out.write("email");
-        out.write(" = ");
-        out.write(client.getEmail());
-        out.write("\n");
-        out.write("password");
-        out.write(" = ");
-        out.write(client.getPassword());
-        out.write("\n");
-        out.close();
+    private String getCaller(HttpServletRequest request) {
+        if ( request.getParameterValues("landingRegister") != null ) {
+            return "index.jsp";
+        }
 
-        System.out.println(getServletContext().getContextPath());
+        if ( request.getParameterValues("register") != null ) {
+            return "HTML/registration.jsp";
+        }
 
+        return null;
     }
 
     public void destroy() {
