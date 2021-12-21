@@ -24,15 +24,32 @@ public class OrderService {
     public OrderService() {
     }
 
+    /**
+     * Find orders given a username
+     * @param username the username of the Client
+     * @return the list of orders of the client
+     */
     public List<Order> findOrderByClient(String username) {
         Client client = em.find(Client.class, username);
         return client.getOrders();
     }
 
-    public Order findMissionById(int orderId) {
+    /**
+     * Find a specific order given by an id
+     * @param orderId the id of the order to retrieve
+     * @return the order retrieved from the database
+     */
+    public Order findOrderById(int orderId) {
         return em.find(Order.class, orderId);
     }
 
+    /**
+     * The method creates a new order
+     * @param client the costumer who purchases the order
+     * @param validityId the chosen validity period
+     * @param packageId the chosen servicePackage to be bought
+     * @param dateSubscription the date of the activation of the servicePackage
+     */
     public void createOrder (Client client, Validity validityId, ServicePackage packageId, Date dateSubscription ) {
         Client costumer = em.find(Client.class, client);
         Order order = new Order( costumer, validityId, packageId, dateSubscription );
@@ -54,6 +71,12 @@ public class OrderService {
 
     }
 
+    /**
+     * This method allows to delete an order
+     * @param orderId the id of the order to be deleted
+     * @param client the client who is withdrawing the order
+     * @throws ClientNotCorrespondingException the order was not made by the client so there is not any correspondence
+     */
     public void deleteOrder(int orderId, Client client) throws ClientNotCorrespondingException {
         Order order = em.find(Order.class, orderId);
         Client costumer = em.find(Client.class, client);
