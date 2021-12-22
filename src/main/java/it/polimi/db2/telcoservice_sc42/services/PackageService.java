@@ -9,6 +9,7 @@ import jakarta.persistence.PersistenceContext;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class PackageService {
     @PersistenceContext(unitName = "TelcoService_EJB")
@@ -30,10 +31,34 @@ public class PackageService {
     /**
      * The method retrieves the specific servicePackage with the corresponding id
      * @param packageId the id of the package to be retrieved
-     * @return the service package with the correspongin id
+     * @return the service package with the corresponding id
      */
     public ServicePackage findServicePackageById(int packageId){
         return em.find(ServicePackage.class, packageId);
+    }
+
+    /**
+     * Return the valid ServicePackages.
+     *
+     * A ServicePackage is valid when its expiration_date is in the future (i.e. it's after the current date).
+     * @return the list of valid service packages.
+     */
+    public List<ServicePackage> findValidServicePackages() {
+        List<ServicePackage> all = em.createNamedQuery("ServicePackage.valid", ServicePackage.class)
+                                     .getResultList();
+
+        Date now = new Date();
+
+        // TODO: remove sanity check
+        List<ServicePackage> valid = all.stream().filter(p -> p.getExpirationDate().after(now))
+                                                 .collect(Collectors.toList());
+
+        if ( all.size() != valid.size() ) {
+            System.out.println("Something's wrong in ServicePackage.valid query, invalid ServicePackages returned");
+            return valid;
+        }
+
+        return all;
     }
 
     /**

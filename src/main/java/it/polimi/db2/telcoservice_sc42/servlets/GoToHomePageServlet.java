@@ -38,12 +38,10 @@ public class GoToHomePageServlet extends HttpServlet {
     }
 
     private void preparePackages(HttpServletRequest request) {
-        String[] test = {"Package 1", "Package 2", "Package 3", "Package 4"};
+        // String[] test = {"Package 1", "Package 2", "Package 3", "Package 4"};
+        List<ServicePackage> packages = packageService.findValidServicePackages();
 
-        // TODO: add get valid service packages method to package service.
-        // ServicePackage[] packages = packageService.
-
-        request.getSession().setAttribute("packages", test);
+        request.getSession().setAttribute("packages", packages);
     }
 
     private void prepareRejectedOrders(HttpServletRequest request, String username) {
