@@ -2,16 +2,15 @@ package it.polimi.db2.telcoservice_sc42.entities;
 
 import java.io.Serializable;
 import jakarta.persistence.*;
-import org.hibernate.query.criteria.internal.expression.function.CurrentTimeFunction;
 
 import java.sql.Time;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Date;
 
 
 @Entity
+@Table(name = "`order`")
 public class Order implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -140,5 +139,13 @@ public class Order implements Serializable {
 
     public void setPackage(ServicePackage servicePackage) {
         this.servicePackage = servicePackage;
+    }
+
+    public OrderStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(OrderStatus status) {
+        this.status = status;
     }
 }

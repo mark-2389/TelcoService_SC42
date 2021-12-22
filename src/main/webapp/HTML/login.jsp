@@ -27,5 +27,12 @@
             </div>
         </form>
     </div>
+    <%
+        if ( request.getSession().getAttribute("invalid") != null ) {
+    %>
+    <p>Login error</p>
+    <%
+        }
+    %>
 </body>
 </html>

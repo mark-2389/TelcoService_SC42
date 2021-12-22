@@ -1,3 +1,6 @@
+<%@ page import="java.util.List" %>
+<%@ page import="it.polimi.db2.telcoservice_sc42.entities.Order" %>
+<%@ page import="it.polimi.db2.telcoservice_sc42.entities.ServicePackage" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
@@ -29,19 +32,33 @@
         <br/>
         <br/>
         <h3>Available packages</h3>
-        <%--@elvariable id="packages" type="java.util.List"--%>
+        <%--@elvariable id="packages" type="List<ServicePackage>"--%>
         <c:forEach var="p" items="${packages}">
-            <a href="#">${p}</a>
-            <br/>
+            <div>
+                <a href="#">${p.name}</a>
+                <br/>
+            </div>
         </c:forEach>
+
+        <%
+            List<Order> rejected = (List<Order>) request.getSession().getAttribute("rejected");
+            if ( !rejected.isEmpty() ) {
+        %>
         <h3>Rejected orders</h3>
-        <%--@elvariable id="rejected" type="java.util.List"--%>
+        <%--@elvariable id="rejected" type="List<Order>"--%>
         <c:forEach var="o" items="${rejected}">
-            <a href="#">${o}</a>
-            <br/>
+            <div>
+                <a href="#">${o.servicePackage.name}</a>
+                <br/>
+                <a href="#">${o.totalCost}</a>
+                <br/>
+            </div>
         </c:forEach>
         <br/>
         <br/>
+        <%
+            }
+        %>
         <a href="buyService.jsp"> START BUYING </a>
     </body>
 </html>

@@ -16,6 +16,18 @@
             <session-type>Stateless</session-type>
             <transaction-type>Container</transaction-type>
         </session>
+        <session>
+            <ejb-name>PackageService</ejb-name>
+            <ejb-class>it.polimi.db2.telcoservice_sc42.services.PackageService</ejb-class>
+            <session-type>Stateless</session-type>
+            <transaction-type>Container</transaction-type>
+        </session>
+        <session>
+            <ejb-name>OrderService</ejb-name>
+            <ejb-class>it.polimi.db2.telcoservice_sc42.services.OrderService</ejb-class>
+            <session-type>Stateless</session-type>
+            <transaction-type>Container</transaction-type>
+        </session>
         <entity>
             <ejb-name>ClientEJB</ejb-name>
             <ejb-class>it.polimi.db2.telcoservice_sc42.entities.Client</ejb-class>

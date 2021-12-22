@@ -4,13 +4,14 @@ import it.polimi.db2.telcoservice_sc42.entities.Order;
 import it.polimi.db2.telcoservice_sc42.entities.Service;
 import it.polimi.db2.telcoservice_sc42.entities.ServicePackage;
 import it.polimi.db2.telcoservice_sc42.entities.Validity;
+import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
+@Stateless
 public class PackageService {
     @PersistenceContext(unitName = "TelcoService_EJB")
     private EntityManager em;
@@ -44,21 +45,7 @@ public class PackageService {
      * @return the list of valid service packages.
      */
     public List<ServicePackage> findValidServicePackages() {
-        List<ServicePackage> all = em.createNamedQuery("ServicePackage.valid", ServicePackage.class)
-                                     .getResultList();
-
-        Date now = new Date();
-
-        // TODO: remove sanity check
-        List<ServicePackage> valid = all.stream().filter(p -> p.getExpirationDate().after(now))
-                                                 .collect(Collectors.toList());
-
-        if ( all.size() != valid.size() ) {
-            System.out.println("Something's wrong in ServicePackage.valid query, invalid ServicePackages returned");
-            return valid;
-        }
-
-        return all;
+        return em.createNamedQuery("ServicePackage.valid", ServicePackage.class).getResultList();
     }
 
     /**

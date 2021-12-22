@@ -55,6 +55,8 @@ public class LoginServlet extends HttpServlet {
     private void handleErrorRedirect(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String caller = getCaller(request);
 
+        request.getSession().setAttribute("invalid", "");
+
         if ( caller != null ) {
             response.sendRedirect(request.getServletContext().getContextPath() + caller);
         }
@@ -97,32 +99,12 @@ public class LoginServlet extends HttpServlet {
     }
 
     private void handleRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        handleClientRequest(request, response);
-        // handleEmployeeRequest(request, response);
-    }
-
-    private void handle(HttpServletRequest request, HttpServletResponse response, UsernameGenerator generator) throws IOException {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-
-        String name;
-
-        try {
-            name = generator.getUsername(username, password);
-        } catch (NonUniqueClientException | ClientNotFoundException exception) {
-            handleErrorRedirect(request, response);
-            return;
-        }
-
-        request.getSession().setAttribute("username", name);
-        response.sendRedirect(request.getServletContext().getContextPath() + "/HomePage");
+        if ( request.getSession().getAttribute("id") == null )
+            handleClientRequest(request, response);
+        else
+            handleEmployeeRequest(request, response);
     }
 
     public void destroy() {
     }
-}
-
-interface UsernameGenerator {
-    String getUsername(String username, String password)
-            throws ClientNotFoundException, NonUniqueClientException;
 }

@@ -1,10 +1,7 @@
 package it.polimi.db2.telcoservice_sc42.services;
 
 
-import it.polimi.db2.telcoservice_sc42.entities.Client;
-import it.polimi.db2.telcoservice_sc42.entities.Order;
-import it.polimi.db2.telcoservice_sc42.entities.ServicePackage;
-import it.polimi.db2.telcoservice_sc42.entities.Validity;
+import it.polimi.db2.telcoservice_sc42.entities.*;
 import it.polimi.db2.telcoservice_sc42.exception.ClientNotCorrespondingException;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
@@ -43,7 +40,9 @@ public class OrderService {
     public List<Order> findRejectedOrdersByClient(String username) {
         List<Order> orders = findOrdersByClient(username);
 
-        return orders.stream().filter(o -> o.getNumberOfRejections() > 0).collect(Collectors.toList());
+        return orders.stream()
+                .filter( o -> o.getStatus() == OrderStatus.REJECTED )
+                .collect(Collectors.toList());
     }
 
     /**
