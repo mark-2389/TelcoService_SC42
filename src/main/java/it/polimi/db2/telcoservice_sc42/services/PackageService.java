@@ -70,6 +70,7 @@ public class PackageService {
         //for each service it completes the JPA relationship
         for( Service s : services ){
             em.find(Service.class, s).addPackage(servicePackage);
+            em.persist(s);
         }
 
         for (int i = 0; i < size; i++) {
@@ -78,6 +79,65 @@ public class PackageService {
             validity.setServicePackage(servicePackage);
             em.persist(validity);
         }
+    }
+
+    public void modifyExpirationDate(ServicePackage toModify, Date newDate){
+        ServicePackage servicePackage = em.find(ServicePackage.class, toModify);
+
+        toModify.setExpirationDate(newDate);
+    }
+
+    public void addService(ServicePackage toModify,Service newService){
+        ServicePackage servicePackage = em.find(ServicePackage.class, toModify);
+
+        servicePackage.addService(newService);
+
+        em.persist(servicePackage);
+    }
+
+    public void removeService(ServicePackage toModify,Service oldService){
+        ServicePackage servicePackage = em.find(ServicePackage.class, toModify);
+
+        servicePackage.removeService(oldService);
+
+        em.persist(servicePackage);
+    }
+
+    public void addOptionalProduct(ServicePackage toModify,Service newService){
+        ServicePackage servicePackage = em.find(ServicePackage.class, toModify);
+
+        servicePackage.addService(newService);
+
+        em.persist(servicePackage);
+    }
+
+    public void removeOptionalProduct(ServicePackage toModify,Service oldService){
+        ServicePackage servicePackage = em.find(ServicePackage.class, toModify);
+
+        servicePackage.removeService(oldService);
+
+        em.persist(servicePackage);
+    }
+
+    public void addValidity(ServicePackage toModify,int period, float monthlyFee, Date date){
+        ServicePackage servicePackage = em.find(ServicePackage.class, toModify);
+        //TODO check how to set id correctly for new instances
+        Validity validity = new Validity(0, servicePackage, period, monthlyFee, date);
+
+        servicePackage.addValidity(validity);
+        validity.setServicePackage(servicePackage);
+
+        em.persist(validity);
+    }
+
+    public void removeValidity(ServicePackage toModify,Validity oldValidity){
+        ServicePackage servicePackage = em.find(ServicePackage.class, toModify);
+        Validity validity = em.find(Validity.class, oldValidity);
+
+        servicePackage.removeValidity(validity);
+        //TODO how to handle the remove of the validity? New column for unavilability?
+
+        em.persist(validity);
     }
 
 }

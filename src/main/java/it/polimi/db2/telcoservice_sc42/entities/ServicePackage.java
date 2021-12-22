@@ -27,6 +27,9 @@ public class ServicePackage implements Serializable {
     @ManyToMany(mappedBy = "packages")
     private List<Service> services;
 
+    @ManyToMany(mappedBy = "packages")
+    private List<OptionalProduct> products;
+
     @OneToMany(mappedBy = "servicePackage", fetch = FetchType.EAGER)
     private List<Validity> validities;
 
@@ -94,11 +97,43 @@ public class ServicePackage implements Serializable {
         this.services = services;
     }
 
+    public List<OptionalProduct> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<OptionalProduct> products) {
+        this.products = products;
+    }
+
     public void addOrder(Order order){
         getOrders().add(order);
     }
 
     public void addValidity(Validity validity) {
         getValidities().add(validity);
+    }
+
+    public void removeValidity(Validity validity) {
+        getValidities().remove(validity);
+    }
+
+    public void addService(Service newService) {
+        getServices().add(newService);
+        newService.addPackage(this);
+    }
+
+    public void removeService(Service oldService) {
+        getServices().remove(oldService);
+        oldService.removePackage(this);
+    }
+
+    public void addOptionaProduct(OptionalProduct newOptional) {
+        getProducts().add(newOptional);
+        newOptional.addPackage(this);
+    }
+
+    public void removeSOptionalProduct(OptionalProduct oldOptional) {
+        getProducts().remove(oldOptional);
+        oldOptional.removePackage(this);
     }
 }
