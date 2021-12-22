@@ -1,6 +1,6 @@
 CREATE DATABASE IF NOT EXISTS `telcoservice_db`;
 USE `telcoservice_db`;
-INSERT INTO `service`
+INSERT INTO `service` (type)
 VALUES 
 ('FIXED_PHONE'), 
 ('MOBILE_PHONE'), 

@@ -18,20 +18,23 @@ public class Client implements Serializable {
     private String email;
 
     @Column(name = "NUMBER_REJECTIONS")
-    private Integer numberOfRejections = 0;
+    private Integer numberOfRejections;
 
     @Column(columnDefinition = "ENUM('SOLVENT', 'INSOLVENT')")
     @Enumerated(EnumType.STRING)
-    private UserStatus insolvent = UserStatus.SOLVENT;
+    private UserStatus insolvent;
 
     // A client can do many orders.
     @OneToMany(mappedBy="client", fetch=FetchType.LAZY)
     private List<Order> orders;
 
     public Client() {
+        this.numberOfRejections = 0;
+        this.insolvent = UserStatus.SOLVENT;
     }
 
     public Client(String username, String email, String password) {
+        new Client();
         this.username = username;
         this.email = email;
         this.password = password;
@@ -68,6 +71,7 @@ public class Client implements Serializable {
     public void setNumberOfRejections(int numberOfRejections) {
         this.numberOfRejections = numberOfRejections;
     }
+
     public UserStatus getInsolvent() {
         return insolvent;
     }
@@ -76,4 +80,20 @@ public class Client implements Serializable {
         this.insolvent = insolvent;
     }
 
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
+
+    public void addOrder(Order order){
+        getOrders().add(order);
+        order.setClient(this);
+    }
+
+    public void removeOrder(Order order){
+        getOrders().remove(order);
+    }
 }

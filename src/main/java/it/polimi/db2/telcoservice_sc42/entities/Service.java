@@ -3,6 +3,7 @@ package it.polimi.db2.telcoservice_sc42.entities;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Collection;
+import java.util.List;
 
 import jakarta.persistence.*;
 
@@ -34,14 +35,14 @@ public class Service implements Serializable {
             (name = "service_composition",
                     joinColumns = @JoinColumn(name="SERVICE_ID"),
                     inverseJoinColumns = @JoinColumn(name="PACKAGE_ID"))
-    private Collection<ServicePackage> packages;
+    private List<ServicePackage> packages;
 
     @ManyToMany
     @JoinTable
             (name = "service_schedule",
                     joinColumns = @JoinColumn(name="SERVICE_ID"),
                     inverseJoinColumns = @JoinColumn(name="USERNAME"))
-    private Collection<Client> clients;
+    private List<Client> clients;
 
 
 
@@ -61,8 +62,20 @@ public class Service implements Serializable {
         this.type = type;
     }
 
-    public Collection<Client> getClients() {
+    public List<Client> getClients() {
         return clients;
     }
 
+    public List<ServicePackage> getPackages() {
+        return packages;
+    }
+
+    public void setPackages(List<ServicePackage> packages) {
+        this.packages = packages;
+    }
+
+
+    public void addPackage(ServicePackage servicePackage) {
+        getPackages().add(servicePackage);
+    }
 }

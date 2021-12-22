@@ -2,8 +2,12 @@ package it.polimi.db2.telcoservice_sc42.entities;
 
 import java.io.Serializable;
 import jakarta.persistence.*;
+import org.hibernate.query.criteria.internal.expression.function.CurrentTimeFunction;
 
 import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Date;
 
 
@@ -59,8 +63,21 @@ public class Order implements Serializable {
     @JoinColumn(name = "CLIENT")
     private Client client;
 
+    public Order() {
+        this.id = 0;
+        this.creationDate = java.sql.Date.valueOf(LocalDate.now());
+        this.creationHour = Time.valueOf(LocalTime.now());
+        this.status = OrderStatus.DEFAULT;
+        this.numberOfRejections = 0;
+    }
 
-
+    public Order(Client client, Validity validityId, ServicePackage packageId, Date subscriptionDate ) {
+        new Order();
+        this.client = client;
+        this.validity = validityId;
+        this.servicePackage = packageId;
+        this.subscriptionDate = subscriptionDate;
+    }
     public int getId() {
         return id;
     }
