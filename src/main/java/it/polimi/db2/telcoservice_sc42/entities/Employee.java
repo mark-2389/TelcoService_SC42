@@ -1,14 +1,12 @@
 package it.polimi.db2.telcoservice_sc42.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
 
 @Entity
 @Table(name = "employee")
+@NamedQuery(name = "Employee.withCredentials", query = "SELECT e FROM Employee e  WHERE e.password = ?1 and e.password = ?2")
 public class Employee implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -38,11 +36,11 @@ public class Employee implements Serializable {
         this.password = password;
     }
 
-    public String getId() {
+    public String getUsername() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setUsername(String id) {
         this.id = id;
     }
 }

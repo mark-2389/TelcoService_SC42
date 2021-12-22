@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>JSP - Hello World</title>
+    <title>Telco Service - Landing page</title>
 </head>
 <body>
 <h1><%= "Telco Service" %> </h1>
