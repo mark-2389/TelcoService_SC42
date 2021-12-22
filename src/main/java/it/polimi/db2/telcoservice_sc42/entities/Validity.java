@@ -27,7 +27,7 @@ public class Validity implements Serializable {
     private Date expirationDate;
 
     @OneToMany(mappedBy="validity", fetch=FetchType.LAZY)
-    private List<Order> validities;
+    private List<Order> orders;
 
     public Validity() {
     }
@@ -80,5 +80,13 @@ public class Validity implements Serializable {
 
     public void setServicePackage(ServicePackage servicePackage) {
         this.servicePackage = servicePackage;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 }

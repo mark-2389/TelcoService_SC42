@@ -77,22 +77,18 @@ public class PackageService {
 
     public void addService(ServicePackage toModify,Service newService){
         ServicePackage servicePackage = em.find(ServicePackage.class, toModify);
-        Service service = em.find(Service.class, newService);
 
         servicePackage.addService(newService);
-        service.addPackage(servicePackage);
 
-        em.persist(service);
+        em.persist(servicePackage);
     }
 
     public void removeService(ServicePackage toModify,Service oldService){
         ServicePackage servicePackage = em.find(ServicePackage.class, toModify);
-        Service service = em.find(Service.class, oldService);
 
-        servicePackage.removeService(service);
-        service.addPackage(servicePackage);
+        servicePackage.removeService(oldService);
 
-        em.persist(service);
+        em.persist(servicePackage);
     }
 
     public void addValidity(ServicePackage toModify,int period, float monthlyFee, Date date){

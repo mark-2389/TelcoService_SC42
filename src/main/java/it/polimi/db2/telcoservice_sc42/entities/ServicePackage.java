@@ -104,12 +104,15 @@ public class ServicePackage implements Serializable {
     public void removeValidity(Validity validity) {
         getValidities().remove(validity);
     }
+
     public void addService(Service newService) {
         getServices().add(newService);
+        newService.addPackage(this);
     }
 
     public void removeService(Service oldService) {
         getServices().remove(oldService);
+        oldService.remove(this);
     }
 
 

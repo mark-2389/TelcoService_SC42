@@ -78,4 +78,8 @@ public class Service implements Serializable {
     public void addPackage(ServicePackage servicePackage) {
         getPackages().add(servicePackage);
     }
+
+    public void remove(ServicePackage servicePackage) {
+        getPackages().remove(servicePackage);
+    }
 }
