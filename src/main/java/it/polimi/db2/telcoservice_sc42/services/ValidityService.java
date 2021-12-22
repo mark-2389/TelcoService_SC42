@@ -1,11 +1,13 @@
 package it.polimi.db2.telcoservice_sc42.services;
 
 import it.polimi.db2.telcoservice_sc42.entities.Validity;
+import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
 import java.util.Date;
 
+@Stateless
 public class ValidityService {
     @PersistenceContext(unitName = "TelcoService_EJB")
     private EntityManager em;
