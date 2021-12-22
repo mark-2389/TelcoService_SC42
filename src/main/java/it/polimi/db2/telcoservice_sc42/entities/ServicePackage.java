@@ -100,4 +100,17 @@ public class ServicePackage implements Serializable {
     public void addValidity(Validity validity) {
         getValidities().add(validity);
     }
+
+    public void removeValidity(Validity validity) {
+        getValidities().remove(validity);
+    }
+    public void addService(Service newService) {
+        getServices().add(newService);
+    }
+
+    public void removeService(Service oldService) {
+        getServices().remove(oldService);
+    }
+
+
 }
