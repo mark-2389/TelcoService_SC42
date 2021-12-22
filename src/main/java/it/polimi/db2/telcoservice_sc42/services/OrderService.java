@@ -12,6 +12,7 @@ import jakarta.persistence.PersistenceContext;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Stateless
 public class OrderService {
@@ -32,6 +33,17 @@ public class OrderService {
     public List<Order> findOrdersByClient(String username) {
         Client client = em.find(Client.class, username);
         return client.getOrders();
+    }
+
+    /**
+     * Return the rejected orders given a username.
+     * @param username the username of the Client.
+     * @return the list of rejected orders of the Client.
+     */
+    public List<Order> findRejectedOrdersByClient(String username) {
+        List<Order> orders = findOrdersByClient(username);
+
+        return orders.stream().filter(o -> o.getNumberOfRejections() > 0).collect(Collectors.toList());
     }
 
     /**
