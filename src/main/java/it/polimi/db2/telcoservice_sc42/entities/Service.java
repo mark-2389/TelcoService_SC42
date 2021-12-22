@@ -79,7 +79,7 @@ public class Service implements Serializable {
         getPackages().add(servicePackage);
     }
 
-    public void remove(ServicePackage servicePackage) {
+    public void removePackage(ServicePackage servicePackage) {
         getPackages().remove(servicePackage);
     }
 }

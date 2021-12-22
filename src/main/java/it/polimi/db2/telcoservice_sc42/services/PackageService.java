@@ -91,6 +91,22 @@ public class PackageService {
         em.persist(servicePackage);
     }
 
+    public void addOptionalProduct(ServicePackage toModify,Service newService){
+        ServicePackage servicePackage = em.find(ServicePackage.class, toModify);
+
+        servicePackage.addService(newService);
+
+        em.persist(servicePackage);
+    }
+
+    public void removeOptionalProduct(ServicePackage toModify,Service oldService){
+        ServicePackage servicePackage = em.find(ServicePackage.class, toModify);
+
+        servicePackage.removeService(oldService);
+
+        em.persist(servicePackage);
+    }
+
     public void addValidity(ServicePackage toModify,int period, float monthlyFee, Date date){
         ServicePackage servicePackage = em.find(ServicePackage.class, toModify);
         //TODO check how to set id correctly for new instances

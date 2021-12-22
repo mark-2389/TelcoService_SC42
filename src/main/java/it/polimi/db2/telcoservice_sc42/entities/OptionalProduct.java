@@ -2,8 +2,8 @@ package it.polimi.db2.telcoservice_sc42.entities;
 
 import jakarta.persistence.*;
 
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "optional_product")
@@ -27,14 +27,14 @@ public class OptionalProduct {
             (name = "order_optional_composition",
                     joinColumns = @JoinColumn(name="optional_product_id"),
                     inverseJoinColumns = @JoinColumn(name="order_id"))
-    private Collection<Order> orders;
+    private List<Order> orders;
 
     @ManyToMany
     @JoinTable
     	(name = "optional_product_composition",
     	joinColumns = @JoinColumn(name="optional_product_id"),
     	inverseJoinColumns = @JoinColumn(name="package_id"))
-    private Collection<ServicePackage> packages;
+    private List<ServicePackage> packages;
 
 
     @ManyToMany
@@ -42,7 +42,7 @@ public class OptionalProduct {
             (name = "optional_schedule",
                     joinColumns = @JoinColumn(name="optional_product_id"),
                     inverseJoinColumns = @JoinColumn(name="username"))
-    private Collection<Client> clients;
+    private List<Client> clients;
 
 
     public int getId() {
@@ -77,11 +77,27 @@ public class OptionalProduct {
         this.expirationDate = expirationDate;
     }
 
-    public Collection<Order> getOrders() {
+    public List<Order> getOrders() {
         return orders;
     }
 
-    public Collection<Client> getClients() {
+    public List<Client> getClients() {
         return clients;
+    }
+
+    public List<ServicePackage> getPackages() {
+        return packages;
+    }
+
+    public void setPackages(List<ServicePackage> packages) {
+        this.packages = packages;
+    }
+
+    public void addPackage(ServicePackage servicePackage) {
+        getPackages().add(servicePackage);
+    }
+
+    public void removePackage(ServicePackage servicePackage){
+        getPackages().remove(servicePackage);
     }
 }
