@@ -21,31 +21,76 @@ public class GoToHomePageServlet extends HttpServlet {
     PackageService packageService;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        // If the user is not logged in (not present in session) redirect to the login
-        String loginPath = getServletContext().getContextPath() + "/HTML/login.jsp";
+        if ( request.getSession().getAttribute("id") != null ) {
+            prepareEmployeeHome(request, response);
+        } else {
+            prepareClientHome(request, response);
+        }
+    }
 
+    /**
+     * Check if the request should be rejected and redirect it if that's the case.
+     *
+     * @param request the http request.
+     * @param response the http response.
+     * @param redirectPath the path to which the request should be redirected. The path starts from the servletContext
+     *                     contextPath and should not contain the leading "/" character.
+     * @param attributeName the name of the session's attribute that contains the username (or id) of the user that is
+     *                      logging in.
+     * @return the user's username (or id in case of Employee) if the no reject redirect was needed, null otherwise.
+     * @throws IOException if the redirect fails.
+     */
+    private String handleRejectRequest(HttpServletRequest request, HttpServletResponse response, String redirectPath, String attributeName) throws IOException {
         HttpSession session = request.getSession();
-        String username = (String) session.getAttribute("username");
 
+        String username = (String) session.getAttribute(attributeName);
         if ( session.isNew() || username == null ) {
+            String loginPath = getServletContext().getContextPath() + "/" + redirectPath;
             response.sendRedirect(loginPath);
-            return;
         }
 
-        preparePackages(request);
-        prepareRejectedOrders(request, username);
-        response.sendRedirect(getServletContext().getContextPath() + "/HTML/home.jsp");
+        return username;
+    }
+
+    /**
+     * Prepare the home page for the client and redirect to it.
+     *
+     * @param request the http request.
+     * @param response the http response.
+     * @throws IOException if the redirect fails.
+     */
+    private void prepareClientHome(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String username = handleRejectRequest(request, response, "HTML/login.jsp", "username");
+
+        if ( username != null ) {
+            preparePackages(request);
+            prepareRejectedOrders(request, username);
+            response.sendRedirect(getServletContext().getContextPath() + "/" + "HTML/home.jsp");
+        }
+    }
+
+    /**
+     * Prepare the home page for the client and redirect to it.
+     *
+     * @param request the http request.
+     * @param response the http response.
+     * @throws IOException if the redirect fails.
+     */
+    private void prepareEmployeeHome(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String id = handleRejectRequest(request, response, "employee/login.jsp", "id");
+
+        if ( id != null ) {
+            response.sendRedirect(getServletContext().getContextPath() + "/" + "HTML/home.jsp");
+        }
     }
 
     private void preparePackages(HttpServletRequest request) {
-        // String[] test = {"Package 1", "Package 2", "Package 3", "Package 4"};
         List<ServicePackage> packages = packageService.findValidServicePackages();
 
         request.getSession().setAttribute("packages", packages);
     }
 
     private void prepareRejectedOrders(HttpServletRequest request, String username) {
-        // String[] test = {"Order 1", "Order 2", "Order 3", "Order 4"};
         List<Order> rejectedOrders = orderService.findRejectedOrdersByClient(username);
 
         request.getSession().setAttribute("rejected", rejectedOrders);

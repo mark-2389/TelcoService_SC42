@@ -28,21 +28,26 @@
         </label>
         <br/>
         <br/>
-        <p><%= request.getSession().getAttribute("employee") %></p>
-        <br/>
-        <br/>
         <h3>Available packages</h3>
         <%--@elvariable id="packages" type="List<ServicePackage>"--%>
+        <%
+            List<ServicePackage> packages = (List<ServicePackage>) request.getSession().getAttribute("packages");
+            if ( packages != null && !packages.isEmpty() ) {
+        %>
         <c:forEach var="p" items="${packages}">
             <div>
                 <a href="#">${p.name}</a>
                 <br/>
             </div>
         </c:forEach>
-
+        <br/>
+        <br/>
+        <%
+            }
+        %>
         <%
             List<Order> rejected = (List<Order>) request.getSession().getAttribute("rejected");
-            if ( !rejected.isEmpty() ) {
+            if ( rejected != null && !rejected.isEmpty() ) {
         %>
         <h3>Rejected orders</h3>
         <%--@elvariable id="rejected" type="List<Order>"--%>
@@ -59,6 +64,13 @@
         <%
             }
         %>
+        <%
+            if ( request.getSession().getAttribute("id") == null ) {
+
+        %>
         <a href="buyService.jsp"> START BUYING </a>
+        <%
+            }
+        %>
     </body>
 </html>

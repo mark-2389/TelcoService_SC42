@@ -62,8 +62,8 @@ public class OrderService {
      * @param dateSubscription the date of the activation of the servicePackage
      */
     public void createOrder (Client client, Validity validityId, ServicePackage packageId, Date dateSubscription ) {
-        Client costumer = em.find(Client.class, client);
-        ServicePackage servicePackage = em.find(ServicePackage.class, packageId);
+        Client costumer = em.find(Client.class, client.getUsername());
+        ServicePackage servicePackage = em.find(ServicePackage.class, packageId.getId());
 
         Order order = new Order( costumer, validityId, servicePackage, dateSubscription );
 

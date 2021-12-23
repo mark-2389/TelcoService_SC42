@@ -28,9 +28,10 @@
         </form>
     </div>
     <%
-        if ( request.getSession().getAttribute("invalid") != null ) {
+        System.out.println(request.getSession(false));
+        if ( request.getSession(false) == null || request.getSession().getAttribute("error") != null  ) {
     %>
-    <p>Login error</p>
+    <p>Login error: <%= request.getSession().getAttribute("error") %></p>
     <%
         }
     %>

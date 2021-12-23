@@ -32,12 +32,18 @@ public class LoginServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        System.out.println("POST called");
         handleRequest(req, resp);
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         handleRequest(request, response);
+    }
+
+    private void handleRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        if ( request.getParameterValues("employeeLoginForm") != null )
+            handleEmployeeRequest(request, response);
+        else
+            handleClientRequest(request, response);
     }
 
     private String getCaller(HttpServletRequest request) {
@@ -49,34 +55,42 @@ public class LoginServlet extends HttpServlet {
             return "HTML/login.jsp";
         }
 
+        if ( request.getParameterValues("employeeLoginForm") != null ) {
+            return "employee/login.jsp";
+        }
+
         return null;
     }
 
-    private void handleErrorRedirect(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void handleErrorRedirect(HttpServletRequest request, HttpServletResponse response, String error) throws IOException {
         String caller = getCaller(request);
 
-        request.getSession().setAttribute("invalid", "");
+        request.getSession().setAttribute("error", error);
 
         if ( caller != null ) {
-            response.sendRedirect(request.getServletContext().getContextPath() + caller);
+            response.sendRedirect(request.getServletContext().getContextPath() + "/" + caller);
         }
     }
 
     private void handleEmployeeRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String username = request.getParameter("username");
+        String username = request.getParameter("id");
         String password = request.getParameter("password");
+
+        System.out.println("Logging employee");
 
         Employee employee;
 
         try {
             employee = employeeService.checkCredentials(username, password);
         } catch (NonUniqueClientException | ClientNotFoundException exception) {
-            handleErrorRedirect(request, response);
+            System.out.println(exception.getClass().getSimpleName());
+            String error = exception.getClass().getSimpleName().replace("Exception", "");
+            handleErrorRedirect(request, response, error);
             return;
         }
 
-        request.getSession().setAttribute("username", employee.getUsername());
-        request.getSession().setAttribute("employee", true);
+        System.out.println("Login ok");
+        request.getSession().setAttribute("id", employee.getUsername());
         response.sendRedirect(request.getServletContext().getContextPath() + "/HomePage");
     }
 
@@ -89,20 +103,13 @@ public class LoginServlet extends HttpServlet {
         try {
             client = clientService.checkCredentials(username, password);
         } catch (NonUniqueClientException | ClientNotFoundException exception) {
-            handleErrorRedirect(request, response);
+            String error = exception.getClass().getSimpleName().replace("Exception", "");
+            handleErrorRedirect(request, response, error);
             return;
         }
 
         request.getSession().setAttribute("username", client.getUsername());
-        request.getSession().setAttribute("employee", false);
         response.sendRedirect(request.getServletContext().getContextPath() + "/HomePage");
-    }
-
-    private void handleRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        if ( request.getSession().getAttribute("id") == null )
-            handleClientRequest(request, response);
-        else
-            handleEmployeeRequest(request, response);
     }
 
     public void destroy() {
