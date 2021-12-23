@@ -20,8 +20,8 @@ public class OptionalProductService {
         em.persist(optionalProduct);
     }
 
-    public void changeExpirationDate(OptionalProduct optionalProduct, Date newExpiraitonDate){
-        em.find(OptionalProduct.class, optionalProduct).setExpirationDate(newExpiraitonDate);
+    public void changeExpirationDate(OptionalProduct optionalProduct, Date newExpirationDate){
+        em.find(OptionalProduct.class, optionalProduct).setExpirationDate(newExpirationDate);
         em.persist(optionalProduct);
     }
 
