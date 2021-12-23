@@ -80,7 +80,8 @@ public class GoToHomePageServlet extends HttpServlet {
         String id = handleRejectRequest(request, response, "employee/login.jsp", "id");
 
         if ( id != null ) {
-            response.sendRedirect(getServletContext().getContextPath() + "/" + "employee/home.jsp");
+            // redirect to the servlet that loads all optionals
+            response.sendRedirect(getServletContext().getContextPath() + "/load_optionals");
         }
     }
 

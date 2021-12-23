@@ -3,11 +3,15 @@ package it.polimi.db2.telcoservice_sc42.entities;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "optional_product")
+@NamedQuery(name = "OptionalProduct.all", query = "SELECT p FROM OptionalProduct p")
+@NamedQuery(name = "OptionalProduct.valid", query = "SELECT p FROM OptionalProduct p WHERE p.expirationDate >= current_date ")
 public class OptionalProduct implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -61,6 +65,20 @@ public class OptionalProduct implements Serializable {
         this(name);
         this.monthlyFee = fee;
         this.expirationDate = expirationDate;
+    }
+
+    @Override
+    public String toString() {
+        return id + " - " + name + " - " + expirationDate + " - " + monthlyFee;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if ( !(other instanceof OptionalProduct) ) {
+            return false;
+        }
+
+        return Objects.equals(this.id, ((OptionalProduct) other).id);
     }
 
     public int getId() {

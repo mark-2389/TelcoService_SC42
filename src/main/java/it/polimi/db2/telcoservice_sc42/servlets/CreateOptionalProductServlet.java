@@ -17,6 +17,8 @@ public class CreateOptionalProductServlet extends HttpServlet {
     @EJB(name = "it.polimi.db2.telcoservice_sc42.services/OptionalProductService")
     OptionalProductService optionalProductService;
 
+
+
     public CreateOptionalProductServlet() {
         super();
     }
@@ -38,6 +40,8 @@ public class CreateOptionalProductServlet extends HttpServlet {
             redirectFailure(request, response, error);
             return;
         }
+
+
 
         redirectSuccess(request, response);
     }

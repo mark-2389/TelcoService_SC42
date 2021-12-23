@@ -9,6 +9,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
 import java.util.Date;
+import java.util.List;
 
 @Stateless
 public class OptionalProductService {
@@ -25,7 +26,7 @@ public class OptionalProductService {
         em.persist(optionalProduct);
     }
 
-    public void createOptionalProduct(String name, Float fee, Date expirationDate) throws BadlyFormattedOptionalProductException {
+    public OptionalProduct createOptionalProduct(String name, Float fee, Date expirationDate) throws BadlyFormattedOptionalProductException {
         if ( expirationDate.before(new Date()) ) {
             throw new PastDateException();
         }
@@ -36,5 +37,19 @@ public class OptionalProductService {
 
         OptionalProduct optionalProduct = new OptionalProduct(name, fee, expirationDate);
         em.persist(optionalProduct);
+
+        return optionalProduct;
+    }
+
+    public OptionalProduct findOptionalProductById(int id) {
+        return em.find(OptionalProduct.class, id);
+    }
+
+    public List<OptionalProduct> findAllOptionalProducts() {
+        return em.createNamedQuery("OptionalProduct.all", OptionalProduct.class).getResultList();
+    }
+
+    public List<OptionalProduct> findValidOptionalProducts() {
+        return em.createNamedQuery("OptionalProduct.valid", OptionalProduct.class).getResultList();
     }
 }

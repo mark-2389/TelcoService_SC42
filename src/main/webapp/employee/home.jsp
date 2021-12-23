@@ -29,6 +29,38 @@
 <%
     }
 %>
+<div class="packageForm">
+    <h3> Service Package Creation </h3>
+    <form>
+        <div>
+            <h5>Selected optional products</h5>
+            <div class="form">
+                <%--@declare id="package_name"--%><label for="package_name">Name:</label>
+                <input type="text" name="package_name" required>
+            </div>
+            <div class="form">
+                <%--@declare id="package_expiration_date"--%>
+                <label for="package_expiration_date">Expiration date:</label>
+                <input type="date" name="package_expiration_date"
+                       value="<%= LocalDate.now().toString() %>" min="<%= LocalDate.now().toString() %>" required >
+            </div>
+            <%--@elvariable id="selected" type="List<it.polimi.db2.telcoservice_sc42.entities.OptionalProduct>"--%>
+            <c:forEach var="e" items="${selected}">
+                <p>${e.toString()}</p>
+            </c:forEach>
+            <div class="form">
+                <input type="submit" class="btn" value="Create" name="createServicePackage">
+            </div>
+        </div>
+        <h5>Available optional products</h5>
+        <%--@elvariable id="optionals" type="List<it.polimi.db2.telcoservice_sc42.entities.OptionalProduct>"--%>
+        <c:forEach var="e" items="${optionals}">
+            <div>
+                <a href="../add_optional_product?optional=${e.id}">${e.toString()}</a>
+            </div>
+        </c:forEach>
+    </form>
+</div>
 <div class="optionalProductForm">
     <h3> Optional Product Creation </h3>
     <form action="../new_optional_product" method="POST">
