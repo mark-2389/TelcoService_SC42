@@ -2,16 +2,19 @@ package it.polimi.db2.telcoservice_sc42.entities;
 
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "optional_product")
-public class OptionalProduct {
+public class OptionalProduct implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     private String name;
 
     @Column(name = "monthly_fee")
@@ -44,6 +47,21 @@ public class OptionalProduct {
                     inverseJoinColumns = @JoinColumn(name="username"))
     private List<Client> clients;
 
+    public OptionalProduct() {
+        this("");
+    }
+
+    public OptionalProduct(String name) {
+        this.name = name;
+        this.monthlyFee = 0.0F;
+        this.expirationDate = null;
+    }
+
+    public OptionalProduct(String name, Float fee, Date expirationDate) {
+        this(name);
+        this.monthlyFee = fee;
+        this.expirationDate = expirationDate;
+    }
 
     public int getId() {
         return id;

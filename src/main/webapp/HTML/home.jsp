@@ -9,7 +9,7 @@
     <title>HOME PAGE</title>
 </head>
     <body>
-        <h1><%= "HOME" %> </h1>
+        <h1><%= "Home" %> </h1>
         <br/>
         <a href="../logout" <%= request.getSession().getAttribute("username") != null ? "" : "hidden" %> >
             Logout
@@ -30,10 +30,6 @@
         <br/>
         <h3>Available packages</h3>
         <%--@elvariable id="packages" type="List<ServicePackage>"--%>
-        <%
-            List<ServicePackage> packages = (List<ServicePackage>) request.getSession().getAttribute("packages");
-            if ( packages != null && !packages.isEmpty() ) {
-        %>
         <c:forEach var="p" items="${packages}">
             <div>
                 <a href="#">${p.name}</a>
@@ -42,9 +38,6 @@
         </c:forEach>
         <br/>
         <br/>
-        <%
-            }
-        %>
         <%
             List<Order> rejected = (List<Order>) request.getSession().getAttribute("rejected");
             if ( rejected != null && !rejected.isEmpty() ) {
@@ -64,13 +57,6 @@
         <%
             }
         %>
-        <%
-            if ( request.getSession().getAttribute("id") == null ) {
-
-        %>
         <a href="buyService.jsp"> START BUYING </a>
-        <%
-            }
-        %>
     </body>
 </html>
