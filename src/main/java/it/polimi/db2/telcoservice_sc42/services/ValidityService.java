@@ -5,6 +5,7 @@ import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Stateless
@@ -17,7 +18,7 @@ public class ValidityService {
         em.persist(validity);
     }
     
-    public void changeMonthlyFee(Validity validity, float monthlyFee){
+    public void changeMonthlyFee(Validity validity, BigDecimal monthlyFee){
         em.find(Validity.class, validity).setMonthlyFee(monthlyFee);
         em.persist(validity);
     }

@@ -5,6 +5,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "internet_service")
 public class InternetService extends Service {
@@ -16,8 +18,8 @@ public class InternetService extends Service {
     @Column(name = "gb")
     private Integer gigaByte;
 
-    @Column(name = "gb_fee")
-    private float gigaByteFee;
+    @Column(name = "gb_fee", precision = 2)
+    private BigDecimal gigaByteFee;
 
     public boolean isMobile() {
         return isMobile;
@@ -27,19 +29,19 @@ public class InternetService extends Service {
         this.isMobile = isMobile;
     }
 
-    public int getGigaByte() {
+    public Integer getGigaByte() {
         return gigaByte;
     }
 
-    public void setGigaByte(int gigaByte) {
+    public void setGigaByte(Integer gigaByte) {
         this.gigaByte = gigaByte;
     }
 
-    public float getGigaByteFee() {
+    public BigDecimal getGigaByteFee() {
         return gigaByteFee;
     }
 
-    public void setGigaByteFee(float gigaByteFee) {
+    public void setGigaByteFee(BigDecimal gigaByteFee) {
         this.gigaByteFee = gigaByteFee;
     }
 

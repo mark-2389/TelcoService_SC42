@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.sql.Date;
 
 @WebServlet(name = "createOptionalProductServlet", value = "/new_optional_product")
@@ -31,7 +32,8 @@ public class CreateOptionalProductServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException{
         String name = request.getParameter("name");
         Date date = Date.valueOf(request.getParameter("expiration_date")) ;
-        Float fee = Float.parseFloat(request.getParameter("monthly_fee"));
+        // TODO check for parsing, I'm not sure it's the correct way
+        BigDecimal fee = new BigDecimal(request.getParameter("monthly_fee"));
 
         try {
             optionalProductService.createOptionalProduct(name, fee, date);

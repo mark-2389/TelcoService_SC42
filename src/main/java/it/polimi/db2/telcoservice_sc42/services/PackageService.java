@@ -8,6 +8,7 @@ import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -59,7 +60,7 @@ public class PackageService {
      * @param monthlyFees a list of monthlyFees, each of them corresponds to a period in the same position
      * @param dates a list of expirationDates for each new validity to be created
      */
-    public void createServicePackage(int id, String name, Date expirationDate, List<Service> services, List<Integer> periods, List<Float> monthlyFees, List<Date> dates ){
+    public void createServicePackage(int id, String name, Date expirationDate, List<Service> services, List<Integer> periods, List<BigDecimal> monthlyFees, List<Date> dates ){
         if ( periods.size() != monthlyFees.size() || monthlyFees.size() != dates.size() )  return;
         int size = periods.size();
 
@@ -119,7 +120,7 @@ public class PackageService {
         em.persist(servicePackage);
     }
 
-    public void addValidity(ServicePackage toModify,int period, float monthlyFee, Date date){
+    public void addValidity(ServicePackage toModify,int period, BigDecimal monthlyFee, Date date){
         ServicePackage servicePackage = em.find(ServicePackage.class, toModify);
         //TODO check how to set id correctly for new instances
         Validity validity = new Validity(0, servicePackage, period, monthlyFee, date);

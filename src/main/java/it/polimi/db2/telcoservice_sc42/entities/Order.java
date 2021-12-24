@@ -33,6 +33,7 @@ public class Order implements Serializable {
     @Column(name = "DATE_SUBSCRIPTION")
     private Date subscriptionDate;
 
+    // TODO double or bigDecimal?
     @Column(name = "TOTAL_COST")
     private Double totalCost;
 

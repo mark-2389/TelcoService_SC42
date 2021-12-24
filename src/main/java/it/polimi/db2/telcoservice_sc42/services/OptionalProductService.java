@@ -8,6 +8,7 @@ import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +17,7 @@ public class OptionalProductService {
     @PersistenceContext(unitName = "TelcoService_EJB")
     private EntityManager em;
 
-    public void changeMonthlyFee(OptionalProduct optionalProduct, float monthlyFee){
+    public void changeMonthlyFee(OptionalProduct optionalProduct, BigDecimal monthlyFee){
         em.find(OptionalProduct.class, optionalProduct).setMonthlyFee(monthlyFee);
         em.persist(optionalProduct);
     }
@@ -26,12 +27,14 @@ public class OptionalProductService {
         em.persist(optionalProduct);
     }
 
-    public OptionalProduct createOptionalProduct(String name, Float fee, Date expirationDate) throws BadlyFormattedOptionalProductException {
+    public OptionalProduct createOptionalProduct(String name, BigDecimal fee, Date expirationDate) throws BadlyFormattedOptionalProductException {
         if ( expirationDate.before(new Date()) ) {
             throw new PastDateException();
         }
 
-        if ( fee < 0 ) {
+        //the compareTo method return -1, 0, 1 if the fee is numerical less than, equal or greater than BigDecimal.Zero
+        //For more information check the BigDecimal's javadoc
+        if ( fee.compareTo(BigDecimal.ZERO) < 0 ) {
             throw new NegativeFeeException();
         }
 

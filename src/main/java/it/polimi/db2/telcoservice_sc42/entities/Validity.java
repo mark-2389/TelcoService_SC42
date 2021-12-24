@@ -2,6 +2,7 @@ package it.polimi.db2.telcoservice_sc42.entities;
 
 import jakarta.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -20,8 +21,8 @@ public class Validity implements Serializable {
 
     private Integer period;
 
-    @Column(name = "MONTHLY_FEE")
-    private Float monthlyFee;
+    @Column(name = "MONTHLY_FEE", precision = 2)
+    private BigDecimal monthlyFee;
 
     @Column(name = "EXPIRATION_DATE")
     private Date expirationDate;
@@ -32,7 +33,7 @@ public class Validity implements Serializable {
     public Validity() {
     }
 
-    public Validity(int id, ServicePackage servicePackage, int period, float monthlyFee, Date expirationDate ){
+    public Validity(int id, ServicePackage servicePackage, int period, BigDecimal monthlyFee, Date expirationDate ){
         this.id = id;
         this.setServicePackage(servicePackage);
         this.period = period;
@@ -40,7 +41,7 @@ public class Validity implements Serializable {
         this.expirationDate = expirationDate;
     }
 
-    public Validity(int id, ServicePackage servicePackage, int period, float monthlyFee ){
+    public Validity(int id, ServicePackage servicePackage, int period, BigDecimal monthlyFee ){
         this.id = id;
         this.setServicePackage(servicePackage);
         this.period = period;
@@ -61,10 +62,10 @@ public class Validity implements Serializable {
     public void setPeriod(int period) {
         this.period = period;
     }
-    public Float getMonthlyFee() {
+    public BigDecimal getMonthlyFee() {
         return monthlyFee;
     }
-    public void setMonthlyFee(Float monthlyFee) {
+    public void setMonthlyFee(BigDecimal monthlyFee) {
         this.monthlyFee = monthlyFee;
     }
     public Date getExpirationDate() {

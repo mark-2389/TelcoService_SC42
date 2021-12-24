@@ -127,7 +127,7 @@ public class ServicePackage implements Serializable {
         oldService.removePackage(this);
     }
 
-    public void addOptionaProduct(OptionalProduct newOptional) {
+    public void addOptionalProduct(OptionalProduct newOptional) {
         getProducts().add(newOptional);
         newOptional.addPackage(this);
     }
