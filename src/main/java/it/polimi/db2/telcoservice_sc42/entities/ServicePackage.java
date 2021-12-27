@@ -8,7 +8,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity(name = "service_package")
-@NamedQuery(name = "ServicePackage.valid", query = "SELECT p FROM service_package p WHERE ( p.expirationDate >= current_date) ")
+@NamedQuery(name = "ServicePackage.valid", query = "SELECT p FROM service_package p WHERE ( p.expirationDate >= current_date OR p.expirationDate = null ) ")
 public class ServicePackage implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -127,7 +127,7 @@ public class ServicePackage implements Serializable {
         oldService.removePackage(this);
     }
 
-    public void addOptionaProduct(OptionalProduct newOptional) {
+    public void addOptionalProduct(OptionalProduct newOptional) {
         getProducts().add(newOptional);
         newOptional.addPackage(this);
     }

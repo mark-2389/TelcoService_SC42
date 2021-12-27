@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
 import java.util.Date;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "mobile_phone_service")
@@ -12,13 +13,14 @@ public class MobilePhoneService extends Service {
     private static final long serialVersionUID = 1L;
 
     private Integer minutes;
+
     private Integer sms;
 
-    @Column(name = "minutes_fee")
-    private float minutesFee;
+    @Column(name = "minutes_fee", precision = 2)
+    private BigDecimal minutesFee;
 
-    @Column(name = "sms_fee")
-    private float smsFee;
+    @Column(name = "sms_fee", precision = 2)
+    private BigDecimal smsFee;
 
     public MobilePhoneService() {
         // by default the empty constructor should set numeric values to 0 when not specified (please check)
@@ -33,28 +35,35 @@ public class MobilePhoneService extends Service {
     }
 
 
-    public int getMinutes() {
+    public Integer getMinutes() {
         return minutes;
     }
-    public void setMinutes(int minutes) {
+
+    public void setMinutes(Integer minutes) {
         this.minutes = minutes;
     }
-    public int getSms() {
+
+    public Integer getSms() {
         return sms;
     }
-    public void setSms(int sms) {
+
+    public void setSms(Integer sms) {
         this.sms = sms;
     }
-    public float getMinutesFee() {
+
+    public BigDecimal getMinutesFee() {
         return minutesFee;
     }
-    public void setMinutesFee(float minutesFee) {
+
+    public void setMinutesFee(BigDecimal minutesFee) {
         this.minutesFee = minutesFee;
     }
-    public float getSmsFee() {
+
+    public BigDecimal getSmsFee() {
         return smsFee;
     }
-    public void setSmsFee(float smsFee) {
+
+    public void setSmsFee(BigDecimal smsFee) {
         this.smsFee = smsFee;
     }
 }

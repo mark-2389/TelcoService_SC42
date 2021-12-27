@@ -8,6 +8,7 @@ import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -45,6 +46,7 @@ public class PackageService {
      * @return the list of valid service packages.
      */
     public List<ServicePackage> findValidServicePackages() {
+        System.out.println(em.createNamedQuery("ServicePackage.valid", ServicePackage.class).getResultList());
         return em.createNamedQuery("ServicePackage.valid", ServicePackage.class).getResultList();
     }
 
@@ -59,7 +61,7 @@ public class PackageService {
      * @param monthlyFees a list of monthlyFees, each of them corresponds to a period in the same position
      * @param dates a list of expirationDates for each new validity to be created
      */
-    public void createServicePackage(int id, String name, Date expirationDate, List<Service> services, List<Integer> periods, List<Float> monthlyFees, List<Date> dates ){
+    public void createServicePackage(int id, String name, Date expirationDate, List<Service> services, List<Integer> periods, List<BigDecimal> monthlyFees, List<Date> dates ){
         if ( periods.size() != monthlyFees.size() || monthlyFees.size() != dates.size() )  return;
         int size = periods.size();
 
@@ -69,7 +71,7 @@ public class PackageService {
 
         //for each service it completes the JPA relationship
         for( Service s : services ){
-            em.find(Service.class, s).addPackage(servicePackage);
+            em.find(Service.class, s.getId()).addPackage(servicePackage);
             em.persist(s);
         }
 
@@ -81,22 +83,22 @@ public class PackageService {
         }
     }
 
-    public void modifyExpirationDate(ServicePackage toModify, Date newDate){
-        ServicePackage servicePackage = em.find(ServicePackage.class, toModify);
+    public void modifyExpirationDate(int toModifyId, Date newDate){
+        ServicePackage servicePackage = findServicePackageById(toModifyId);
 
-        toModify.setExpirationDate(newDate);
+        servicePackage.setExpirationDate(newDate);
     }
 
-    public void addService(ServicePackage toModify,Service newService){
-        ServicePackage servicePackage = em.find(ServicePackage.class, toModify);
+    public void addService(int toModifyId,Service newService){
+        ServicePackage servicePackage = findServicePackageById(toModifyId);
 
         servicePackage.addService(newService);
 
         em.persist(servicePackage);
     }
 
-    public void removeService(ServicePackage toModify,Service oldService){
-        ServicePackage servicePackage = em.find(ServicePackage.class, toModify);
+    public void removeService(int toModifyId,Service oldService){
+        ServicePackage servicePackage = findServicePackageById(toModifyId);
 
         servicePackage.removeService(oldService);
 
@@ -111,16 +113,16 @@ public class PackageService {
         em.persist(servicePackage);
     }
 
-    public void removeOptionalProduct(ServicePackage toModify,Service oldService){
-        ServicePackage servicePackage = em.find(ServicePackage.class, toModify);
+    public void removeOptionalProduct(int toModifyId,Service oldService){
+        ServicePackage servicePackage = findServicePackageById(toModifyId);
 
         servicePackage.removeService(oldService);
 
         em.persist(servicePackage);
     }
 
-    public void addValidity(ServicePackage toModify,int period, float monthlyFee, Date date){
-        ServicePackage servicePackage = em.find(ServicePackage.class, toModify);
+    public void addValidity(int toModifyId,int period, BigDecimal monthlyFee, Date date){
+        ServicePackage servicePackage = findServicePackageById(toModifyId);
         //TODO check how to set id correctly for new instances
         Validity validity = new Validity(0, servicePackage, period, monthlyFee, date);
 
@@ -130,9 +132,9 @@ public class PackageService {
         em.persist(validity);
     }
 
-    public void removeValidity(ServicePackage toModify,Validity oldValidity){
-        ServicePackage servicePackage = em.find(ServicePackage.class, toModify);
-        Validity validity = em.find(Validity.class, oldValidity);
+    public void removeValidity(int toModifyId,int oldValidityId){
+        ServicePackage servicePackage = findServicePackageById(toModifyId);
+        Validity validity = em.find(Validity.class, oldValidityId);
 
         servicePackage.removeValidity(validity);
         //TODO how to handle the remove of the validity? New column for unavilability?

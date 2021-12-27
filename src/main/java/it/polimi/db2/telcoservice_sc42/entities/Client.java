@@ -11,8 +11,9 @@ import java.util.List;
 public class Client implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    // TODO: consider adding an id.
+
     @Id
-    //TODO: consider adding an id.
     private String username;
     private String password;
     private String email;

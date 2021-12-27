@@ -3,6 +3,7 @@ package it.polimi.db2.telcoservice_sc42.entities;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "optional_product")
 @NamedQuery(name = "OptionalProduct.all", query = "SELECT p FROM OptionalProduct p")
-@NamedQuery(name = "OptionalProduct.valid", query = "SELECT p FROM OptionalProduct p WHERE ( p.expirationDate >= current_date or p.expirationDate = NULL )")
+@NamedQuery(name = "OptionalProduct.valid", query = "SELECT p FROM OptionalProduct p WHERE p.expirationDate = null OR p.expirationDate >= current_date ")
 public class OptionalProduct implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -21,8 +22,8 @@ public class OptionalProduct implements Serializable {
 
     private String name;
 
-    @Column(name = "monthly_fee")
-    private float monthlyFee;
+    @Column(name = "monthly_fee", precision = 2)
+    private BigDecimal monthlyFee;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "expiration_date")
@@ -57,11 +58,11 @@ public class OptionalProduct implements Serializable {
 
     public OptionalProduct(String name) {
         this.name = name;
-        this.monthlyFee = 0.0F;
+        this.monthlyFee = BigDecimal.ZERO;
         this.expirationDate = null;
     }
 
-    public OptionalProduct(String name, Float fee, Date expirationDate) {
+    public OptionalProduct(String name, BigDecimal fee, Date expirationDate) {
         this(name);
         this.monthlyFee = fee;
         this.expirationDate = expirationDate;
@@ -97,11 +98,11 @@ public class OptionalProduct implements Serializable {
         this.name = name;
     }
 
-    public float getMonthlyFee() {
+    public BigDecimal getMonthlyFee() {
         return monthlyFee;
     }
 
-    public void setMonthlyFee(float monthlyFee) {
+    public void setMonthlyFee(BigDecimal monthlyFee) {
         this.monthlyFee = monthlyFee;
     }
 
