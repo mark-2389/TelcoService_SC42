@@ -31,7 +31,7 @@ public class InternetService extends Service {
         this.isMobile = true;
     }
 
-    public InternetService(Date expirationDate, Integer gb, float gbFee, boolean isMobile) {
+    public InternetService(Date expirationDate, Integer gb, BigDecimal gbFee, boolean isMobile) {
         super(isMobile ? ServiceType.MOBILE_INTERNET : ServiceType.FIXED_INTERNET,  expirationDate);
         this.gigaByte = gb;
         this.gigaByteFee = gbFee;

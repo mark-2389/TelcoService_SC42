@@ -26,7 +26,7 @@ public class MobilePhoneService extends Service {
         // by default the empty constructor should set numeric values to 0 when not specified (please check)
     }
 
-    public MobilePhoneService(Date expirationDate, Integer minutes, float minutesFee, Integer sms, float smsFee) {
+    public MobilePhoneService(Date expirationDate, Integer minutes, BigDecimal minutesFee, Integer sms, BigDecimal smsFee) {
         super(ServiceType.MOBILE_PHONE, expirationDate);
         this.minutes = minutes;
         this.minutesFee = minutesFee;

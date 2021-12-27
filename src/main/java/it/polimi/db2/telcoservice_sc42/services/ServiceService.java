@@ -9,6 +9,7 @@ import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -19,7 +20,7 @@ public class ServiceService {
 
     public ServiceService(){ }
 
-    public Service createService(ServiceType type, Date expirationDate, Float gbFee, Integer gbs, Float smsFee, Integer sms, Float callFee, Integer minutes) throws BadParametersException {
+    public Service createService(ServiceType type, Date expirationDate, BigDecimal gbFee, Integer gbs, BigDecimal smsFee, Integer sms, BigDecimal callFee, Integer minutes) throws BadParametersException {
 
         if ( !areParametersValid(type, expirationDate, gbFee, gbs, smsFee, sms, callFee, minutes) ) {
             throw new BadParametersException();
@@ -43,7 +44,7 @@ public class ServiceService {
         return  service;
     }
 
-    private boolean areParametersValid(ServiceType type, Date expirationDate, Float gbFee, Integer gbs, Float smsFee, Integer sms, Float callFee, Integer minutes) {
+    private boolean areParametersValid(ServiceType type, Date expirationDate, BigDecimal gbFee, Integer gbs, BigDecimal smsFee, Integer sms, BigDecimal callFee, Integer minutes) {
         return Arrays.stream(ServiceType.values()).anyMatch(t -> t == type);
     }
 
@@ -51,15 +52,15 @@ public class ServiceService {
         return new Service(ServiceType.FIXED_PHONE, expirationDate);
     }
 
-    public Service createMobilePhoneService(Date expirationDate, Float smsFee, Integer sms, Float callFee, Integer minutes) {
+    public Service createMobilePhoneService(Date expirationDate, BigDecimal smsFee, Integer sms, BigDecimal callFee, Integer minutes) {
         return new MobilePhoneService(expirationDate, minutes, callFee, sms, smsFee);
     }
 
-    public Service createMobileInternetService(Date expirationDate, Float gbFee, Integer gbs) {
+    public Service createMobileInternetService(Date expirationDate, BigDecimal gbFee, Integer gbs) {
         return new InternetService(expirationDate, gbs, gbFee, true);
     }
 
-    public Service createFixedInternetService(Date expirationDate, Float gbFee, Integer gbs) {
+    public Service createFixedInternetService(Date expirationDate, BigDecimal gbFee, Integer gbs) {
         return new InternetService(expirationDate, gbs, gbFee, false);
     }
 }

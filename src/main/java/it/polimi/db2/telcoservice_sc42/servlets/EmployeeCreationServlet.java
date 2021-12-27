@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.Arrays;
 import java.util.List;
@@ -45,7 +46,7 @@ public class EmployeeCreationServlet extends HttpServlet {
     private void createOptionalProduct(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String name = request.getParameter("name");
         Date date = Date.valueOf(request.getParameter("expiration_date")) ;
-        Float fee = Float.parseFloat(request.getParameter("monthly_fee"));
+        BigDecimal fee = new BigDecimal(request.getParameter("monthly_fee"));
 
         try {
             optionalProductService.createOptionalProduct(name, fee, date);
@@ -69,23 +70,12 @@ public class EmployeeCreationServlet extends HttpServlet {
         return value;
     }
 
-    private Float safeParseFloat(String number) {
-        float value;
-        try {
-            value = Float.parseFloat(number);
-        } catch (NumberFormatException e) {
-            return null;
-        }
-
-        return value;
-    }
-
     private void createService(HttpServletRequest request, HttpServletResponse response) throws IOException {
         ServiceType type = ServiceType.fromString(request.getParameter("types"));
         Date date = Date.valueOf(request.getParameter("expiration_date")) ;
-        Float gbFee = safeParseFloat(request.getParameter("gb_fee"));
-        Float smsFee = safeParseFloat(request.getParameter("sms_fee"));
-        Float callFee = safeParseFloat(request.getParameter("call_fee"));
+        BigDecimal gbFee = new BigDecimal(request.getParameter("gb_fee"));
+        BigDecimal smsFee = new BigDecimal(request.getParameter("sms_fee"));
+        BigDecimal callFee = new BigDecimal(request.getParameter("call_fee"));
         Integer gbs = safeParseInteger(request.getParameter("gbs"));
         Integer sms = safeParseInteger(request.getParameter("sms"));
         Integer minutes = safeParseInteger(request.getParameter("minutes"));
@@ -111,7 +101,7 @@ public class EmployeeCreationServlet extends HttpServlet {
         List<String> selected = Arrays.asList(request.getParameterValues("selected"));
         request.getSession().setAttribute("selected_optionals", selected);
 
-        
+
 
         redirectSuccess(request, response);
     }
