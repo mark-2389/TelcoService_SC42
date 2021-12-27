@@ -44,6 +44,14 @@ public class Service implements Serializable {
                     inverseJoinColumns = @JoinColumn(name="USERNAME"))
     private List<Client> clients;
 
+    public Service() {
+
+    }
+
+    public Service(ServiceType type, Date expirationDate) {
+        this.type = type;
+        this.expirationDate = expirationDate;
+    }
 
 
     public int getId() {

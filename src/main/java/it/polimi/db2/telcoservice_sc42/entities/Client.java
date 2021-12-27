@@ -40,6 +40,13 @@ public class Client implements Serializable {
         this.password = password;
     }
 
+    @Override
+    public String toString() {
+        return "Client{" +
+                "username='" + username + '\'' +
+                '}';
+    }
+
     public String getUsername() {
         return username;
     }

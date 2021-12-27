@@ -11,7 +11,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "optional_product")
 @NamedQuery(name = "OptionalProduct.all", query = "SELECT p FROM OptionalProduct p")
-@NamedQuery(name = "OptionalProduct.valid", query = "SELECT p FROM OptionalProduct p WHERE p.expirationDate >= current_date ")
+@NamedQuery(name = "OptionalProduct.valid", query = "SELECT p FROM OptionalProduct p WHERE ( p.expirationDate >= current_date or p.expirationDate = NULL )")
 public class OptionalProduct implements Serializable {
     private static final long serialVersionUID = 1L;
 
