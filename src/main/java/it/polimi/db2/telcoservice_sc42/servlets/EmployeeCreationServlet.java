@@ -70,12 +70,26 @@ public class EmployeeCreationServlet extends HttpServlet {
         return value;
     }
 
+    private BigDecimal safeParseBigDecimal(String number) {
+        BigDecimal value;
+
+        if ( number == null ) { return null; }
+
+        try {
+            value = new BigDecimal(number);
+        } catch (NumberFormatException exception) {
+            return null;
+        }
+
+        return value;
+    }
+
     private void createService(HttpServletRequest request, HttpServletResponse response) throws IOException {
         ServiceType type = ServiceType.fromString(request.getParameter("types"));
         Date date = Date.valueOf(request.getParameter("expiration_date")) ;
-        BigDecimal gbFee = new BigDecimal(request.getParameter("gb_fee"));
-        BigDecimal smsFee = new BigDecimal(request.getParameter("sms_fee"));
-        BigDecimal callFee = new BigDecimal(request.getParameter("call_fee"));
+        BigDecimal gbFee = safeParseBigDecimal(request.getParameter("gb_fee"));
+        BigDecimal smsFee = safeParseBigDecimal(request.getParameter("sms_fee"));
+        BigDecimal callFee = safeParseBigDecimal(request.getParameter("call_fee"));
         Integer gbs = safeParseInteger(request.getParameter("gbs"));
         Integer sms = safeParseInteger(request.getParameter("sms"));
         Integer minutes = safeParseInteger(request.getParameter("minutes"));
