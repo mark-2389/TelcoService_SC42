@@ -40,10 +40,14 @@
                 <input type="text" name="package_name" required>
             </div>
             <div class="form">
-                <%--@declare id="package_expiration_date"--%>
-                <label for="package_expiration_date">Expiration date:</label>
-                <input type="date" name="package_expiration_date"
-                       value="<%= LocalDate.now().toString() %>" min="<%= LocalDate.now().toString() %>" required >
+                <input type="radio" id="package_no_expiration_date" name="package_expiration_date" value="no" checked>
+                <label for="package_no_expiration_date">No expiration date</label>
+            </div>
+            <div class="form">
+                <input type="radio" id="package_yes_expiration_date" name="package_expiration_date" value="yes">
+                <label for="package_yes_expiration_date">Expiration date</label>
+                <input type="date" name="package_expiration_date_input" value="<%= LocalDate.now().toString() %>"
+                       min="<%= LocalDate.now().toString() %>" required >
             </div>
             <h4>Selected Services</h4>
             <%--@elvariable id="services" type="List<it.polimi.db2.telcoservice_sc42.entities.Service>"--%>
@@ -117,8 +121,13 @@
             <input type="number" step="0.01" name="monthly_fee" required>
         </div>
         <div class="form">
-            <%--@declare id="expiration_date"--%><label for="expiration_date">Expiration date:</label>
-            <input type="date" name="expiration_date" value="<%= LocalDate.now().toString() %>"
+            <input type="radio" id="optional_no_expiration_date" name="optional_expiration_date" value="no" checked>
+            <label for="service_no_expiration_date">No expiration date</label>
+        </div>
+        <div class="form">
+            <input type="radio" id="optional_yes_expiration_date" name="optional_expiration_date" value="yes">
+            <label for="optional_yes_expiration_date">Expiration date</label>
+            <input type="date" name="optional_expiration_date_input" value="<%= LocalDate.now().toString() %>"
                    min="<%= LocalDate.now().toString() %>" required >
         </div>
         <div class="form">

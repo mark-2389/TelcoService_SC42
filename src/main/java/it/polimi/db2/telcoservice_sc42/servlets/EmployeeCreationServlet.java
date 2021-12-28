@@ -59,7 +59,7 @@ public class EmployeeCreationServlet extends HttpServlet {
 
     private void createOptionalProduct(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String name = request.getParameter("name");
-        Date date = Date.valueOf(request.getParameter("expiration_date")) ;
+        Date date = getOptionalDate(request, "optional_expiration_date", "optional_expiration_date_input");
         BigDecimal fee = new BigDecimal(request.getParameter("monthly_fee"));
 
         try {
@@ -100,23 +100,13 @@ public class EmployeeCreationServlet extends HttpServlet {
 
     private void createService(HttpServletRequest request, HttpServletResponse response) throws IOException {
         ServiceType type = ServiceType.fromString(request.getParameter("types"));
+        Date date = getOptionalDate(request, "service_expiration_date", "service_expiration_date_input");
         BigDecimal gbFee = safeParseBigDecimal(request.getParameter("gb_fee"));
         BigDecimal smsFee = safeParseBigDecimal(request.getParameter("sms_fee"));
         BigDecimal callFee = safeParseBigDecimal(request.getParameter("call_fee"));
         Integer gbs = safeParseInteger(request.getParameter("gbs"));
         Integer sms = safeParseInteger(request.getParameter("sms"));
         Integer minutes = safeParseInteger(request.getParameter("minutes"));
-
-
-        Date date = null;
-        List<String> dateValues = Arrays.asList(request.getParameterValues("service_expiration_date"));
-        if ( dateValues.contains("yes") ) {
-            date = Date.valueOf(request.getParameter("service_expiration_date_input")) ;
-            System.out.println("date: " + date);
-        } else {
-            System.out.println("null date");
-        }
-
 
         if ( type == null ) {
             redirectFailure(request, response, "Invalid service type");
@@ -210,6 +200,23 @@ public class EmployeeCreationServlet extends HttpServlet {
         return periods;
     }
 
+    /**
+     * Return the date inserted in a form with a radio button.
+     * @param request the http request.
+     * @param checkBoxParameter the name given to all radio buttons (i.e. the "name" in <input type="radio" id="some_id" name="name" value="some_value" checked>)
+     * @param inputParameter the name of the input tag.
+     * @return A Date if the radio button with the date is selected, null otherwise
+     */
+    private Date getOptionalDate(HttpServletRequest request, String checkBoxParameter, String inputParameter) {
+        Date date = null;
+        List<String> dateValues = Arrays.asList(request.getParameterValues(checkBoxParameter));
+        if ( dateValues.contains("yes") ) {
+            date = Date.valueOf(request.getParameter(inputParameter)) ;
+        }
+
+        return date;
+    }
+
     private IndependentValidityPeriod getIndependentValidityPeriod(String str) {
         if ( str == null ) return null;
 
@@ -223,7 +230,7 @@ public class EmployeeCreationServlet extends HttpServlet {
     private void createServicePackage(HttpServletRequest request, HttpServletResponse response) throws IOException {
         // get package specific info
         String name = (String) request.getSession().getAttribute("package_name");
-        Date expirationDate = Date.valueOf((String) request.getSession().getAttribute("package_expiration_date"));
+        Date expirationDate = getOptionalDate(request, "package_expiration_date", "package_expiration_date_input");
 
         // id NOT NEEDED
         // name DONE
