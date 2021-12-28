@@ -30,6 +30,13 @@
 <%
     }
 %>
+
+<div class="salesReportLink">
+    <a href="salesReport.jsp" >
+        Go to SalesReport
+    </a>
+</div>
+
 <div class="packageForm">
     <h3> Service Package Creation </h3>
     <form action="../add_optional_product" method="POST">
