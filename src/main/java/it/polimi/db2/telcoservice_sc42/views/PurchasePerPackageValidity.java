@@ -6,6 +6,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "purchase_per_package_validity")
+@NamedQuery(name = "PurchasePerPackageValidity.all", query = "SELECT p FROM PurchasePerPackageValidity p")
 public class PurchasePerPackageValidity implements Serializable {
     private static final long serialVersionUID = 1L;
 

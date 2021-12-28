@@ -7,6 +7,7 @@ import java.math.BigInteger;
 
 @Entity
 @Table(name = "value_per_package_op")
+@NamedQuery(name = "ValuePerPackageWithOptionalProduct.all", query = "SELECT v FROM ValuePerPackageWithOptionalProduct v")
 public class ValuePerPackageWithOptionalProduct implements Serializable {
     private static final long serialVersionUID = 1L;
 

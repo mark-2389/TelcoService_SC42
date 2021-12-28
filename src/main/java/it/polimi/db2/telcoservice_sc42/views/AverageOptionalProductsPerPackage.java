@@ -1,14 +1,12 @@
 package it.polimi.db2.telcoservice_sc42.views;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
 
 @Entity
 @Table(name = "average_opproducts_per_servpackage")
+@NamedQuery(name = "AverageOptionalProductsPerPackage.all", query = "SELECT aop FROM AverageOptionalProductsPerPackage aop")
 public class AverageOptionalProductsPerPackage implements Serializable {
     private static final long serialVersionUID = 1L;
 

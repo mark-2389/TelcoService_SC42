@@ -28,6 +28,12 @@
             <session-type>Stateless</session-type>
             <transaction-type>Container</transaction-type>
         </session>
+        <session>
+            <ejb-name>SalesReportService</ejb-name>
+            <ejb-class>it.polimi.db2.telcoservice_sc42.services.SalesReportService</ejb-class>
+            <session-type>Stateless</session-type>
+            <transaction-type>Container</transaction-type>
+        </session>
         <entity>
             <ejb-name>ClientEJB</ejb-name>
             <ejb-class>it.polimi.db2.telcoservice_sc42.entities.Client</ejb-class>
