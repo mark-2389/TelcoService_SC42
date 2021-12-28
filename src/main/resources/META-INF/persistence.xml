@@ -13,6 +13,12 @@
         <class>it.polimi.db2.telcoservice_sc42.entities.FixedInternetService</class>
         <class>it.polimi.db2.telcoservice_sc42.entities.OptionalProduct</class>
         <class>it.polimi.db2.telcoservice_sc42.entities.Auditing</class>
+        <class>it.polimi.db2.telcoservice_sc42.views.AverageOptionalProductsPerPackage</class>
+        <class>it.polimi.db2.telcoservice_sc42.views.BestOptionalProduct</class>
+        <class>it.polimi.db2.telcoservice_sc42.views.PurchasePerPackage</class>
+        <class>it.polimi.db2.telcoservice_sc42.views.PurchasePerPackageValidity</class>
+        <class>it.polimi.db2.telcoservice_sc42.views.ValuePerPackageWithOptionalProduct</class>
+        <class>it.polimi.db2.telcoservice_sc42.views.ValuePerPackageWithoutOp</class>
         <properties>
             <property name="toplink.jdbc.url" value="jdbc:mysql://localhost:3306/telcoservice_db"/>
             <property name="toplink.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
@@ -25,6 +31,10 @@
             <property name="eclipselink.jdbc.url" value="jdbc:mysql://localhost:3306/telcoservice_db"/>
             <property name="eclipselink.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <property name="eclipselink.logging.level" value="FINE" />
+            <property name="hibernate.connection.username" value="Mark"/>
+            <property name="hibernate.connection.password" value="6428M@rco"/>
+            <property name="openjpa.ConnectionUserName" value="Mark"/>
+            <property name="openjpa.ConnectionPassword" value="6428M@rco"/>
         </properties>
 
     </persistence-unit>
