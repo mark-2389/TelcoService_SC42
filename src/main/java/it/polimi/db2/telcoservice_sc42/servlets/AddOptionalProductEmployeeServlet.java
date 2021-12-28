@@ -10,10 +10,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.stream.Collectors;
 
 @WebServlet(name = "addOptionalProductEmployeeServlet", value = "/add_optional_product")
 public class AddOptionalProductEmployeeServlet extends HttpServlet {
@@ -29,21 +27,6 @@ public class AddOptionalProductEmployeeServlet extends HttpServlet {
 
     public void init() throws ServletException {
         super.init();
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        System.out.println("handling post after add optional product");
-
-        // ids of the selected products in the checkbox
-        List<String> selected = Arrays.asList(request.getParameterValues("selected"));
-        List<Integer> ids = selected.stream().map(Integer::parseInt).collect(Collectors.toList());
-
-        for (int id: ids) {
-            System.out.println(optionalProductService.findOptionalProductById(id));
-        }
-
-        handleSuccessRedirect(request, response);
     }
 
     @Override

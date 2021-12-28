@@ -2,7 +2,7 @@ package it.polimi.db2.telcoservice_sc42.entities;
 
 import jakarta.persistence.*;
 
-import java.util.Date;
+import java.sql.Date;
 import java.math.BigDecimal;
 
 @Entity
@@ -23,6 +23,11 @@ public class MobilePhoneService extends Service {
 
     public MobilePhoneService() {
         // by default the empty constructor should set numeric values to 0 when not specified (please check)
+    }
+
+    public String toString() {
+        String str = super.toString();
+        return str + " - " + minutes + " minutes ( " + minutesFee + " € ) - " + sms + " sms ( " + smsFee + " € )";
     }
 
     public MobilePhoneService(Date expirationDate, Integer minutes, BigDecimal minutesFee, Integer sms, BigDecimal smsFee) {

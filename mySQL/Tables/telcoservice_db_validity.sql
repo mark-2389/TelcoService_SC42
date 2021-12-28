@@ -5,7 +5,7 @@ DROP TABLE IF EXISTS `validity`;
 
 CREATE TABLE `validity` (
 
-    `ID` int,
+    `ID` int AUTO_INCREMENT,
     `PACKAGE_ID` int,
     `PERIOD` int,
     `MONTHLY_FEE` decimal(6,2) DEFAULT 0.00,

@@ -32,12 +32,11 @@
 %>
 <div class="packageForm">
     <h3> Service Package Creation </h3>
-    <form action="../add_optional_product" method="POST">
+    <form action="../new" method="POST">
         <div>
-
-            <div class="validity_form">
-                <%--@declare id="package_name"--%><label for="package_name">Name:</label>
-                <input type="text" name="package_name" required>
+            <div class="form">
+                <label for="package_name_input">Name:</label>
+                <input type="text" id="package_name_input" name="package_name_input" required>
             </div>
             <div class="form">
                 <input type="radio" id="package_no_expiration_date" name="package_expiration_date" value="no" checked>
@@ -59,22 +58,10 @@
             </c:forEach>
 
             <h4>Selected optional products</h4>
-            <!--
-                <div>
-                    <input type="radio" id="expiration_date" name="expiration_date" value="nil" checked>
-                    <label for="huey">No expiration date</label>
-                </div>
-
-                <div>
-                  <input type="radio" id="expiration_date" name="expiration_date" value="set">
-                  <label for="dewey">Expiration date</label>
-                  <input type="date" name="package_expiration_date">
-                </div>
-            -->
             <%--@elvariable id="optionals" type="List<it.polimi.db2.telcoservice_sc42.entities.OptionalProduct>"--%>
             <c:forEach var="e" items="${optionals}">
                 <div>
-                    <input type="checkbox" id="selected" name="selected" value="${e.id}" >
+                    <input type="checkbox" id="optionals" name="optionals" value="${e.id}" >
                     <label for="${e.id}">${e.toString()}</label>
                 </div>
             </c:forEach>
@@ -85,10 +72,10 @@
             <h4>Validity Period</h4>
 
             <h5>Select Validity Period</h5>
-            <%--@elvariable id="periods" type="List<it.polimi.db2.telcoservice_sc42.entities.IndependentValidityPeriod>"--%>
-            <c:forEach var="e" items="${periods}">
+            <%--@elvariable id="validities" type="List<it.polimi.db2.telcoservice_sc42.entities.IndependentValidityPeriod>"--%>
+            <c:forEach var="e" items="${validities}">
                 <div>
-                    <input type="checkbox" id="periods" name="periods" value="${e.getId()}" >
+                    <input type="checkbox" id="periods" name="periods" value="${e.getId()}" checked>
                     <label for="${e.getId()}">${e.toString()}</label>
                 </div>
             </c:forEach>
