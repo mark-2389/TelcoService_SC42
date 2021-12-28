@@ -13,6 +13,7 @@ public class ServicePackage implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private String name;
@@ -37,14 +38,12 @@ public class ServicePackage implements Serializable {
 
     }
 
-    public ServicePackage(Integer id, String name) {
-        this.id = id;
+    public ServicePackage(String name) {
         this.name = name;
         this.expirationDate = null;
     }
 
-    public ServicePackage(Integer id, String name, Date expirationDate) {
-        this.id = id;
+    public ServicePackage(String name, Date expirationDate) {
         this.name = name;
         this.expirationDate = expirationDate;
     }
@@ -101,7 +100,7 @@ public class ServicePackage implements Serializable {
         return products;
     }
 
-    public void setProducts(List<OptionalProduct> products) {
+    public void setOptionalProducts(List<OptionalProduct> products) {
         this.products = products;
     }
 

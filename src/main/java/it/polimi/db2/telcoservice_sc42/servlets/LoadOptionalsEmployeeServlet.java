@@ -1,7 +1,9 @@
 package it.polimi.db2.telcoservice_sc42.servlets;
 
 import it.polimi.db2.telcoservice_sc42.entities.OptionalProduct;
+import it.polimi.db2.telcoservice_sc42.entities.Service;
 import it.polimi.db2.telcoservice_sc42.services.OptionalProductService;
+import it.polimi.db2.telcoservice_sc42.services.ServiceService;
 import jakarta.ejb.EJB;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -18,7 +20,11 @@ public class LoadOptionalsEmployeeServlet extends HttpServlet {
     @EJB(name = "it.polimi.db2.telcoservice_sc42.services/OptionalProductService")
     OptionalProductService optionalProductService;
 
+    @EJB(name = "it.polimi.db2.telcoservice_sc42.services/ServiceService")
+    ServiceService serviceService;
+
     final String allOptionalsAttribute = "optionals";
+    final String allServicesAttribute = "services";
 
     public LoadOptionalsEmployeeServlet() { }
 
@@ -28,13 +34,26 @@ public class LoadOptionalsEmployeeServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        loadOptionals(request);
+        loadServices(request);
+
+        redirectSuccess(request, response);
+    }
+
+    private void loadOptionals(HttpServletRequest request) {
         // get all the optionals available
         List<OptionalProduct> optionals = optionalProductService.findValidOptionalProducts();
 
         // save the optionals in the session
         request.getSession().setAttribute(allOptionalsAttribute, optionals);
+    }
 
-        redirectSuccess(request, response);
+    private void loadServices(HttpServletRequest request) {
+        // get all the optionals available
+        List<Service> services = serviceService.findValidServices();
+
+        // save the optionals in the session
+        request.getSession().setAttribute(allServicesAttribute, services);
     }
 
     private void redirectSuccess(HttpServletRequest request, HttpServletResponse response) throws IOException {

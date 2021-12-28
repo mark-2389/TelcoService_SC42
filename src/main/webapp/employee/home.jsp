@@ -35,7 +35,7 @@
     <form action="../add_optional_product" method="POST">
         <div>
 
-            <div class="form">
+            <div class="validity_form">
                 <%--@declare id="package_name"--%><label for="package_name">Name:</label>
                 <input type="text" name="package_name" required>
             </div>
@@ -45,23 +45,16 @@
                 <input type="date" name="package_expiration_date"
                        value="<%= LocalDate.now().toString() %>" min="<%= LocalDate.now().toString() %>" required >
             </div>
-            <h5>Validity Period</h5>
-            <form action="">
-                <div class="form">
-                    <label for="validity_period">Period:</label>
-                    <input type="number" step="1" id="validity_period" name="validity_period" required>
+            <h4>Selected Services</h4>
+            <%--@elvariable id="services" type="List<it.polimi.db2.telcoservice_sc42.entities.Service>"--%>
+            <c:forEach var="s" items="${services}">
+                <div>
+                    <input type="checkbox" id="services" name="services" value="${s.id}" >
+                    <label for="${s.id}">${s.toString()}</label>
                 </div>
-                <div class="form">
-                    <label for="validity_monthly_fee">Monthly fee:</label>
-                    <input type="number" step="0.01" id="validity_monthly_fee" name="validity_monthly_fee" required>
-                </div>
-                <div class="form">
-                    <input type="submit" class="btn" value="Add Validity Period" name="addValidities">
-                </div>
-            </form>
+            </c:forEach>
 
-            <h5>Selected Services</h5>
-            <h5>Selected optional products</h5>
+            <h4>Selected optional products</h4>
             <!--
                 <div>
                     <input type="radio" id="expiration_date" name="expiration_date" value="nil" checked>
@@ -84,9 +77,31 @@
             <div class="form">
                 <input type="submit" class="btn" value="Create Service Package" name="createServicePackage">
             </div>
-            <!-- <div class="form"> -->
-            <!--     <input type="submit" class="btn" value="Create" name="createServicePackage"> -->
-            <!-- </div> -->
+
+            <h4>Validity Period</h4>
+
+            <h5>Select Validity Period</h5>
+            <%--@elvariable id="periods" type="List<it.polimi.db2.telcoservice_sc42.entities.IndependentValidityPeriod>"--%>
+            <c:forEach var="e" items="${periods}">
+                <div>
+                    <input type="checkbox" id="periods" name="periods" value="${e.getId()}" >
+                    <label for="${e.getId()}">${e.toString()}</label>
+                </div>
+            </c:forEach>
+        </div>
+    </form>
+    <h5>Add Validity Period</h5>
+    <form action="../new" method="POST">
+        <div class="form">
+            <label for="validity_period">Period:</label>
+            <input type="number" step="1" id="validity_period" name="validity_period" required>
+        </div>
+        <div class="form">
+            <label for="validity_monthly_fee">Monthly fee:</label>
+            <input type="number" step="0.01" id="validity_monthly_fee" name="validity_monthly_fee" required>
+        </div>
+        <div class="form">
+            <input type="submit" class="btn" value="Add Validity Period" name="addValidities">
         </div>
     </form>
 </div>
@@ -130,13 +145,18 @@
             <datalist id="types">
                 <% ServiceType[] types = ServiceType.values(); %>
                 <c:forEach var="t" items="<%= types %>">
-                    <option value="${t.toString()}">
+                    <option value="${t.description()}">
                 </c:forEach>
             </datalist>
         </div>
         <div class="form">
-            <label for="expiration_date">Expiration date:</label>
-            <input type="date" name="expiration_date" value="<%= LocalDate.now().toString() %>"
+            <input type="radio" id="service_no_expiration_date" name="service_expiration_date" value="no" checked>
+            <label for="service_no_expiration_date">No expiration date</label>
+        </div>
+        <div class="form">
+            <input type="radio" id="service_yes_expiration_date" name="service_expiration_date" value="yes">
+            <label for="service_yes_expiration_date">Expiration date</label>
+            <input type="date" name="service_expiration_date_input" value="<%= LocalDate.now().toString() %>"
                    min="<%= LocalDate.now().toString() %>" required >
         </div>
         <div class="form">

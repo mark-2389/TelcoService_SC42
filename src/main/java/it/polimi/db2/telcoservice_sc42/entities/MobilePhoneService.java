@@ -1,14 +1,13 @@
 package it.polimi.db2.telcoservice_sc42.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.util.Date;
 import java.math.BigDecimal;
 
 @Entity
 @Table(name = "mobile_phone_service")
+@DiscriminatorValue("MOBILE_PHONE")
 public class MobilePhoneService extends Service {
     private static final long serialVersionUID = 1L;
 

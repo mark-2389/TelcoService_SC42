@@ -12,6 +12,7 @@ public class Validity implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Id
@@ -33,16 +34,14 @@ public class Validity implements Serializable {
     public Validity() {
     }
 
-    public Validity(int id, ServicePackage servicePackage, int period, BigDecimal monthlyFee, Date expirationDate ){
-        this.id = id;
+    public Validity(ServicePackage servicePackage, int period, BigDecimal monthlyFee, Date expirationDate ){
         this.setServicePackage(servicePackage);
         this.period = period;
         this.monthlyFee = monthlyFee;
         this.expirationDate = expirationDate;
     }
 
-    public Validity(int id, ServicePackage servicePackage, int period, BigDecimal monthlyFee ){
-        this.id = id;
+    public Validity(ServicePackage servicePackage, int period, BigDecimal monthlyFee ){
         this.setServicePackage(servicePackage);
         this.period = period;
         this.monthlyFee = monthlyFee;

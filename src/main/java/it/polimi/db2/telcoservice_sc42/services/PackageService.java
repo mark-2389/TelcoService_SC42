@@ -1,9 +1,6 @@
 package it.polimi.db2.telcoservice_sc42.services;
 
-import it.polimi.db2.telcoservice_sc42.entities.Order;
-import it.polimi.db2.telcoservice_sc42.entities.Service;
-import it.polimi.db2.telcoservice_sc42.entities.ServicePackage;
-import it.polimi.db2.telcoservice_sc42.entities.Validity;
+import it.polimi.db2.telcoservice_sc42.entities.*;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -53,34 +50,38 @@ public class PackageService {
     /**
      * The method is invoked when we are creating a new ServicePackage. It provides the functionalities to associate the package to the services it offers.
      * Moreover it all manages to create and set all the validityPeriods for such new servicePackage
-     * @param id the id of the servicePackage to be created
      * @param name the name of the servicePackage to be created
      * @param expirationDate the expirationDate of the servicePackage to be created
-     * @param services a list of services that the new ServicePackage offers
-     * @param periods a list of periods that the new ServicePackage allows
-     * @param monthlyFees a list of monthlyFees, each of them corresponds to a period in the same position
-     * @param dates a list of expirationDates for each new validity to be created
+     * @param services a list of the Services that the new ServicePackage offers
+     * @param optionals a list of the OptionalProducts that have to be added to the Package
      */
-    public void createServicePackage(int id, String name, Date expirationDate, List<Service> services, List<Integer> periods, List<BigDecimal> monthlyFees, List<Date> dates ){
-        if ( periods.size() != monthlyFees.size() || monthlyFees.size() != dates.size() )  return;
-        int size = periods.size();
+    // TODO: consider the following signature String name, Date expirationDate, List<Service> services, List<IndependentValidityPeriods> periods
+    public ServicePackage createServicePackage(String name, Date expirationDate, List<Service> services, List<OptionalProduct> optionals ){
+        ServicePackage servicePackage = new ServicePackage(name, expirationDate);
 
-        ServicePackage servicePackage = new ServicePackage(id, name, expirationDate);
-
+        // add the services to the package
         servicePackage.setServices(services);
 
-        //for each service it completes the JPA relationship
-        for( Service s : services ){
-            em.find(Service.class, s.getId()).addPackage(servicePackage);
-            em.persist(s);
-        }
+        // add the optional products to the package
+        servicePackage.setOptionalProducts(optionals);
 
-        for (int i = 0; i < size; i++) {
-            Validity validity = new Validity(i, servicePackage, periods.get(i), monthlyFees.get(i), dates.get(i));
-            servicePackage.addValidity(validity);
-            validity.setServicePackage(servicePackage);
-            em.persist(validity);
-        }
+        //for each service it completes the JPA relationship
+        // for( Service s : services ){
+        //     em.find(Service.class, s.getId()).addPackage(servicePackage);
+        //     em.persist(s);
+        // }
+
+        // for (int i = 0; i < size; i++) {
+        //     Validity validity = new Validity(i, servicePackage, periods.get(i), monthlyFees.get(i), dates.get(i));
+        //     servicePackage.addValidity(validity);
+        //     validity.setServicePackage(servicePackage);
+        //     em.persist(validity);
+        // }
+
+        // probably useless
+        em.persist(servicePackage);
+
+        return servicePackage;
     }
 
     public void modifyExpirationDate(int toModifyId, Date newDate){
@@ -121,11 +122,8 @@ public class PackageService {
         em.persist(servicePackage);
     }
 
-    public void addValidity(int toModifyId,int period, BigDecimal monthlyFee, Date date){
+    public void addValidity(int toModifyId, Validity validity){
         ServicePackage servicePackage = findServicePackageById(toModifyId);
-        //TODO check how to set id correctly for new instances
-        Validity validity = new Validity(0, servicePackage, period, monthlyFee, date);
-
         servicePackage.addValidity(validity);
         validity.setServicePackage(servicePackage);
 

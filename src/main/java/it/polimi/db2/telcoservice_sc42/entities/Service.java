@@ -2,10 +2,10 @@ package it.polimi.db2.telcoservice_sc42.entities;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Collection;
 import java.util.List;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.DiscriminatorFormula;
 
 @Entity
 @Table(name = "service")
@@ -16,10 +16,18 @@ import jakarta.persistence.*;
         name="TYPE",
         discriminatorType = DiscriminatorType.STRING
 )
+// @DiscriminatorFormula(
+//         "CASE WHEN `type` = 'FIXED_PHONE' THEN 'FIXED_PHONE' " +
+//              "WHEN `type` = 'MOBILE_PHONE' THEN 'MOBILE_PHONE' " +
+//              "WHEN `type` = 'MOBILE_INTERNET' OR type = 'FIXED_INTERNET' THEN 'INTERNET' end"
+// )
+@DiscriminatorValue("FIXED_PHONE")
+@NamedQuery(name = "Service.valid", query = "SELECT s FROM Service s WHERE ( s.expirationDate = NULL OR s.expirationDate >= current_date )")
 public class Service implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(columnDefinition = "ENUM('FIXED_PHONE', 'MOBILE_PHONE', 'FIXED_INTERNET', 'MOBILE_INTERNET')")
@@ -53,6 +61,9 @@ public class Service implements Serializable {
         this.expirationDate = expirationDate;
     }
 
+    public String toString() {
+        return this.type.description() + " - " + this.expirationDate;
+    }
 
     public int getId() {
         return id;

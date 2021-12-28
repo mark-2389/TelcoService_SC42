@@ -1,9 +1,6 @@
 package it.polimi.db2.telcoservice_sc42.services;
 
-import it.polimi.db2.telcoservice_sc42.entities.MobilePhoneService;
-import it.polimi.db2.telcoservice_sc42.entities.InternetService;
-import it.polimi.db2.telcoservice_sc42.entities.Service;
-import it.polimi.db2.telcoservice_sc42.entities.ServiceType;
+import it.polimi.db2.telcoservice_sc42.entities.*;
 import it.polimi.db2.telcoservice_sc42.exception.BadParametersException;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
@@ -12,6 +9,7 @@ import jakarta.persistence.PersistenceContext;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 @Stateless
 public class ServiceService {
@@ -40,8 +38,10 @@ public class ServiceService {
 
         if ( service == null ) { throw new BadParametersException(); }
 
+        System.out.println(service.getType().name());
+
         entityManager.persist(service);
-        return  service;
+        return service;
     }
 
     private boolean areParametersValid(ServiceType type, Date expirationDate, BigDecimal gbFee, Integer gbs, BigDecimal smsFee, Integer sms, BigDecimal callFee, Integer minutes) {
@@ -57,10 +57,23 @@ public class ServiceService {
     }
 
     public Service createMobileInternetService(Date expirationDate, BigDecimal gbFee, Integer gbs) {
-        return new InternetService(expirationDate, gbs, gbFee, true);
+        return new MobileInternetService(expirationDate, gbs, gbFee);
     }
 
     public Service createFixedInternetService(Date expirationDate, BigDecimal gbFee, Integer gbs) {
-        return new InternetService(expirationDate, gbs, gbFee, false);
+        return new FixedInternetService(expirationDate, gbs, gbFee);
+    }
+
+    public List<Service> findValidServices() {
+        return entityManager.createNamedQuery("Service.valid", Service.class).getResultList();
+    }
+
+    public Service findServiceById(int id) {
+        List<Service> services = entityManager.createQuery("SELECT s from Service s WHERE s.id = ?1", Service.class)
+                .setParameter(1, id).getResultList();
+
+        if ( services.isEmpty() ) { return null; }
+
+        return services.get(0);
     }
 }
