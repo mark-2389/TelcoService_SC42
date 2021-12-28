@@ -1,11 +1,11 @@
 package it.polimi.db2.telcoservice_sc42.entities;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Date;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.DiscriminatorFormula;
 
 @Entity
 @Table(name = "service")
@@ -34,20 +34,19 @@ public class Service implements Serializable {
     @Enumerated(EnumType.STRING)
     private ServiceType type;
 
-    @Temporal(TemporalType.DATE)
     @Column(name = "expiration_date")
     private Date expirationDate;
 
     @ManyToMany
-    @JoinTable
-            (name = "service_composition",
+    @JoinTable(
+            name = "service_composition",
                     joinColumns = @JoinColumn(name="SERVICE_ID"),
                     inverseJoinColumns = @JoinColumn(name="PACKAGE_ID"))
     private List<ServicePackage> packages;
 
     @ManyToMany
-    @JoinTable
-            (name = "service_schedule",
+    @JoinTable(
+            name = "service_schedule",
                     joinColumns = @JoinColumn(name="SERVICE_ID"),
                     inverseJoinColumns = @JoinColumn(name="USERNAME"))
     private List<Client> clients;

@@ -7,7 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.sql.Date;
 
 @Entity
 @Table(name = "mobile_internet_service")
@@ -23,6 +23,11 @@ public class MobileInternetService extends Service {
 
     public MobileInternetService() {
 
+    }
+
+    public String toString() {
+        String str = super.toString();
+        return str + " - " + gigaByte + " gb ( " + gigaByteFee + " € )";
     }
 
     public MobileInternetService(Date expirationDate, Integer gb, BigDecimal gbFee) {

@@ -8,7 +8,7 @@ import jakarta.persistence.PersistenceContext;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 @Stateless

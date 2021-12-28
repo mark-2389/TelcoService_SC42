@@ -11,11 +11,6 @@ public class ValidityPrimaryKey implements Serializable {
     @SuppressWarnings({"unused", "FieldCanBeLocal"})
     private Integer servicePackage;
 
-    public ValidityPrimaryKey(int id, int servicePackage) {
-        this.id = id;
-        this.servicePackage = servicePackage;
-    }
-
     public ValidityPrimaryKey() { }
 
     @Override

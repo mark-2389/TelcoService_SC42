@@ -35,7 +35,7 @@ public class IndependentValidityPeriod {
     }
 
     public String getId() {
-        return fee + "" + period;
+        return period + "-" + fee;
     }
 
     public float getFee() {

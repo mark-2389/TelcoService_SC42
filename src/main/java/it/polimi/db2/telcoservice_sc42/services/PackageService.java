@@ -5,7 +5,6 @@ import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -65,21 +64,25 @@ public class PackageService {
         // add the optional products to the package
         servicePackage.setOptionalProducts(optionals);
 
-        //for each service it completes the JPA relationship
-        // for( Service s : services ){
-        //     em.find(Service.class, s.getId()).addPackage(servicePackage);
-        //     em.persist(s);
-        // }
+        // persist the services
+        for( Service s : services ){
+            // em.find(Service.class, s.getId()).addPackage(servicePackage);
+            s.addPackage(servicePackage);
+            // em.persist(s);
+        }
 
-        // for (int i = 0; i < size; i++) {
-        //     Validity validity = new Validity(i, servicePackage, periods.get(i), monthlyFees.get(i), dates.get(i));
-        //     servicePackage.addValidity(validity);
-        //     validity.setServicePackage(servicePackage);
-        //     em.persist(validity);
-        // }
+        // persist the optional products
+        for( OptionalProduct p: optionals ) {
+            p.addPackage(servicePackage);
+            // em.persist(p);
+        }
 
         // probably useless
         em.persist(servicePackage);
+        em.flush();
+
+        ServicePackage returned = em.find(ServicePackage.class, servicePackage.getId());
+        System.out.println("returned services: " + returned.getServices());
 
         return servicePackage;
     }
@@ -135,7 +138,7 @@ public class PackageService {
         Validity validity = em.find(Validity.class, oldValidityId);
 
         servicePackage.removeValidity(validity);
-        //TODO how to handle the remove of the validity? New column for unavilability?
+        //TODO how to handle the remove of the validity? New column for unavailability?
 
         em.persist(validity);
     }
