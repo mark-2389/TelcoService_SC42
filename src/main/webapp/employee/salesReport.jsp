@@ -18,6 +18,7 @@
 <a href="home.jsp" >
     Go back
 </a>
+
 <div class="Purchases">
     <h2>Purchases per package</h2>
     <fieldset style="width:500px">
@@ -40,21 +41,50 @@
         </c:forEach>
     </fieldset>
 </div>
-
-<h2>Total value of sales per package without optional products</h2>
-<h2>Total value of sales per package with optional products</h2>
-<h2>Average number of optional products per service package</h2>
-
-<div>
-    <div>
-        <h2>Best Optional product</h2>
+<div class="ValuesWithoutOp">
+    <h2>Total value of sales per package without optional products</h2>
+    <fieldset style="width:500px">
+        <%--@elvariable id="values" type="List<java.lang.String>"--%>
+        <c:forEach var="v" items="${values}">
+            <div>
+                <c:out value="${v}"></c:out>
+            </div>
+        </c:forEach>
+    </fieldset>
+</div>
+<div class="ValuesWithOp">
+    <h2>Total value of sales per package with optional products</h2>
+    <fieldset style="width:500px">
+        <%--@elvariable id="valuesPackageOptional" type="List<java.lang.String>"--%>
+        <c:forEach var="v" items="${valuesPackageOptional}">
+            <div>
+                <c:out value="${v}"></c:out>
+            </div>
+        </c:forEach>
+    </fieldset>
+</div>
+<div class="Averages">
+    <h2>Average number of optional products per service package</h2>
+    <fieldset style="width:500px">
+        <%--@elvariable id="averages" type="List<java.lang.String>"--%>
+        <c:forEach var="a" items="${averages}">
+            <div>
+                <c:out value="${a}"></c:out>
+            </div>
+        </c:forEach>
+    </fieldset>
+</div>
+<div class="BestOptional">
+    <h2>Best Optional product</h2>
+        <fieldset style="width:500px" >
             <% if ( request.getSession().getAttribute("best") == null ) { %>
                 <c:out value="NO BEST PRODUCT"></c:out>
             <% } else { %>
-                <%--@elvariable id="best" type="it.polimi.db2.telcoservice_sc42.views.BestOptionalProduct"--%>
-                <c:out value="BEST: ${best.toString()}"></c:out>
+                <%--@elvariable id="best" type="java.lang.String"--%>
+                <c:out value="BEST: ${best}"></c:out>
             <% } %>
-    </div>
+        </fieldset>
 </div>
+
 </body>
 </html>
