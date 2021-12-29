@@ -15,7 +15,7 @@ public class GoToSalesReportPageServlet extends HttpServlet {
 
     private void prepareSalesReports(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String id = handleRejectRequest(request, response, "employee/login.jsp", "id");
-
+        System.out.println("SALES REPORT ID: " + id);
         if ( id != null ) {
             // redirect to the servlet that loads all optionals
             response.sendRedirect(getServletContext().getContextPath() + "/load_reports");

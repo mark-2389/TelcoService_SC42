@@ -3,11 +3,11 @@ package it.polimi.db2.telcoservice_sc42.services;
 import it.polimi.db2.telcoservice_sc42.views.*;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Stateless
 public class SalesReportService {
@@ -19,8 +19,15 @@ public class SalesReportService {
     }
 
     //Number of total purchases per package.
-    public List<PurchasePerPackage> getAllPurchasesPerPackage(){
-        return em.createNamedQuery("PurchasePerPackage.all", PurchasePerPackage.class).getResultList();
+    public List<String> getAllPurchasesPerPackage(){
+        //System.out.println("SIMPLE CLASS: " + em.createNamedQuery("PurchasePerPackage.named", PurchasePerPackage.class).getResultList());
+        List<Object[]> results = em.createNamedQuery("PurchasePerPackage.named").getResultList();
+        List<String> stringedResults = new ArrayList<>();
+
+        for (Object[] object : results )
+            stringedResults.add("ID: " + object[0] + "    NAME: " + object[1] + "    PURCHASES: " + object[2] );
+
+        return stringedResults;
     }
 
     //Number of total purchases per package and validity period.
@@ -45,9 +52,13 @@ public class SalesReportService {
 
     //Best seller optional product, i.e. the optional product with the greatest value of sales across all the sold service packages.
     public BestOptionalProduct findBestOptionalProduct(){
-        return em.createNamedQuery("BestOptionalProduct.get", BestOptionalProduct.class).getSingleResult();
+        try {
+            return em.createNamedQuery("BestOptionalProduct.get", BestOptionalProduct.class).getSingleResult();
+        } catch (NoResultException e ){
+            return null;
+        }
     }
 
-    //List of insolvent users, suspended orders and alerts.
+    // TODO List of insolvent users, suspended orders and alerts.
 
 }

@@ -24,4 +24,10 @@ public class BestOptionalProduct implements Serializable {
     public Integer getValueOfSales() {
         return valueOfSales;
     }
+
+    @Override
+    public String toString() {
+        return "optionalProductId: " + optionalProductId +
+                ", valueOfSales: " + valueOfSales;
+    }
 }

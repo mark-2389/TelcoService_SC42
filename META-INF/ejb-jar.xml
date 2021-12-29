@@ -34,40 +34,5 @@
             <session-type>Stateless</session-type>
             <transaction-type>Container</transaction-type>
         </session>
-        <entity>
-            <ejb-name>ClientEJB</ejb-name>
-            <ejb-class>it.polimi.db2.telcoservice_sc42.entities.Client</ejb-class>
-            <persistence-type>Bean</persistence-type>
-            <prim-key-class>java.lang.String</prim-key-class>
-            <reentrant>true</reentrant>
-        </entity>
-        <entity>
-            <ejb-name>OrderEJB</ejb-name>
-            <ejb-class>it.polimi.db2.telcoservice_sc42.entities.Order</ejb-class>
-            <persistence-type>Bean</persistence-type>
-            <prim-key-class>java.lang.String</prim-key-class>
-            <reentrant>true</reentrant>
-        </entity>
-        <entity>
-            <ejb-name>ValidityEJB</ejb-name>
-            <ejb-class>it.polimi.db2.telcoservice_sc42.entities.Validity</ejb-class>
-            <persistence-type>Bean</persistence-type>
-            <prim-key-class>java.lang.String</prim-key-class>
-            <reentrant>true</reentrant>
-        </entity>
-        <entity>
-            <ejb-name>ServicePackageEJB</ejb-name>
-            <ejb-class>it.polimi.db2.telcoservice_sc42.entities.ServicePackage</ejb-class>
-            <persistence-type>Bean</persistence-type>
-            <prim-key-class>java.lang.String</prim-key-class>
-            <reentrant>true</reentrant>
-        </entity>
-        <entity>
-            <ejb-name>ServiceEJB</ejb-name>
-            <ejb-class>it.polimi.db2.telcoservice_sc42.entities.Service</ejb-class>
-            <persistence-type>Bean</persistence-type>
-            <prim-key-class>java.lang.String</prim-key-class>
-            <reentrant>true</reentrant>
-        </entity>
     </enterprise-beans>
 </ejb-jar>
