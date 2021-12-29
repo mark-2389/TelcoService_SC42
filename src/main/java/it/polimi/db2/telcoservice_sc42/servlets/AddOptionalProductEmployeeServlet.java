@@ -3,7 +3,6 @@ package it.polimi.db2.telcoservice_sc42.servlets;
 import it.polimi.db2.telcoservice_sc42.entities.OptionalProduct;
 import it.polimi.db2.telcoservice_sc42.services.OptionalProductService;
 import jakarta.ejb.EJB;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;

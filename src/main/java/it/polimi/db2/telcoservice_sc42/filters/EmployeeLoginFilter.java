@@ -21,12 +21,16 @@ public class EmployeeLoginFilter implements Filter {
 
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-
-        if ( true ) return;
-
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
-        String loginPath = req.getServletContext().getContextPath() + "employee/login.jsp";
+
+        System.out.println("Filtering for employee " + req.getServletContext().getContextPath());
+
+        if ( req.getServletContext().getContextPath().endsWith("/employee/login.jsp") ) {
+            chain.doFilter(request, response);
+        }
+
+        String loginPath = req.getServletContext().getContextPath() + "/employee/login.jsp";
 
         HttpSession s = req.getSession();
         if (s.isNew() || s.getAttribute("id") == null) {
