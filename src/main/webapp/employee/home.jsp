@@ -99,6 +99,16 @@
             <input type="number" step="0.01" id="validity_monthly_fee" name="validity_monthly_fee" required>
         </div>
         <div class="form">
+            <input type="radio" id="validity_no_expiration_date" name="validity_expiration_date" value="no" checked>
+            <label for="validity_no_expiration_date">No expiration date</label>
+        </div>
+        <div class="form">
+            <input type="radio" id="validity_yes_expiration_date" name="validity_expiration_date" value="yes">
+            <label for="validity_yes_expiration_date">Expiration date</label>
+            <input type="date" name="validity_expiration_date_input" value="<%= LocalDate.now().toString() %>"
+                   min="<%= LocalDate.now().toString() %>" required >
+        </div>
+        <div class="form">
             <input type="submit" class="btn" value="Add Validity Period" name="addValidities">
         </div>
     </form>
