@@ -8,6 +8,7 @@ import java.math.BigInteger;
 @Entity
 @Table(name = "value_per_package_op")
 @NamedQuery(name = "ValuePerPackageWithOptionalProduct.all", query = "SELECT v FROM ValuePerPackageWithOptionalProduct v")
+@NamedQuery(name = "ValuePerPackageWithOptionalProduct.named", query = "SELECT v.packageId, s.name, v.total FROM ValuePerPackageWithOptionalProduct v JOIN ServicePackage s ON v.packageId = s.id")
 public class ValuePerPackageWithOptionalProduct implements Serializable {
     private static final long serialVersionUID = 1L;
 

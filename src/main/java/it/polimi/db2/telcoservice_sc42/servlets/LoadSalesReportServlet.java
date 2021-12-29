@@ -79,8 +79,7 @@ public class LoadSalesReportServlet extends HttpServlet {
 
     private void loadValuesPerPackageOptionalProduct(HttpServletRequest request) {
         // retrieve values of sales per package with OptionalProducts
-        List<ValuePerPackageWithOptionalProduct> valuesOptional = salesReportService.getAllValuePerPackageWithOptionalProduct();
-        System.out.println("5" + valuesOptional);
+        List<String> valuesOptional = salesReportService.getAllValuePerPackageWithOptionalProduct();
 
         // save values in the session
         request.getSession().setAttribute(allValuesPerPackageOptionalProduct, valuesOptional);
