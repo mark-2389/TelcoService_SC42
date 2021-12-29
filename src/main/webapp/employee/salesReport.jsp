@@ -23,7 +23,7 @@
     <%--@elvariable id="purchases" type="List<java.lang.String>"--%>
     <c:forEach var="p" items="${purchases}">
         <div>
-            <c:out value="${p}"></c:out>
+            <c:out value="${p}"> </c:out>
         </div>
     </c:forEach>
 </div>
@@ -36,10 +36,10 @@
     <div>
         <h2>Best Optional product</h2>
             <% if ( request.getSession().getAttribute("best") == null ) { %>
-                <c:out value="NO BEST PRODUCT"></c:out>
+                <c:out value="NO BEST PRODUCT"> </c:out>
             <% } else { %>
                 <%--@elvariable id="best" type="it.polimi.db2.telcoservice_sc42.views.BestOptionalProduct"--%>
-                <c:out value="BEST: ${best.toString()}"></c:out>
+                <c:out value="BEST: ${best.toString()}"> </c:out>
             <% } %>
     </div>
 </div>

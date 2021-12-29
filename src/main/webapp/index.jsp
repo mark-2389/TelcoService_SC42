@@ -44,7 +44,7 @@
     </form>
 </div>
 
-<a href="HomePage">Continue without browsing</a>
+<a href="HomePage">Continue without login</a>
 
 </body>
 </html>
