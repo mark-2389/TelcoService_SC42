@@ -28,10 +28,6 @@ public class LoadOptionalsEmployeeServlet extends HttpServlet {
 
     public LoadOptionalsEmployeeServlet() { }
 
-    public void init() throws ServletException {
-        super.init();
-    }
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         loadOptionals(request);

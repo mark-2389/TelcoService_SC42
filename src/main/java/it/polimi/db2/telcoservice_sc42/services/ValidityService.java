@@ -23,8 +23,8 @@ public class ValidityService {
         em.persist(validity);
     }
 
-    public void changeExpirationDate(Validity validity, Date newExpiraitonDate){
-        em.find(Validity.class, validity).setExpirationDate(newExpiraitonDate);
+    public void changeExpirationDate(Validity validity, Date newExpirationDate){
+        em.find(Validity.class, validity).setExpirationDate(newExpirationDate);
         em.persist(validity);
     }
 }

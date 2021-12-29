@@ -5,9 +5,7 @@ import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Stateless
 public class SalesReportService {

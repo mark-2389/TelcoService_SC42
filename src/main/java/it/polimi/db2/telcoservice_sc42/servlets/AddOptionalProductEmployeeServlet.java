@@ -25,10 +25,6 @@ public class AddOptionalProductEmployeeServlet extends HttpServlet {
         super();
     }
 
-    public void init() throws ServletException {
-        super.init();
-    }
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String addedId = request.getParameter(optionalParameter);

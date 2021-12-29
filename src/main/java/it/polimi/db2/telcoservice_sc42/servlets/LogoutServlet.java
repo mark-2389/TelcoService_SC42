@@ -25,8 +25,4 @@ public class LogoutServlet extends HttpServlet {
         response.sendRedirect(request.getServletContext().getContextPath() + "/index.jsp");
     }
 
-    @Override
-    public void destroy() {
-        super.destroy();
-    }
 }
