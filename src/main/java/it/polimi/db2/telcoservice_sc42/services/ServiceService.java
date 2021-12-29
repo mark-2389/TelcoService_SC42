@@ -69,11 +69,7 @@ public class ServiceService {
     }
 
     public Service findServiceById(int id) {
-        List<Service> services = entityManager.createQuery("SELECT s from Service s WHERE s.id = ?1", Service.class)
-                .setParameter(1, id).getResultList();
-
-        if ( services.isEmpty() ) { return null; }
-
-        return services.get(0);
+        return entityManager.createQuery("SELECT s from Service s WHERE s.id = ?1", Service.class)
+                .setParameter(1, id).getSingleResult();
     }
 }

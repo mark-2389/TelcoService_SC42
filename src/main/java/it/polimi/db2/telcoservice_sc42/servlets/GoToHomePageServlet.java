@@ -20,7 +20,7 @@ public class GoToHomePageServlet extends HttpServlet {
     @EJB(name = "it.polimi.db2.telcoservice_sc42.services/PackageService")
     PackageService packageService;
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if ( request.getSession().getAttribute("id") != null ) {
             prepareEmployeeHome(request, response);
         } else {

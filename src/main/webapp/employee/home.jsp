@@ -30,9 +30,9 @@
 <%
     }
 %>
-
+<br/>
 <div class="salesReportLink">
-    <a href="salesReport.jsp" >
+    <a href="../SalesReportPage" >
         Go to SalesReport
     </a>
 </div>

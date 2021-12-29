@@ -14,13 +14,13 @@ public class ValuePerPackageWithoutOp implements Serializable {
     @Column(name = "package_id")
     private Integer packageId;
 
-    private Integer purchases;
+    private Integer total;
 
     public Integer getPackageId() {
         return packageId;
     }
 
-    public Integer getPurchases() {
-        return purchases;
+    public Integer getTotal() {
+        return total;
     }
 }

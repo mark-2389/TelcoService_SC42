@@ -14,9 +14,8 @@ import java.util.Date;
 public class Order implements Serializable {
     private static final long serialVersionUID = 1L;
 
-
-    // TODO: @GeneratedValue(strategy=GenerationType.SEQUENCE)
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "HOUR_CREATION")
