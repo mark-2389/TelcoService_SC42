@@ -52,8 +52,14 @@ public class SalesReportService {
     }
 
     //Total value of sales per package without the optional products.
-    public List<ValuePerPackageWithoutOp> getAllValuePerPackageWithoutOp(){
-        return em.createNamedQuery("ValuePerPackageWithoutOp.all", ValuePerPackageWithoutOp.class).getResultList();
+    public List<String> getAllValuePerPackageWithoutOp(){
+        List<Object[]> results = em.createNamedQuery("ValuePerPackageWithoutOp.named").getResultList();
+        List<String> stringedResults = new ArrayList<>();
+
+        for (Object[] object : results )
+            stringedResults.add("ID: " + object[0] + "    NAME: " + object[1] + "    VALUE: " + object[2] );
+
+        return stringedResults;
     }
 
     //Average number of optional products sold together with each service package.
