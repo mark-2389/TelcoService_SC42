@@ -47,8 +47,8 @@ public class LoadSalesReportServlet extends HttpServlet {
 
     private void loadAverageOptionalProduct(HttpServletRequest request) {
         // get all the averages per optionalProduct per package
-        List<AverageOptionalProductsPerPackage> averages = salesReportService.getAllAveragesOptionalProductsPerPackage();
-        System.out.println("1" + averages);
+        List<String> averages = salesReportService.getAllAveragesOptionalProductsPerPackage();
+
         // save the averages in the session
         request.getSession().setAttribute(allAverageOptionalProduct, averages);
     }
@@ -65,7 +65,6 @@ public class LoadSalesReportServlet extends HttpServlet {
     private void loadPurchasesPerPackage(HttpServletRequest request) {
         // get all purchases per package
         List<String> purchases = salesReportService.getAllPurchasesPerPackage();
-        System.out.println("3" + purchases);
 
         // save purchases in the session
         request.getSession().setAttribute(allPurchasesPerPackage, purchases);
@@ -74,7 +73,6 @@ public class LoadSalesReportServlet extends HttpServlet {
     private void loadPurchasesPerPackageValidity(HttpServletRequest request) {
         // retrieve purchases per package and validity
         List<String> purchasesValidity = salesReportService.getAllPurchasesPerPackageValidity();
-        System.out.println("4" + purchasesValidity);
 
         // save purchasesValidity in the session
         request.getSession().setAttribute(allPurchasesPerPackageValidity, purchasesValidity);

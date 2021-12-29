@@ -51,8 +51,14 @@ public class SalesReportService {
     }
 
     //Average number of optional products sold together with each service package.
-    public List<AverageOptionalProductsPerPackage> getAllAveragesOptionalProductsPerPackage(){
-        return em.createNamedQuery("AverageOptionalProductsPerPackage.all", AverageOptionalProductsPerPackage.class).getResultList();
+    public List<String> getAllAveragesOptionalProductsPerPackage(){
+        List<Object[]> results = em.createNamedQuery("AverageOptionalProductsPerPackage.named").getResultList();
+        List<String> stringedResults = new ArrayList<>();
+
+        for (Object[] object : results )
+            stringedResults.add("ID: " + object[0] + "    NAME: " + object[1] + "    AVERAGE: " + object[2] );
+
+        return stringedResults;
     }
 
     //Best seller optional product, i.e. the optional product with the greatest value of sales across all the sold service packages.
