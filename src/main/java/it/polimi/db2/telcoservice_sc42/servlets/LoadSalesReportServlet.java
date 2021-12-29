@@ -34,6 +34,7 @@ public class LoadSalesReportServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("ENTERING LOAD REPORT SERVLET");
+
         loadAverageOptionalProduct(request);
         loadBestOptionalProduct(request);
         loadPurchasesPerPackage(request);
@@ -72,7 +73,7 @@ public class LoadSalesReportServlet extends HttpServlet {
 
     private void loadPurchasesPerPackageValidity(HttpServletRequest request) {
         // retrieve purchases per package and validity
-        List<PurchasePerPackageValidity> purchasesValidity = salesReportService.getAllPurchasesPerPackageValidity();
+        List<String> purchasesValidity = salesReportService.getAllPurchasesPerPackageValidity();
         System.out.println("4" + purchasesValidity);
 
         // save purchasesValidity in the session

@@ -20,14 +20,27 @@
 </a>
 <div class="Purchases">
     <h2>Purchases per package</h2>
-    <%--@elvariable id="purchases" type="List<java.lang.String>"--%>
-    <c:forEach var="p" items="${purchases}">
-        <div>
-            <c:out value="${p}"></c:out>
-        </div>
-    </c:forEach>
+    <fieldset style="width:500px">
+        <%--@elvariable id="purchases" type="List<java.lang.String>"--%>
+        <c:forEach var="p" items="${purchases}">
+            <div>
+                <c:out value="${p}"></c:out>
+            </div>
+        </c:forEach>
+    </fieldset>
 </div>
-<h2>Purchases per package and Validity</h2>
+<div class="PurchasesWithValidity">
+    <h2>Purchases per package and Validity</h2>
+    <fieldset style="width:500px">
+        <%--@elvariable id="purchasesValidity" type="List<java.lang.String>"--%>
+        <c:forEach var="p" items="${purchasesValidity}">
+            <div>
+                <c:out value="${p}"></c:out>
+            </div>
+        </c:forEach>
+    </fieldset>
+</div>
+
 <h2>Total value of sales per package without optional products</h2>
 <h2>Total value of sales per package with optional products</h2>
 <h2>Average number of optional products per service package</h2>

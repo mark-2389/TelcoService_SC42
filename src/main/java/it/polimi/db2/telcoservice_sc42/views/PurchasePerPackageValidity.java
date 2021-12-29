@@ -7,6 +7,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "purchase_per_package_validity")
 @NamedQuery(name = "PurchasePerPackageValidity.all", query = "SELECT p FROM PurchasePerPackageValidity p")
+@NamedQuery(name = "PurchasePerPackageValidity.named", query = "SELECT p.packageId, p.validityId, s.name, v.period, p.purchases FROM PurchasePerPackageValidity p JOIN ServicePackage s JOIN Validity v ON p.packageId = s.id AND p.validityId = v.id")
 public class PurchasePerPackageValidity implements Serializable {
     private static final long serialVersionUID = 1L;
 

@@ -20,7 +20,6 @@ public class SalesReportService {
 
     //Number of total purchases per package.
     public List<String> getAllPurchasesPerPackage(){
-        //System.out.println("SIMPLE CLASS: " + em.createNamedQuery("PurchasePerPackage.named", PurchasePerPackage.class).getResultList());
         List<Object[]> results = em.createNamedQuery("PurchasePerPackage.named").getResultList();
         List<String> stringedResults = new ArrayList<>();
 
@@ -31,8 +30,14 @@ public class SalesReportService {
     }
 
     //Number of total purchases per package and validity period.
-    public List<PurchasePerPackageValidity> getAllPurchasesPerPackageValidity(){
-        return em.createNamedQuery("PurchasePerPackageValidity.all", PurchasePerPackageValidity.class).getResultList();
+    public List<String> getAllPurchasesPerPackageValidity(){
+        List<Object[]> results = em.createNamedQuery("PurchasePerPackageValidity.named").getResultList();
+        List<String> stringedResults = new ArrayList<>();
+
+        for (Object[] object : results )
+            stringedResults.add("[ (" + object[0] + ") " + object[2] +  ",    (" + object[1] + ") " + object[3] + " ]    PURCHASES: " + object[4] );
+
+        return stringedResults;
     }
 
     //Total value of sales per package with the optional products.
@@ -59,6 +64,8 @@ public class SalesReportService {
         }
     }
 
-    // TODO List of insolvent users, suspended orders and alerts.
+    // TODO List of insolvent users
+    // TODO List of suspended orders
+    // TODO List of alerts.
 
 }
