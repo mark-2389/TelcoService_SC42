@@ -7,6 +7,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "best_optional_product")
 @NamedQuery(name = "BestOptionalProduct.get", query = "SELECT op FROM BestOptionalProduct op")
+@NamedQuery(name = "BestOptionalProduct.getNamed", query = "SELECT op.optionalProductId, o.name, op.valueOfSales FROM BestOptionalProduct op JOIN OptionalProduct o ON op.optionalProductId = o.id")
 public class BestOptionalProduct implements Serializable {
     private static final long serialVersionUID = 1L;
 

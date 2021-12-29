@@ -55,8 +55,7 @@ public class LoadSalesReportServlet extends HttpServlet {
 
     private void loadBestOptionalProduct(HttpServletRequest request) {
         // retrieve the best optionalProduct
-        BestOptionalProduct best = salesReportService.findBestOptionalProduct();
-        System.out.println("2" + best);
+        String best = salesReportService.findBestOptionalProduct();
 
         // save the best product in the session
         request.getSession().setAttribute(bestOptionalProduct, best);

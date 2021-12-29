@@ -62,12 +62,14 @@ public class SalesReportService {
     }
 
     //Best seller optional product, i.e. the optional product with the greatest value of sales across all the sold service packages.
-    public BestOptionalProduct findBestOptionalProduct(){
-        try {
-            return em.createNamedQuery("BestOptionalProduct.get", BestOptionalProduct.class).getSingleResult();
-        } catch (NoResultException e ){
-            return null;
-        }
+    public String findBestOptionalProduct(){
+        List<Object[]> results = em.createNamedQuery("AverageOptionalProductsPerPackage.named").getResultList();
+
+        if (results.isEmpty()) return null;
+
+        Object[] object = results.get(0);
+
+        return "ID: " + object[0] + "    NAME: " + object[1] + "    VALUE: " + object[2];
     }
 
     // TODO List of insolvent users
