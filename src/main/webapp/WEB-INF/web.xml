@@ -3,4 +3,22 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
          version="5.0">
+
+    <filter>
+        <filter-name>ClientLoginFilter</filter-name>
+        <filter-class>it.polimi.db2.telcoservice_sc42.filters.ClientLoginFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>ClientLoginFilter</filter-name>
+        <url-pattern>/HTML/confirmation.jsp</url-pattern>
+    </filter-mapping>
+    <filter>
+        <filter-name>EmployeeLoginFilter</filter-name>
+        <filter-class>it.polimi.db2.telcoservice_sc42.filters.EmployeeLoginFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>EmployeeLoginFilter</filter-name>
+        <url-pattern>/employee/home.jsp</url-pattern>
+        <url-pattern>/employee/salesReport.jsp</url-pattern>
+    </filter-mapping>
 </web-app>

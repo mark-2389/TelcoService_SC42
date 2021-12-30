@@ -9,7 +9,6 @@ import it.polimi.db2.telcoservice_sc42.exception.NonUniqueClientException;
 import it.polimi.db2.telcoservice_sc42.services.ClientService;
 import it.polimi.db2.telcoservice_sc42.services.EmployeeService;
 import jakarta.ejb.EJB;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 

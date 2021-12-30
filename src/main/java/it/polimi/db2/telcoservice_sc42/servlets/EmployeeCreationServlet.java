@@ -21,6 +21,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @WebServlet(name = "employeeCreationServlet", value = "/new")
@@ -136,7 +137,13 @@ public class EmployeeCreationServlet extends HttpServlet {
         return !validities.contains(validity);
     }
 
-    private List<OptionalProduct> getSelectedOptionalProducts(HttpServletRequest request) {
+    /**
+     * Return the ids of the optional products in the request's form.
+     *
+     * @param request the http request
+     * @return a list of Integer ids of the optional products
+     */
+    private List<Integer> getSelectedOptionalProducts(HttpServletRequest request) {
         // TODO: check for empty selected
         String[] params = request.getParameterValues(ParameterRegistry.optionalsCheckbox);
 
@@ -146,26 +153,18 @@ public class EmployeeCreationServlet extends HttpServlet {
         }
 
         List<String> selected = Arrays.asList(params);
-        List<Integer> ids = selected.stream().map(Integer::parseInt).collect(Collectors.toList());
-        List<OptionalProduct> optionals = new ArrayList<>();
-
-        for (int id: ids) {
-            optionals.add(optionalProductService.findOptionalProductById(id));
-        }
-
-        return optionals;
+        return selected.stream().map(Integer::parseInt).collect(Collectors.toList());
     }
 
-    private List<Service> getSelectedServices(HttpServletRequest request) {
+    /**
+     * Return the ids of the services in the request's form.
+     *
+     * @param request the http request
+     * @return a list of Integer ids of the services
+     */
+    private List<Integer> getSelectedServices(HttpServletRequest request) {
         List<String> selected = Arrays.asList(request.getParameterValues("services"));
-        List<Integer> ids = selected.stream().map(Integer::parseInt).collect(Collectors.toList());
-        List<Service> services = new ArrayList<>();
-
-        for (int id: ids) {
-            services.add(serviceService.findServiceById(id));
-        }
-
-        return services;
+        return selected.stream().map(Integer::parseInt).collect(Collectors.toList());
     }
 
     private List<IndependentValidityPeriod> getSelectedValidityPeriods(HttpServletRequest request) {
@@ -204,7 +203,13 @@ public class EmployeeCreationServlet extends HttpServlet {
         String[] parts = str.split(IndependentValidityPeriod.idSeparator);
         int period = SafeParser.safeParseInteger(parts[0]);
         float fee = SafeParser.safeParseFloat(parts[1]);
-        Date expirationDate = Date.valueOf(parts[3]);
+
+        System.out.println(parts[2]);
+        Date expirationDate = null;
+        if (!Objects.equals(parts[2], "null")) {
+             expirationDate = Date.valueOf(parts[2]);
+        }
+
 
         return new IndependentValidityPeriod(period, fee, expirationDate);
     }
@@ -222,23 +227,25 @@ public class EmployeeCreationServlet extends HttpServlet {
             return;
         }
 
-        // get optionals
-        List<OptionalProduct> optionals = getSelectedOptionalProducts(request);
+        // get optionals ids
+        List<Integer> optionals = getSelectedOptionalProducts(request);
 
         System.out.println("optionals: " + optionals);
 
         // get services
-        List<Service> services = getSelectedServices(request);
+        List<Integer> services = getSelectedServices(request);
         System.out.println("services: " + services);
-
-        ServicePackage sp = packageService.createServicePackage(name, expirationDate, services, optionals);
 
         // get periods
         List<IndependentValidityPeriod> periods = getSelectedValidityPeriods(request);
-        List<Validity> validities = periods.stream().map(p -> p.getValidityWith(sp)).collect(Collectors.toList());
-        validities.forEach(v -> packageService.addValidity(sp.getId(), v));
 
-        System.out.println("validities: " + validities);
+
+        ServicePackage sp = packageService.createServicePackage(name, expirationDate, services, optionals, periods);
+
+        // List<Validity> validities = periods.stream().map(p -> p.getValidityWith(sp)).collect(Collectors.toList());
+        // for (Validity v: validities) {
+        //     packageService.addValidity(sp.getId(), v);
+        // }
 
         redirectSuccess(request, response);
     }

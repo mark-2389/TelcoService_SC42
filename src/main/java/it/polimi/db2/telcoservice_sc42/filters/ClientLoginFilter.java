@@ -2,6 +2,8 @@ package it.polimi.db2.telcoservice_sc42.filters;
 
 
 import java.io.IOException;
+
+import it.polimi.db2.telcoservice_sc42.utils.SessionAttributeRegistry;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -21,21 +23,29 @@ public class ClientLoginFilter implements Filter {
 
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-
-        if ( true ) return;
+        System.out.println("Filtering for client");
 
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
+
+        System.out.println(req.getServletContext().getContextPath());
+
+        if ( req.getServletContext().getContextPath().endsWith("index.jsp") ) {
+            chain.doFilter(request, response);
+        }
+
         String loginPath = req.getServletContext().getContextPath() + "/index.jsp";
 
+
+
         HttpSession s = req.getSession();
-        if (s.isNew() || s.getAttribute("user") == null) {
+        if (s.isNew() || s.getAttribute(SessionAttributeRegistry.username) == null) {
             res.sendRedirect(loginPath);
             return;
         }
+
         // pass the request along the filter chain
         chain.doFilter(request, response);
-
     }
 }
 
