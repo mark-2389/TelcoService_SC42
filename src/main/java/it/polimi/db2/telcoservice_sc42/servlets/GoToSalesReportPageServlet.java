@@ -9,7 +9,7 @@ import java.io.IOException;
 @WebServlet(name = "GoToSalesReportPageServlet", value = "/SalesReportPage")
 public class GoToSalesReportPageServlet extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         prepareSalesReports(request, response);
     }
 

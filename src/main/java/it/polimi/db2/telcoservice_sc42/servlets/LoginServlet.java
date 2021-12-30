@@ -27,10 +27,6 @@ public class LoginServlet extends HttpServlet {
         super();
     }
 
-    public void init() throws ServletException {
-        super.init();
-    }
-
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         handleRequest(req, resp);
     }

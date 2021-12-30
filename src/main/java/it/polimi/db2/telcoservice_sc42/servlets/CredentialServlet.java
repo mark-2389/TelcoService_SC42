@@ -18,10 +18,6 @@ public class CredentialServlet extends HttpServlet {
         super();
     }
 
-    public void init() throws ServletException {
-        super.init();
-    }
-
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         System.out.println("POST called");
         handleRequest(req, resp);

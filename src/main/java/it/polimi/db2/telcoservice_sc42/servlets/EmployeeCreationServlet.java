@@ -10,7 +10,6 @@ import it.polimi.db2.telcoservice_sc42.utils.ParameterRegistry;
 import it.polimi.db2.telcoservice_sc42.utils.SafeParser;
 import it.polimi.db2.telcoservice_sc42.utils.SessionAttributeRegistry;
 import jakarta.ejb.EJB;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -38,10 +37,6 @@ public class EmployeeCreationServlet extends HttpServlet {
 
     public EmployeeCreationServlet() {
         super();
-    }
-
-    public void init() throws ServletException {
-        super.init();
     }
 
     @Override
@@ -110,7 +105,9 @@ public class EmployeeCreationServlet extends HttpServlet {
         // get the added validity
         int period = Integer.parseInt(request.getParameter(ParameterRegistry.validityPeriod));
         float fee = Float.parseFloat(request.getParameter(ParameterRegistry.validityFee));
-        IndependentValidityPeriod validityPeriod = new IndependentValidityPeriod(period, fee);
+        Date expirationDate = getOptionalDate(request, "validity_expiration_date", "validity_expiration_date_input");
+
+        IndependentValidityPeriod validityPeriod = new IndependentValidityPeriod(period, fee, expirationDate);
 
         Object attribute = request.getSession().getAttribute(SessionAttributeRegistry.validities);
         List<IndependentValidityPeriod> periods;
@@ -119,6 +116,7 @@ public class EmployeeCreationServlet extends HttpServlet {
         if ( attribute == null ) {
             periods = new ArrayList<>();
         } else {
+            //noinspection unchecked
             periods = (List<IndependentValidityPeriod>) attribute;
         }
 
@@ -203,14 +201,12 @@ public class EmployeeCreationServlet extends HttpServlet {
     private IndependentValidityPeriod getIndependentValidityPeriod(String str) {
         if ( str == null ) return null;
 
-        System.out.println("independent validity period: " + str);
-
-        String[] parts = str.split("-");
-        System.out.println("independent validity period: " + Arrays.toString(parts));
+        String[] parts = str.split(IndependentValidityPeriod.idSeparator);
         int period = SafeParser.safeParseInteger(parts[0]);
         float fee = SafeParser.safeParseFloat(parts[1]);
+        Date expirationDate = Date.valueOf(parts[3]);
 
-        return new IndependentValidityPeriod(period, fee);
+        return new IndependentValidityPeriod(period, fee, expirationDate);
     }
 
     private void createServicePackage(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -225,15 +221,6 @@ public class EmployeeCreationServlet extends HttpServlet {
             redirectFailure(request, response, "Null values");
             return;
         }
-
-
-
-        // id NOT NEEDED
-        // name DONE
-        // expirationDate DONE
-        // services
-        // periods
-        // optionals
 
         // get optionals
         List<OptionalProduct> optionals = getSelectedOptionalProducts(request);

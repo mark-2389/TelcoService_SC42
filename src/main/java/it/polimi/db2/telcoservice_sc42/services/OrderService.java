@@ -7,6 +7,7 @@ import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,6 +39,8 @@ public class OrderService {
      * @return the list of rejected orders of the Client.
      */
     public List<Order> findRejectedOrdersByClient(String username) {
+        if ( username == null ) return new ArrayList<>();
+
         List<Order> orders = findOrdersByClient(username);
 
         return orders.stream()

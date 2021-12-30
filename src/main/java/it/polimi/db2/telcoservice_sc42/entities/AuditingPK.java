@@ -6,13 +6,13 @@ import java.sql.Time;
 
 public class AuditingPK implements Serializable {
 
-    @SuppressWarnings({"unused", "FieldCanBeLocal"})
+    @SuppressWarnings({"unused"})
     private String username;
 
-    @SuppressWarnings({"unused", "FieldCanBeLocal"})
+    @SuppressWarnings({"unused"})
     private Date rejectionDate;
 
-    @SuppressWarnings({"unused", "FieldCanBeLocal"})
+    @SuppressWarnings({"unused"})
     private Time rejectionTime;
 
     @Override

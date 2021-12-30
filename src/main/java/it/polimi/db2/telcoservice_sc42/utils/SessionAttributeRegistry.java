@@ -4,6 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SessionAttributeRegistry {
+    public static final String username = "username";
+    public static final String employeeId = "id";
+
+
     public static final String selectedOptionals = "optionals";
     public static final String error = "error";
 

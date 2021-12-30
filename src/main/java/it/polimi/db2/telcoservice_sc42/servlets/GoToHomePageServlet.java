@@ -4,6 +4,7 @@ import it.polimi.db2.telcoservice_sc42.entities.Order;
 import it.polimi.db2.telcoservice_sc42.entities.ServicePackage;
 import it.polimi.db2.telcoservice_sc42.services.OrderService;
 import it.polimi.db2.telcoservice_sc42.services.PackageService;
+import it.polimi.db2.telcoservice_sc42.utils.SessionAttributeRegistry;
 import jakarta.ejb.EJB;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
@@ -60,13 +61,10 @@ public class GoToHomePageServlet extends HttpServlet {
      * @throws IOException if the redirect fails.
      */
     private void prepareClientHome(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String username = handleRejectRequest(request, response, "HTML/login.jsp", "username");
-
-        if ( username != null ) {
-            preparePackages(request);
-            prepareRejectedOrders(request, username);
-            response.sendRedirect(getServletContext().getContextPath() + "/" + "HTML/home.jsp");
-        }
+        String username = (String) request.getSession().getAttribute(SessionAttributeRegistry.username);
+        preparePackages(request);
+        prepareRejectedOrders(request, username);
+        response.sendRedirect(getServletContext().getContextPath() + "/" + "HTML/home.jsp");
     }
 
     /**

@@ -4,7 +4,7 @@ from population import *
 
 # a function to generate a tuple
 def generate(id):
-    ref = ['Davide', 'Giammarco', 'Marco', 'Niccolo', 'Paolo', 'Cecilia', 'Elisa']
+    ref = ['Davide', 'Gianmarco', 'Marco', 'Niccolo', 'Paolo', 'Cecilia', 'Elisa']
 
     return [
         '{}'.format(ref[id]),
