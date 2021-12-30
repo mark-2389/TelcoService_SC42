@@ -5,8 +5,10 @@ import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Stateless
 public class PackageService {
@@ -51,12 +53,25 @@ public class PackageService {
      * Moreover it all manages to create and set all the validityPeriods for such new servicePackage
      * @param name the name of the servicePackage to be created
      * @param expirationDate the expirationDate of the servicePackage to be created
-     * @param services a list of the Services that the new ServicePackage offers
-     * @param optionals a list of the OptionalProducts that have to be added to the Package
+     * @param serviceIds a list of id of the Services that the new ServicePackage offers
+     * @param optionalIds a list of id of the OptionalProducts that have to be added to the Package
      */
-    // TODO: consider the following signature String name, Date expirationDate, List<Service> services, List<IndependentValidityPeriods> periods
-    public ServicePackage createServicePackage(String name, Date expirationDate, List<Service> services, List<OptionalProduct> optionals ){
+    public ServicePackage createServicePackage(String name, Date expirationDate, List<Integer> serviceIds, List<Integer> optionalIds, List<IndependentValidityPeriod> periods){
         ServicePackage servicePackage = new ServicePackage(name, expirationDate);
+        System.out.println(servicePackage);
+
+        List<Service> services = new ArrayList<>();
+        List<OptionalProduct> optionals = new ArrayList<>();
+
+        // get the actual services
+        for (int id: serviceIds) {
+            services.add(em.find(Service.class, id));
+        }
+
+        // get the actual optionals
+        for (int id: optionalIds) {
+            optionals.add(em.find(OptionalProduct.class, id));
+        }
 
         // add the services to the package
         servicePackage.setServices(services);
@@ -66,23 +81,29 @@ public class PackageService {
 
         // persist the services
         for( Service s : services ){
-            // em.find(Service.class, s.getId()).addPackage(servicePackage);
+            // System.out.println("Is service object managed?  " + em.contains(s));
             s.addPackage(servicePackage);
-            // em.persist(s);
         }
 
         // persist the optional products
         for( OptionalProduct p: optionals ) {
+            // System.out.println("Is optionals object managed?  " + em.contains(s));
             p.addPackage(servicePackage);
-            // em.persist(p);
         }
 
-        // probably useless
+        // persist to get the save the servicePackage and get its id
         em.persist(servicePackage);
         em.flush();
 
-        ServicePackage returned = em.find(ServicePackage.class, servicePackage.getId());
-        System.out.println("returned services: " + returned.getServices());
+
+
+        // add the validities
+        List<Validity> validities = periods.stream()
+                .map(p -> p.getValidityWith(servicePackage))
+                .collect(Collectors.toList());
+        for (Validity v: validities) {
+            addValidity(servicePackage.getId(), v);
+        }
 
         return servicePackage;
     }
@@ -127,6 +148,8 @@ public class PackageService {
 
     public void addValidity(int toModifyId, Validity validity){
         ServicePackage servicePackage = findServicePackageById(toModifyId);
+        em.refresh(servicePackage);
+
         servicePackage.addValidity(validity);
         validity.setServicePackage(servicePackage);
 

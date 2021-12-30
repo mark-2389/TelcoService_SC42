@@ -14,12 +14,12 @@ BEGIN
         SET _period = (
             SELECT V.PERIOD
             FROM telcoservice_db.validity V
-            WHERE V.PACKAGE_ID = NEW.PACKAGE_ID AND V.ID = NEW.PACKAGE_ID
+            WHERE V.PACKAGE_ID = NEW.PACKAGE_ID AND V.ID = NEW.VALIDITY_ID
         );
 
         -- insert the service_ids decorated with the name of the user and the starting and ending date
         INSERT INTO telcoservice_db.service_schedule (
-            SELECT NEW.CLIENT, C.SERVICE_ID, CURRENT_DATE, DATE_ADD(CURRENT_DATE, INTERVAL _period MONTH)
+            SELECT NEW.CLIENT, C.SERVICE_ID, NEW.DATE_SUBSCRIPTION, DATE_ADD(NEW.DATE_SUBSCRIPTION, INTERVAL _period MONTH)
             FROM telcoservice_db.service_composition C
             WHERE C.PACKAGE_ID = NEW.PACKAGE_ID
         );

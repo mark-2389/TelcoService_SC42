@@ -10,7 +10,7 @@ public class IndependentValidityPeriod {
     private final int period;
     private final BigDecimal fee;
     private final Date expirationDate;
-    public static String idSeparator;
+    public static String idSeparator = "#";
 
     public IndependentValidityPeriod(int period, float fee, Date expirationDate) {
         this.period = period;
