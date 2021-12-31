@@ -4,6 +4,7 @@ import it.polimi.db2.telcoservice_sc42.entities.*;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.validation.Valid;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -97,13 +98,32 @@ public class PackageService {
 
 
 
-        // add the validities
-        List<Validity> validities = periods.stream()
-                .map(p -> p.getValidityWith(servicePackage))
-                .collect(Collectors.toList());
-        for (Validity v: validities) {
-            addValidity(servicePackage.getId(), v);
+        //// add the validities
+        //List<Validity> validities = periods.stream()
+        //        .map(p -> p.getValidityWith(servicePackage))
+        //        .collect(Collectors.toList());
+        //for (Validity v: validities) {
+        //    addValidity(servicePackage.getId(), v);
+        //}
+
+        List<Validity> validities = new ArrayList<>();
+
+        //get all Validities
+        for (IndependentValidityPeriod period : periods ){
+            System.out.println("WHEN ADDING VALIDITIES: " + em.contains(servicePackage) );
+            validities.add( period.getValidityWith(servicePackage));
         }
+
+        servicePackage.setValidities(validities);
+
+        for (Validity v : validities){
+            System.out.println("WHEN SETTING SERVICE PACKAGE: " + em.contains(v) );
+            //v.setServicePackage(servicePackage);
+            em.persist(v);
+            System.out.println("WHEN AFTER SETTING SERVICE PACKAGE: " + em.contains(v) );
+        }
+
+        System.out.println(validities);
 
         return servicePackage;
     }

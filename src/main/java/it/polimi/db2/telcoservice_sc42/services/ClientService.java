@@ -41,7 +41,6 @@ public class ClientService {
 
         Client newClient = new Client(username, email, password);
         em.persist(newClient);
-        em.flush();
 
         return newClient;
     }
