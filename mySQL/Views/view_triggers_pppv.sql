@@ -12,7 +12,7 @@ create trigger new_package_validity
 after insert on validity
 for each row
 begin
-	insert into purchase_per_package_validity value (new.ID, new.PACKAGE_ID, 0);
+	insert into purchase_per_package_validity value (new.PACKAGE_ID, new.ID, 0);
 end; //
 
 delimiter ;
