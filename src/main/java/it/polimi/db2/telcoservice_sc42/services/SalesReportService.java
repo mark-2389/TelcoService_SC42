@@ -1,5 +1,8 @@
 package it.polimi.db2.telcoservice_sc42.services;
 
+import it.polimi.db2.telcoservice_sc42.entities.Auditing;
+import it.polimi.db2.telcoservice_sc42.entities.Client;
+import it.polimi.db2.telcoservice_sc42.entities.Order;
 import it.polimi.db2.telcoservice_sc42.views.*;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
@@ -8,6 +11,7 @@ import jakarta.persistence.PersistenceContext;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Stateless
 public class SalesReportService {
@@ -85,7 +89,20 @@ public class SalesReportService {
     }
 
     // TODO List of insolvent users
-    // TODO List of suspended orders
-    // TODO List of alerts.
+    public List<String> insolventUsers(){
+        List<Client> insolvent = em.createNamedQuery("Client.insolvent", Client.class).getResultList();
+        return insolvent.stream().map(Client::toString).collect(Collectors.toList());
+    }
 
+    // TODO List of suspended orders
+    public List<String> suspendedOrders(){
+        List<Order> suspended = em.createNamedQuery("Order.rejected", Order.class).getResultList();
+        return suspended.stream().map(Order::toString).collect(Collectors.toList());
+    }
+
+    // TODO List of alerts.
+    public List<String> getAlerts(){
+        List<Auditing> alerts = em.createNamedQuery("Auditing.allActive", Auditing.class).getResultList();
+        return alerts.stream().map(Auditing::toString).collect(Collectors.toList());
+    }
 }

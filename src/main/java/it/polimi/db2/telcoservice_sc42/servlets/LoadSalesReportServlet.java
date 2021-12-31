@@ -22,6 +22,9 @@ public class LoadSalesReportServlet extends HttpServlet {
     final String allPurchasesPerPackageValidity = "purchasesValidity";
     final String allValuesPerPackageOptionalProduct = "valuesPackageOptional";
     final String allValuesPerPackageWithoutOp = "values";
+    final String insolventUsers = "insolvents";
+    final String suspendedOrders = "orders";
+    final String activeAlerts = "alerts";
 
     public LoadSalesReportServlet() {
     }
@@ -34,6 +37,9 @@ public class LoadSalesReportServlet extends HttpServlet {
         loadPurchasesPerPackageValidity(request);
         loadValuesPerPackageOptionalProduct(request);
         loadValuesPerPackageWithoutOp(request);
+        loadInsolventUsers(request);
+        loadSuspendedOrders(request);
+        loadAlerts(request);
 
         redirectSuccess(request, response);
     }
@@ -84,6 +90,30 @@ public class LoadSalesReportServlet extends HttpServlet {
 
         // save values in the session
         request.getSession().setAttribute(allValuesPerPackageWithoutOp, values);
+    }
+
+    private void loadInsolventUsers(HttpServletRequest request) {
+        // retrieve insolvent Users
+        List<String> users = salesReportService.insolventUsers();
+
+        // save users in the session
+        request.getSession().setAttribute(insolventUsers, users);
+    }
+
+    private void loadSuspendedOrders(HttpServletRequest request) {
+        // retrieve suspended Orders
+        List<String> orders = salesReportService.suspendedOrders();
+
+        // save orders in the session
+        request.getSession().setAttribute(suspendedOrders, orders);
+    }
+
+    private void loadAlerts(HttpServletRequest request) {
+        // retrieve active alerts
+        List<String> alerts = salesReportService.getAlerts();
+
+        // save alerts in the session
+        request.getSession().setAttribute(activeAlerts, alerts);
     }
 
 

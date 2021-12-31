@@ -6,10 +6,12 @@ import it.polimi.db2.telcoservice_sc42.services.OrderService;
 import it.polimi.db2.telcoservice_sc42.services.PackageService;
 import it.polimi.db2.telcoservice_sc42.utils.SessionAttributeRegistry;
 import jakarta.ejb.EJB;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 @WebServlet(name = "GoToHomePageServlet", value = "/HomePage")
@@ -27,6 +29,12 @@ public class GoToHomePageServlet extends HttpServlet {
         } else {
             prepareClientHome(request, response);
         }
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        System.out.println("BEFORE PREPARING: " + (request.getParameter("selected")));
+        prepareClientHome(request, response);
     }
 
     /**

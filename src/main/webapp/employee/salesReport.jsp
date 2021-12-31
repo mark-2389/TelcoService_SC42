@@ -85,6 +85,39 @@
             <% } %>
         </fieldset>
 </div>
+<div class="InsolventClients">
+    <h2>Insolvent Clients</h2>
+    <fieldset style="width:500px">
+        <%--@elvariable id="insolvents" type="List<java.lang.String>"--%>
+        <c:forEach var="i" items="${insolvents}">
+            <div>
+                <c:out value="${i}"></c:out>
+            </div>
+        </c:forEach>
+    </fieldset>
+</div>
+<div class="SuspendedOrders">
+    <h2>Suspended Orders</h2>
+    <fieldset style="width:500px">
+        <%--@elvariable id="orders" type="List<java.lang.String>"--%>
+        <c:forEach var="o" items="${orders}">
+            <div>
+                <c:out value="${o}"></c:out>
+            </div>
+        </c:forEach>
+    </fieldset>
+</div>
+<div class="ActiveAlerts">
+    <h2>Active Alerts</h2>
+    <fieldset style="width:500px">
+        <%--@elvariable id="alerts" type="List<java.lang.String>"--%>
+        <c:forEach var="a" items="${alerts}">
+            <div>
+                <c:out value="${a}"></c:out>
+            </div>
+        </c:forEach>
+    </fieldset>
+</div>
 
 </body>
 </html>

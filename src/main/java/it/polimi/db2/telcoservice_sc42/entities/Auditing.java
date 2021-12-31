@@ -9,6 +9,7 @@ import java.sql.Time;
 
 @Entity
 @IdClass(AuditingPK.class)
+@NamedQuery(name = "Auditing.allActive", query = "SELECT a FROM Auditing a WHERE a.isActive = true")
 public class Auditing implements Serializable {
     private static final long serialVersionUID = 1L;
     //todo check for JPA annotations
@@ -36,7 +37,7 @@ public class Auditing implements Serializable {
 
     @Basic
     @Column(name = "IS_ACTIVE", nullable = true)
-    private Byte isActive;
+    private Boolean isActive;
 
     public Client getUsername() {
         return username;
@@ -78,41 +79,22 @@ public class Auditing implements Serializable {
         this.rejectionTime = rejectionTime;
     }
 
-    public Byte getIsActive() {
+    public Boolean getIsActive() {
         return isActive;
     }
 
-    public void setIsActive(Byte isActive) {
+    public void setIsActive(Boolean isActive) {
         this.isActive = isActive;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Auditing auditing = (Auditing) o;
-
-        if (username != null ? !username.equals(auditing.username) : auditing.username != null) return false;
-        if (email != null ? !email.equals(auditing.email) : auditing.email != null) return false;
-        if (amount != null ? !amount.equals(auditing.amount) : auditing.amount != null) return false;
-        if (rejectionDate != null ? !rejectionDate.equals(auditing.rejectionDate) : auditing.rejectionDate != null)
-            return false;
-        if (rejectionTime != null ? !rejectionTime.equals(auditing.rejectionTime) : auditing.rejectionTime != null)
-            return false;
-        if (isActive != null ? !isActive.equals(auditing.isActive) : auditing.isActive != null) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = username != null ? username.hashCode() : 0;
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (amount != null ? amount.hashCode() : 0);
-        result = 31 * result + (rejectionDate != null ? rejectionDate.hashCode() : 0);
-        result = 31 * result + (rejectionTime != null ? rejectionTime.hashCode() : 0);
-        result = 31 * result + (isActive != null ? isActive.hashCode() : 0);
-        return result;
+    public String toString() {
+        return "Auditing{" +
+                "username=" + username +
+                ", email=" + email +
+                ", amount=" + amount +
+                ", rejectionDate=" + rejectionDate +
+                ", rejectionTime=" + rejectionTime +
+                '}';
     }
 }

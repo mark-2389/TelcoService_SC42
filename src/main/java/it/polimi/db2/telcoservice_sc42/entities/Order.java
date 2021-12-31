@@ -11,6 +11,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "`order`")
+@NamedQuery(name = "Order.rejected", query = "SELECT o FROM Order o WHERE o.status = it.polimi.db2.telcoservice_sc42.entities.OrderStatus.REJECTED")
 public class Order implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -147,5 +148,16 @@ public class Order implements Serializable {
 
     public void setStatus(OrderStatus status) {
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", creationHour=" + creationHour +
+                ", creationDate=" + creationDate +
+                ", subscriptionDate=" + subscriptionDate +
+                ", totalCost=" + totalCost +
+                '}';
     }
 }

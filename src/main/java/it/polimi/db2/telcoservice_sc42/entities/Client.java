@@ -8,6 +8,7 @@ import java.util.List;
 
 @Entity
 @NamedQuery(name = "Client.withCredentials", query = "SELECT r FROM Client r  WHERE r.username = ?1 and r.password = ?2")
+@NamedQuery(name = "Client.insolvent", query = "SELECT c FROM Client c WHERE c.insolvent = it.polimi.db2.telcoservice_sc42.entities.UserStatus.INSOLVENT" )
 public class Client implements Serializable {
     private static final long serialVersionUID = 1L;
 
