@@ -5,6 +5,7 @@
   Time: 17:21
   To change this template use File | Settings | File Templates.
 --%>
+<%@ page import="java.time.LocalDate" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -48,15 +49,22 @@
             <h4>Available validity periods</h4>
             <%--@elvariable id="validities" type="List<it.polimi.db2.telcoservice_sc42.entities.Validity>"--%>
             <c:forEach var="v" items="${validities}">
-                <input type="radio" id="${v.getId()}" name="available_validity" value="no" required>
-                <label for="available_validity">${v.toString()}</label>
+                <div>
+                    <input type="radio" id="${v.getId()}" name="available_validity" value="no" required>
+                    <label for="available_validity">${v.toString()}</label>
+                </div>
             </c:forEach>
             <h4>Available optional products</h4>
             <%--@elvariable id="optionals" type="List<it.polimi.db2.telcoservice_sc42.entities.OptionalProduct>"--%>
             <c:forEach var="o" items="${optionals}">
-                <input type="checkbox" id="available_optionals" value="${o.getId()}" name="available_optional">
-                <label for="${o.getId()}">${o.toString()}</label>
+                <div>
+                    <input type="checkbox" id="available_optionals" value="${o.getId()}" name="available_optional">
+                    <label for="${o.getId()}">${o.toString()}</label>
+                </div>
             </c:forEach>
+            <h4>Starting date of subscription</h4>
+            <input type="date" name="starting_date_of_subscription" value="<%= LocalDate.now().toString() %>"
+                   min="<%= LocalDate.now().toString() %>" required>
         </fieldset>
         <br>
         <input type="submit" class="btn" value="confirm">
