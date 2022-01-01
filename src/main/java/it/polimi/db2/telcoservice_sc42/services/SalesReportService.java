@@ -88,19 +88,16 @@ public class SalesReportService {
         return "ID: " + object[0] + "    NAME: " + object[1] + "    VALUE: " + object[2];
     }
 
-    // TODO List of insolvent users
     public List<String> insolventUsers(){
         List<Client> insolvent = em.createNamedQuery("Client.insolvent", Client.class).getResultList();
         return insolvent.stream().map(Client::toString).collect(Collectors.toList());
     }
 
-    // TODO List of suspended orders
     public List<String> suspendedOrders(){
         List<Order> suspended = em.createNamedQuery("Order.rejected", Order.class).getResultList();
         return suspended.stream().map(Order::toString).collect(Collectors.toList());
     }
 
-    // TODO List of alerts.
     public List<String> getAlerts(){
         List<Auditing> alerts = em.createNamedQuery("Auditing.allActive", Auditing.class).getResultList();
         return alerts.stream().map(Auditing::toString).collect(Collectors.toList());
