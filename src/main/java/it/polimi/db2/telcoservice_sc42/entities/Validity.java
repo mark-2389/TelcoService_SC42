@@ -89,4 +89,15 @@ public class Validity implements Serializable {
     public void setOrders(List<Order> orders) {
         this.orders = orders;
     }
+
+    @Override
+    public String toString() {
+        return "Validity{" +
+                "id=" + id +
+                ", servicePackage=" + servicePackage.getName() +
+                ", period=" + period +
+                ", monthlyFee=" + monthlyFee +
+                ", expirationDate=" + expirationDate +
+                '}';
+    }
 }

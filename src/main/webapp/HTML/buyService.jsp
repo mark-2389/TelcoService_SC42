@@ -17,9 +17,7 @@
 <div>
 
     <p>
-        PATH FOR REDIRECTION: <%= request.getSession().getAttribute("selectedId") %>
-        <br>
-        PATH FOR REDIRECTION: <%= request.getSession().getAttribute("selected") %>
+        PACKAGE: <%= request.getSession().getAttribute("selectedPackage") %>
     </p>
 
     <form action="../Refresh" method="POST">
@@ -30,7 +28,7 @@
                     <%--@elvariable id="packages" type="List<it.polimi.db2.telcoservice_sc42.entities.ServicePackage>"--%>
                     <c:forEach var="p" items="${packages}">
                         <option value="${p.getId()}"
-                                <c:if test="${p.getId() eq selectedId}">selected="selected"</c:if>
+                                <c:if test="${p.getId() eq selectedPackage}">selected="selected"</c:if>
                         >${p.getName()}</option>
                     </c:forEach>
                 </select>
@@ -50,15 +48,15 @@
             <%--@elvariable id="validities" type="List<it.polimi.db2.telcoservice_sc42.entities.Validity>"--%>
             <c:forEach var="v" items="${validities}">
                 <div>
-                    <input type="radio" id="${v.getId()}" name="available_validity" value="no" required>
-                    <label for="available_validity">${v.toString()}</label>
+                    <input type="radio" id="validity" name="available_validity" value="${v.getId()}" required>
+                    <label for="validity">${v.toString()}</label>
                 </div>
             </c:forEach>
             <h4>Available optional products</h4>
             <%--@elvariable id="optionals" type="List<it.polimi.db2.telcoservice_sc42.entities.OptionalProduct>"--%>
             <c:forEach var="o" items="${optionals}">
                 <div>
-                    <input type="checkbox" id="available_optionals" value="${o.getId()}" name="available_optional">
+                    <input type="checkbox" id="available_optionals" name="available_optional" value="${o.getId()}" >
                     <label for="${o.getId()}">${o.toString()}</label>
                 </div>
             </c:forEach>

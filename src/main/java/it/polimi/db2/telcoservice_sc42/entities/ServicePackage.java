@@ -26,10 +26,10 @@ public class ServicePackage implements Serializable {
     @OneToMany(mappedBy = "servicePackage", fetch=FetchType.LAZY)
     private List<Order> orders;
 
-    @ManyToMany(mappedBy = "packages")
+    @ManyToMany(mappedBy = "packages", fetch=FetchType.EAGER)
     private List<Service> services;
 
-    @ManyToMany(mappedBy = "packages")
+    @ManyToMany(mappedBy = "packages", fetch=FetchType.EAGER)
     private List<OptionalProduct> products;
 
     @OneToMany(mappedBy = "servicePackage", fetch = FetchType.EAGER)
@@ -132,8 +132,20 @@ public class ServicePackage implements Serializable {
         newOptional.addPackage(this);
     }
 
-    public void removeSOptionalProduct(OptionalProduct oldOptional) {
+    public void removeOptionalProduct(OptionalProduct oldOptional) {
         getProducts().remove(oldOptional);
         oldOptional.removePackage(this);
+    }
+
+    @Override
+    public String toString() {
+        return "ServicePackage{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", expirationDate=" + expirationDate +
+                ", services=" + services +
+                ", products=" + products +
+                ", validities=" + validities +
+                '}';
     }
 }

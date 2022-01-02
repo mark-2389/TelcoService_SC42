@@ -23,8 +23,7 @@ public class RefreshBuyPageServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        int selectedId = SafeParser.safeParseInteger(request.getParameter("selected"));
-        request.getSession().setAttribute("selectedId", selectedId);
+        request.getSession().setAttribute("selectedPackage", request.getParameter("selected"));
 
         preparePage(request);
 
@@ -32,8 +31,8 @@ public class RefreshBuyPageServlet extends HttpServlet {
     }
 
     private void preparePage(HttpServletRequest request) {
-        int selectedId = SafeParser.safeParseInteger(request.getParameter("selected"));
-        ServicePackage servicePackage = packageService.findServicePackageById(selectedId);
+        int selectedPackage = SafeParser.safeParseInteger(request.getParameter("selected"));
+        ServicePackage servicePackage = packageService.findServicePackageById(selectedPackage);
 
         request.getSession().setAttribute("services", servicePackage.getServices());
         request.getSession().setAttribute("validities", servicePackage.getValidities());
