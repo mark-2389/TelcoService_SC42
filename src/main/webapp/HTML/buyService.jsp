@@ -35,38 +35,41 @@
                 <input type="submit" class="btn" value="select">
       </fieldset>
     </form>
-    <!-- TODO if section for optionality -->
-    <form action="../BuyPage" method="POST">
-        <fieldset>
-            <legend>Selected Service Package</legend>
-            <h4>Included services</h4>
-            <%--@elvariable id="services" type="List<it.polimi.db2.telcoservice_sc42.entities.Service>"--%>
-            <c:forEach var="s" items="${services}">
-                <p>${s.toString()}</p>
-            </c:forEach>
-            <h4>Available validity periods</h4>
-            <%--@elvariable id="validities" type="List<it.polimi.db2.telcoservice_sc42.entities.Validity>"--%>
-            <c:forEach var="v" items="${validities}">
-                <div>
-                    <input type="radio" id="validity" name="available_validity" value="${v.getId()}" required>
-                    <label for="validity">${v.toString()}</label>
-                </div>
-            </c:forEach>
-            <h4>Available optional products</h4>
-            <%--@elvariable id="optionals" type="List<it.polimi.db2.telcoservice_sc42.entities.OptionalProduct>"--%>
-            <c:forEach var="o" items="${optionals}">
-                <div>
-                    <input type="checkbox" id="available_optionals" name="available_optional" value="${o.getId()}" >
-                    <label for="${o.getId()}">${o.toString()}</label>
-                </div>
-            </c:forEach>
-            <h4>Starting date of subscription</h4>
-            <input type="date" name="starting_date_of_subscription" value="<%= LocalDate.now().toString() %>"
-                   min="<%= LocalDate.now().toString() %>" required>
+
+    <br> <br>
+    <% if ( request.getSession().getAttribute("selectedPackage") != null ) { %>
+        <form action="../BuyPage" method="POST">
+            <fieldset>
+                <legend>Selected Service Package</legend>
+                <h4>Included services</h4>
+                <%--@elvariable id="services" type="List<it.polimi.db2.telcoservice_sc42.entities.Service>"--%>
+                <c:forEach var="s" items="${services}">
+                    <p>${s.toString()}</p>
+                </c:forEach>
+                <h4>Available validity periods</h4>
+                <%--@elvariable id="validities" type="List<it.polimi.db2.telcoservice_sc42.entities.Validity>"--%>
+                <c:forEach var="v" items="${validities}">
+                    <div>
+                        <input type="radio" id="validity" name="available_validity" value="${v.getId()}" required>
+                        <label for="validity">${v.toString()}</label>
+                    </div>
+                </c:forEach>
+                <h4>Available optional products</h4>
+                <%--@elvariable id="optionals" type="List<it.polimi.db2.telcoservice_sc42.entities.OptionalProduct>"--%>
+                <c:forEach var="o" items="${optionals}">
+                    <div>
+                        <input type="checkbox" id="available_optionals" name="available_optional" value="${o.getId()}" >
+                        <label for="${o.getId()}">${o.toString()}</label>
+                    </div>
+                </c:forEach>
+                <h4>Starting date of subscription</h4>
+                <input type="date" name="starting_date_of_subscription" value="<%= LocalDate.now().toString() %>"
+                       min="<%= LocalDate.now().toString() %>" required>
         </fieldset>
-        <br>
-        <input type="submit" class="btn" value="confirm">
-    </form>
+            <br>
+            <input type="submit" class="btn" value="confirm">
+        </form>
+    <% } %>
 
 </div>
 </body>
