@@ -15,6 +15,8 @@ public class LogoutServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         System.out.println("Logging out");
 
+        request.getSession().setAttribute(SessionAttributeRegistry.error, null);
+
         // get the login page before invalidating the session
         String loginPage = getLoginPage(request);
 

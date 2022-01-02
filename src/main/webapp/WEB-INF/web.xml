@@ -10,7 +10,7 @@
     </filter>
     <filter-mapping>
         <filter-name>ClientLoginFilter</filter-name>
-        <url-pattern>/HTML/confirmation.jsp</url-pattern>
+        <url-pattern>/boh</url-pattern>
     </filter-mapping>
     <filter>
         <filter-name>EmployeeLoginFilter</filter-name>

@@ -32,7 +32,7 @@ public class BuyPageServlet extends HttpServlet {
     private void refresh(HttpServletRequest request, HttpServletResponse response) throws IOException {
         ServicePackage servicePackage = setServicePackage(request);
         prepareRefresh(request, servicePackage);
-        response.sendRedirect(getServletContext().getContextPath() + "/HTML/buyService.jsp");
+        response.sendRedirect(getServletContext().getContextPath() + "/" + "HTML/buyService.jsp");
     }
 
     /**
@@ -43,7 +43,9 @@ public class BuyPageServlet extends HttpServlet {
      */
     private void buy(HttpServletRequest request, HttpServletResponse response) throws IOException {
         prepareConfirmationPage(request);
-        response.sendRedirect(getServletContext().getContextPath() + "/HTML/confirmation.jsp");
+        // redirect to the confirmation page servlet that loads the details needed
+        response.sendRedirect(getServletContext().getContextPath() + "/confirmation");
+        // response.sendRedirect(getServletContext().getContextPath() + "/" + "HTML/confirmation.jsp");
     }
 
     /**
