@@ -8,6 +8,7 @@ import it.polimi.db2.telcoservice_sc42.exception.ClientNotFoundException;
 import it.polimi.db2.telcoservice_sc42.exception.NonUniqueClientException;
 import it.polimi.db2.telcoservice_sc42.services.ClientService;
 import it.polimi.db2.telcoservice_sc42.services.EmployeeService;
+import it.polimi.db2.telcoservice_sc42.utils.SessionAttributeRegistry;
 import jakarta.ejb.EJB;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
@@ -35,6 +36,8 @@ public class LoginServlet extends HttpServlet {
     }
 
     private void handleRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        request.getSession().setAttribute(SessionAttributeRegistry.error, null);
+
         if ( request.getParameterValues("employeeLoginForm") != null )
             handleEmployeeRequest(request, response);
         else

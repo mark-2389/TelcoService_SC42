@@ -2,6 +2,7 @@ package it.polimi.db2.telcoservice_sc42.servlets;
 
 import it.polimi.db2.telcoservice_sc42.exception.NonUniqueClientException;
 import it.polimi.db2.telcoservice_sc42.services.ClientService;
+import it.polimi.db2.telcoservice_sc42.utils.SessionAttributeRegistry;
 import jakarta.ejb.EJB;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
@@ -29,6 +30,8 @@ public class CredentialServlet extends HttpServlet {
 
     public void handleRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/plain");
+
+        request.getSession().setAttribute(SessionAttributeRegistry.error, null);
 
         String username = request.getParameter("username");
         String email = request.getParameter("email");

@@ -7,6 +7,7 @@ import jakarta.persistence.PersistenceContext;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 @Stateless
 public class ValidityService {
@@ -26,5 +27,18 @@ public class ValidityService {
     public void changeExpirationDate(Validity validity, Date newExpirationDate){
         em.find(Validity.class, validity).setExpirationDate(newExpirationDate);
         em.persist(validity);
+    }
+
+    public Validity findValidityById(int validityId) {
+        List<Validity> validities = em.createQuery("SELECT V FROM Validity V WHERE V.id = ?1", Validity.class)
+                .setParameter(1, validityId)
+                .getResultList();
+
+        if ( validities.isEmpty() ) {
+            System.out.println("No validity returned from query");
+            return null;
+        }
+
+        return validities.get(0);
     }
 }
