@@ -45,7 +45,6 @@ public class PackageService {
      * @return the list of valid service packages.
      */
     public List<ServicePackage> findValidServicePackages() {
-        System.out.println(em.createNamedQuery("ServicePackage.valid", ServicePackage.class).getResultList());
         return em.createNamedQuery("ServicePackage.valid", ServicePackage.class).getResultList();
     }
 

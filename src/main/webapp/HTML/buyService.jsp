@@ -20,7 +20,7 @@
         PACKAGE: <%= request.getSession().getAttribute("selectedPackage") %>
     </p>
 
-    <form action="../Refresh" method="POST">
+    <form action="../BuyPage" method="POST">
         <fieldset>
             <legend>Available Service Packages</legend>
                 <select name="selected" id="selected" required>
@@ -36,7 +36,7 @@
       </fieldset>
     </form>
     <!-- TODO if section for optionality -->
-    <form action="../Buy" method="POST">
+    <form action="../BuyPage" method="POST">
         <fieldset>
             <legend>Selected Service Package</legend>
             <h4>Included services</h4>
