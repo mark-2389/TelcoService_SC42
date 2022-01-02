@@ -3,6 +3,7 @@ package it.polimi.db2.telcoservice_sc42.services;
 
 import it.polimi.db2.telcoservice_sc42.entities.*;
 import it.polimi.db2.telcoservice_sc42.exception.ClientNotCorrespondingException;
+import jakarta.ejb.EJB;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -16,6 +17,9 @@ import java.util.stream.Collectors;
 public class OrderService {
     @PersistenceContext(unitName = "TelcoService_EJB")
     private EntityManager em;
+
+    @EJB(name = "it.polimi.db2.telcoservice_sc42.services/ValidityService")
+    ValidityService validityService;
 
     /**
      * Default constructor.
@@ -59,16 +63,18 @@ public class OrderService {
 
     /**
      * The method creates a new order
-     * @param client the costumer who purchases the order
-     * @param validityId the chosen validity period
-     * @param packageId the chosen servicePackage to be bought
+     * @param clientUsername the username of the costumer who purchases the order
+     * @param validityId the id of the chosen validity period
+     * @param packageId the id of the chosen servicePackage to be bought
      * @param dateSubscription the date of the activation of the servicePackage
+     * @return the id of the order that has been created, null if some error occurred
      */
-    public void createOrder (Client client, Validity validityId, ServicePackage packageId, Date dateSubscription ) {
-        Client costumer = em.find(Client.class, client.getUsername());
-        ServicePackage servicePackage = em.find(ServicePackage.class, packageId.getId());
+    public Integer createOrder (String clientUsername, int validityId, int packageId, Date dateSubscription ) {
+        Client costumer = em.find(Client.class, clientUsername);
+        ServicePackage servicePackage = em.find(ServicePackage.class, packageId);
+        Validity validity = validityService.findValidityByKey(validityId, packageId);
 
-        Order order = new Order( costumer, validityId, servicePackage, dateSubscription );
+        Order order = new Order( costumer, validity, servicePackage, dateSubscription );
 
         // for debugging: let's check if mission is managed
         System.out.println("Method createOrder before client.addMission(mission)");
@@ -77,16 +83,20 @@ public class OrderService {
         costumer.addOrder(order); // updates both sides of the relationship
         servicePackage.addOrder(order); // updates both sides of the relationship
 
+        em.persist(order);
+        em.flush();
+
         // for debugging: let's check if mission is managed
         System.out.println("Method createOrder AFTER client.addMission(mission)");
         System.out.println("Is order object managed?  " + em.contains(order));
 
-        em.persist(costumer); // makes also order object managed via cascading
-        em.persist(servicePackage); // makes also order object managed via cascading
+        // em.persist(costumer); // makes also order object managed via cascading
+        // em.persist(servicePackage); // makes also order object managed via cascading
 
         System.out.println("Method createOrder after em.persist()");
         System.out.println("Is order object managed?  " + em.contains(order));
 
+        return order.getId();
     }
 
     /**
@@ -105,5 +115,13 @@ public class OrderService {
         client.removeOrder(order); // this updates both directions of the associations
 
         em.remove(order);
+    }
+
+    public void setOrderStatus(int id, OrderStatus status) {
+        Order order = em.find(Order.class, id);
+
+        if ( order == null ) return;
+
+        order.setStatus(status);
     }
 }

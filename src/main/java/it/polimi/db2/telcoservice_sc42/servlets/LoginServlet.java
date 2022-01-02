@@ -107,7 +107,15 @@ public class LoginServlet extends HttpServlet {
         }
 
         request.getSession().setAttribute("username", client.getUsername());
-        response.sendRedirect(request.getServletContext().getContextPath() + "/HomePage");
+
+        String redirectPage = "/HomePage";
+
+        if ( request.getSession().getAttribute("selectedPackage") != null ) {
+            // if a package has already been selected the user was in the confirmation page
+            redirectPage = "/HTML/confirmation.jsp";
+        }
+
+        response.sendRedirect(request.getServletContext().getContextPath() + redirectPage);
     }
 
     public void destroy() {

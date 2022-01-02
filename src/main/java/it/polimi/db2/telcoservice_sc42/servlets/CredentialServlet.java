@@ -4,7 +4,6 @@ import it.polimi.db2.telcoservice_sc42.exception.NonUniqueClientException;
 import it.polimi.db2.telcoservice_sc42.services.ClientService;
 import it.polimi.db2.telcoservice_sc42.utils.SessionAttributeRegistry;
 import jakarta.ejb.EJB;
-import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
@@ -51,7 +50,14 @@ public class CredentialServlet extends HttpServlet {
             return;
         }
 
-        response.sendRedirect(getServletContext().getContextPath() + "/index.jsp");
+        String redirectPage = "/index.jsp";
+
+        if ( request.getSession().getAttribute("selectedPackage") != null ) {
+            // if a package has already been selected the user was in the confirmation page
+            redirectPage = "/HTML/confirmation.jsp";
+        }
+
+        response.sendRedirect(getServletContext().getContextPath() + redirectPage);
     }
 
     /**

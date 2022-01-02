@@ -41,4 +41,17 @@ public class ValidityService {
 
         return validities.get(0);
     }
+
+    public Validity findValidityByKey(int validityId, int packageId) {
+        List<Validity> validities = em.createQuery("SELECT V FROM Validity V WHERE V.id = ?1 AND V.servicePackage.id = ?2", Validity.class)
+                .setParameter(1, validityId).setParameter(2, packageId)
+                .getResultList();
+
+        if ( validities.isEmpty() ) {
+            System.out.println("No validity returned from query");
+            return null;
+        }
+
+        return validities.get(0);
+    }
 }

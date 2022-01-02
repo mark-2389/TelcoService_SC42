@@ -16,11 +16,11 @@
 <%
     int months = (Integer) request.getSession().getAttribute("chosen_validity_months");
 
-    float fee = (Float) request.getSession().getAttribute("chosen_validity_fee");
+    BigDecimal fee = (BigDecimal) request.getSession().getAttribute("chosen_validity_fee");
 
     BigDecimal totalFee = SafeParser.safeParseBigDecimal( (String) request.getSession().getAttribute("totalFee"));
     if ( totalFee == null ) totalFee = new BigDecimal(0);
-    float price = ( fee + totalFee.floatValue() )  * months;
+    BigDecimal price = ( fee.add(totalFee) ).multiply(BigDecimal.valueOf(months));
 %>
 <div>
     <%
@@ -65,7 +65,24 @@
     <h4>Total price: </h4><%= price %>
 </div>
 
-<button> BUY </button>
+<%
+    if ( request.getSession().getAttribute("username") != null ) {
+%>
+        <form method="get" action="../Payment">
+            <button type="submit" > BUY </button>
+        </form>
+<%
+    } else {
+%>
+        <form method="get" action="login.jsp">
+            <button type="submit"> LOGIN </button>
+        </form>
+        <form method="get" action="register.jsp">
+            <button type="submit"> REGISTER </button>
+        </form>
+<%
+    }
+%>
 
 
 <!-- TODO PRINT ALL DETAILS (SEE SPECIFICATIONS) OF THE ORDER TO BE PAYED -->

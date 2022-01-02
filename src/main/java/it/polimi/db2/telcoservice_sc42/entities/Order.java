@@ -3,6 +3,7 @@ package it.polimi.db2.telcoservice_sc42.entities;
 import java.io.Serializable;
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -33,9 +34,8 @@ public class Order implements Serializable {
     @Column(name = "DATE_SUBSCRIPTION")
     private Date subscriptionDate;
 
-    // TODO double or bigDecimal?
     @Column(name = "TOTAL_COST")
-    private Double totalCost;
+    private BigDecimal totalCost;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "IS_VALID")
@@ -72,11 +72,20 @@ public class Order implements Serializable {
     }
 
     public Order(Client client, Validity validityId, ServicePackage packageId, Date subscriptionDate ) {
-        new Order();
+        super();
         this.client = client;
         this.validity = validityId;
         this.servicePackage = packageId;
         this.subscriptionDate = subscriptionDate;
+
+        BigDecimal totalFee = new BigDecimal(0);
+        for ( OptionalProduct o: packageId.getProducts() ) {
+            totalFee = totalFee.add(o.getMonthlyFee());
+        }
+
+        BigDecimal bigPeriod = new BigDecimal(validityId.getPeriod());
+
+        this.totalCost = ( validityId.getMonthlyFee().add(totalFee) ).multiply(bigPeriod);
     }
     public int getId() {
         return id;
@@ -127,12 +136,10 @@ public class Order implements Serializable {
     }
 
     public Double getTotalCost() {
-        return totalCost;
+        return totalCost.doubleValue();
     }
 
-    public void setTotalCost(Double totalCost) {
-        this.totalCost = totalCost;
-    }
+    public void setTotalCost(Double totalCost) { this.totalCost = new BigDecimal(totalCost); }
 
     public ServicePackage getPackage() {
         return servicePackage;
