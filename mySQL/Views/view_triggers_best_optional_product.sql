@@ -38,31 +38,36 @@ CREATE TRIGGER update_optional_product_sales
     FOR EACH row
 BEGIN
     -- the duration of the order in number of months
-    DECLARE duration INT DEFAULT (
-		SELECT period
-        FROM validity
-        WHERE PACKAGE_ID = new.package_Id AND id = new.validity_Id
-    );
+    DECLARE duration INT;
 
-	-- a table containing the id of an optional product and the relative total value
-	CREATE TEMPORARY TABLE new_volume_of_sales (
-			SELECT OP.id AS Id, OP.monthly_fee * duration AS total_value
-			FROM telcoservice_db.Order_Optional_Composition OOC JOIN telcoservice_db.optional_product as OP
-			ON OOC.optional_Product_Id = OP.id
-			WHERE OOC.order_Id = new.id -- select only the optionals of the new order
-	);
+    IF ( old.is_valid <> 'ACCEPTED' and new.is_valid = 'ACCEPTED' ) THEN
 
-	-- update the product in the table
-    UPDATE telcoservice_db.optional_product_volume_of_sales VOS
-    SET VALUE_OF_SALES = VALUE_OF_SALES + (
-        SELECT total_value
-        FROM new_volume_of_sales N
-        WHERE VOS.id = N.id
-    )
-    WHERE VOS.id IN (
-        SELECT id FROM new_volume_of_sales
-    );
+        SET duration = (
+            SELECT period
+            FROM validity
+            WHERE PACKAGE_ID = new.package_Id AND id = new.validity_Id
+        );
 
+        -- a table containing the id of an optional product and the relative total value
+        CREATE TEMPORARY TABLE new_volume_of_sales (
+            SELECT OP.id AS Id, OP.monthly_fee * duration AS total_value
+            FROM telcoservice_db.Order_Optional_Composition OOC JOIN telcoservice_db.optional_product as OP
+                                                                     ON OOC.optional_Product_Id = OP.id
+            WHERE OOC.order_Id = new.id -- select only the optionals of the new order
+        );
+
+        -- update the product in the table
+        UPDATE telcoservice_db.optional_product_volume_of_sales VOS
+        SET VALUE_OF_SALES = VALUE_OF_SALES + (
+            SELECT total_value
+            FROM new_volume_of_sales N
+            WHERE VOS.id = N.id
+        )
+        WHERE VOS.id IN (
+            SELECT id
+            FROM new_volume_of_sales
+        );
+    END IF;
 END; //
 delimiter ;
 delimiter //

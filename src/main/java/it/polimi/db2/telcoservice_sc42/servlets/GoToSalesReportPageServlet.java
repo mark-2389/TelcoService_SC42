@@ -1,6 +1,5 @@
 package it.polimi.db2.telcoservice_sc42.servlets;
 
-import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
@@ -8,14 +7,12 @@ import java.io.IOException;
 
 @WebServlet(name = "GoToSalesReportPageServlet", value = "/SalesReportPage")
 public class GoToSalesReportPageServlet extends HttpServlet {
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        prepareSalesReports(request, response);
-    }
-
-    private void prepareSalesReports(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String id = handleRejectRequest(request, response, "employee/login.jsp", "id");
         System.out.println("SALES REPORT ID: " + id);
+
         if ( id != null ) {
             // redirect to the servlet that loads all optionals
             response.sendRedirect(getServletContext().getContextPath() + "/load_reports");

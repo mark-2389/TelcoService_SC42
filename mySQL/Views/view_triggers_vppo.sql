@@ -26,7 +26,7 @@ create trigger new_purchase_value_op
 after update on telcoservice_db.order
 for each row
 begin
-    if ( old.is_valid != 'ACCEPTED' and new.is_valid = 'ACCEPTED' ) then
+    if ( old.is_valid <> 'ACCEPTED' and new.is_valid = 'ACCEPTED' ) then
 		update value_per_package_op VPPO
 			set VPPO.TOTAL = VPPO.TOTAL + ( SELECT O.TOTAL_COST
 											FROM telcoservice_db.order O

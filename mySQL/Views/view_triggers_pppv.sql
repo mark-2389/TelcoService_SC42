@@ -23,7 +23,7 @@ create trigger new_purchase_validity
 after update on telcoservice_db.order
 for each row
 begin
-    if ( old.is_valid != 'ACCEPTED' and new.is_valid = 'ACCEPTED' ) then
+    if ( old.is_valid <> 'ACCEPTED' and new.is_valid = 'ACCEPTED' ) then
         update purchase_per_package_validity PPPV
 			set PPPV.purchases = PPPV.purchases + 1
             where PPPV.PACKAGE_ID = new.PACKAGE_ID and PPPV.VALIDITY_ID = new.VALIDITY_ID;

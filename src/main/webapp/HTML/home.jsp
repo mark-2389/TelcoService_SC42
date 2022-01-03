@@ -44,9 +44,9 @@
         <%--@elvariable id="rejected" type="List<Order>"--%>
         <c:forEach var="o" items="${rejected}">
             <div>
-                <a href="#">${o.servicePackage.name}</a>
+                ${o.getPackage().getName()}
                 <br/>
-                <a href="#">${o.totalCost}</a>
+                ${o.getTotalCost()}
                 <br/>
             </div>
         </c:forEach>

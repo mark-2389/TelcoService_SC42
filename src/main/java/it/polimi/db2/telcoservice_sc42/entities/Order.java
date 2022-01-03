@@ -72,7 +72,7 @@ public class Order implements Serializable {
     }
 
     public Order(Client client, Validity validityId, ServicePackage packageId, Date subscriptionDate ) {
-        super();
+        this();
         this.client = client;
         this.validity = validityId;
         this.servicePackage = packageId;

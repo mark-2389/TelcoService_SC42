@@ -23,7 +23,7 @@ after update on telcoservice_db.order
 for each row
 begin
 	
-	if ( old.is_valid != 'ACCEPTED' and new.is_valid = 'ACCEPTED' ) then
+	if ( old.is_valid <> 'ACCEPTED' and new.is_valid = 'ACCEPTED' ) then
     
 		create temporary table prod_per_order ( SELECT O.ID as ID, count(OPTIONAL_PRODUCT_ID) as NUM_PROD
 												FROM telcoservice_db.order O  LEFT JOIN order_optional_composition OpComp on O.ID = OpComp.ORDER_ID

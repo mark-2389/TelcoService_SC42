@@ -18,9 +18,9 @@
 
     BigDecimal fee = (BigDecimal) request.getSession().getAttribute("chosen_validity_fee");
 
-    BigDecimal totalFee = SafeParser.safeParseBigDecimal( (String) request.getSession().getAttribute("totalFee"));
-    if ( totalFee == null ) totalFee = new BigDecimal(0);
-    BigDecimal price = ( fee.add(totalFee) ).multiply(BigDecimal.valueOf(months));
+    BigDecimal totalOptionalsFee = SafeParser.safeParseBigDecimal( (String) request.getSession().getAttribute("total_optionals_fee"));
+    if ( totalOptionalsFee == null ) totalOptionalsFee = new BigDecimal(0);
+    BigDecimal price = ( fee.add(totalOptionalsFee) ).multiply(BigDecimal.valueOf(months));
 %>
 <div>
     <%

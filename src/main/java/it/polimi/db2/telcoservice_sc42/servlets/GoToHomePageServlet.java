@@ -33,7 +33,6 @@ public class GoToHomePageServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        System.out.println("BEFORE PREPARING: " + (request.getParameter("selected")));
         prepareClientHome(request, response);
     }
 

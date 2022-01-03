@@ -26,7 +26,7 @@ create trigger new_purchase_value
 after update on telcoservice_db.order
 for each row
 begin
-    if ( old.is_valid != 'ACCEPTED' and new.is_valid = 'ACCEPTED' ) then
+    if ( old.is_valid <> 'ACCEPTED' and new.is_valid = 'ACCEPTED' ) then
 		update value_per_package_without VPP
 			set VPP.TOTAL = VPP.TOTAL + ( SELECT V.MONTHLY_FEE * V.PERIOD 
 											FROM telcoservice_db.order O join validity V on (O.VALIDITY_ID, O.PACKAGE_ID) = (V.id, V.PACKAGE_ID)
