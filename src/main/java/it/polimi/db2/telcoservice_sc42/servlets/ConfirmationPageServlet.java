@@ -6,6 +6,7 @@ import it.polimi.db2.telcoservice_sc42.entities.Validity;
 import it.polimi.db2.telcoservice_sc42.services.OptionalProductService;
 import it.polimi.db2.telcoservice_sc42.services.PackageService;
 import it.polimi.db2.telcoservice_sc42.services.ValidityService;
+import it.polimi.db2.telcoservice_sc42.utils.BuySessionRegistry;
 import it.polimi.db2.telcoservice_sc42.utils.SafeParser;
 import jakarta.ejb.EJB;
 import jakarta.servlet.annotation.WebServlet;
@@ -43,7 +44,7 @@ public class ConfirmationPageServlet extends HttpServlet {
     }
 
     private void prepareServicePackageDetails(HttpServletRequest request) {
-        Object attribute = request.getSession().getAttribute("selectedPackage");
+        Object attribute = request.getSession().getAttribute(BuySessionRegistry.selectedPackage);
 
         if ( !(attribute instanceof Integer) )  return;
 
@@ -54,11 +55,11 @@ public class ConfirmationPageServlet extends HttpServlet {
         ServicePackage servicePackage = packageService.findServicePackageById(id);
 
         // save the name of the selected package
-        request.getSession().setAttribute("selectedPackage_name", servicePackage.getName());
+        request.getSession().setAttribute(BuySessionRegistry.selectedPackageName, servicePackage.getName());
     }
 
     private void prepareValidityDetails(HttpServletRequest request) {
-        Object attribute = request.getSession().getAttribute("chosen_validity");
+        Object attribute = request.getSession().getAttribute(BuySessionRegistry.chosenValidity);
 
         if ( !(attribute instanceof String) ) return;
 
@@ -74,14 +75,14 @@ public class ConfirmationPageServlet extends HttpServlet {
         }
 
         // save months
-        request.getSession().setAttribute("chosen_validity_months", validity.getPeriod());
+        request.getSession().setAttribute(BuySessionRegistry.chosenValidityMonths, validity.getPeriod());
 
         // save fee
-        request.getSession().setAttribute("chosen_validity_fee", validity.getMonthlyFee());
+        request.getSession().setAttribute(BuySessionRegistry.chosenValidityFee, validity.getMonthlyFee());
     }
 
     private void prepareOptionalsDetails(HttpServletRequest request) {
-        String[] optionalIds = (String[]) request.getSession().getAttribute("chosen_optionals");
+        String[] optionalIds = (String[]) request.getSession().getAttribute(BuySessionRegistry.chosenOptionals);
 
         List<String> optionals = new ArrayList<>();
 
@@ -98,7 +99,7 @@ public class ConfirmationPageServlet extends HttpServlet {
             }
         }
 
-        request.getSession().setAttribute("total_optionals_fee", totalFee);
-        request.getSession().setAttribute("chosen_optionals_desc", optionals);
+        request.getSession().setAttribute(BuySessionRegistry.totalOptionalsFee, totalFee);
+        request.getSession().setAttribute(BuySessionRegistry.chosenOptionalsDescriptions, optionals);
     }
 }

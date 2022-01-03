@@ -2,6 +2,7 @@ package it.polimi.db2.telcoservice_sc42.servlets;
 
 import it.polimi.db2.telcoservice_sc42.entities.OrderStatus;
 import it.polimi.db2.telcoservice_sc42.services.OrderService;
+import it.polimi.db2.telcoservice_sc42.utils.BuySessionRegistry;
 import it.polimi.db2.telcoservice_sc42.utils.SafeParser;
 import it.polimi.db2.telcoservice_sc42.utils.SessionAttributeRegistry;
 import jakarta.ejb.EJB;
@@ -9,6 +10,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.sql.Date;
@@ -21,10 +23,11 @@ public class PaymentServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String username = (String) request.getSession().getAttribute(SessionAttributeRegistry.username);
-        int validityId = SafeParser.safeParseInteger( (String) request.getSession().getAttribute("chosen_validity") );
-        int packageId = (Integer) request.getSession().getAttribute("selectedPackage");
-        Date subscriptionDate = Date.valueOf( (String) request.getSession().getAttribute("chosen_subscription"));
+        HttpSession session = request.getSession();
+        String username = (String) session.getAttribute(SessionAttributeRegistry.username);
+        int validityId = SafeParser.safeParseInteger((String) session.getAttribute(BuySessionRegistry.chosenValidity));
+        int packageId = (Integer) session.getAttribute(BuySessionRegistry.selectedPackage);
+        Date subscriptionDate = Date.valueOf( (String) session.getAttribute(BuySessionRegistry.chosenSubscription));
 
         // first we create the order
         Integer orderId = orderService.createOrder(username, validityId, packageId, subscriptionDate);
@@ -47,7 +50,7 @@ public class PaymentServlet extends HttpServlet {
             msg = "The payment has been rejected, try again later. ";
         }
 
-        request.getSession().setAttribute(SessionAttributeRegistry.error, msg);
+        session.setAttribute(BuySessionRegistry.paymentMsg, msg);
 
         response.sendRedirect(request.getServletContext().getContextPath() + "/HomePage");
     }

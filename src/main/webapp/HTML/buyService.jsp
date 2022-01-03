@@ -6,8 +6,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page import="java.time.LocalDate" %>
+<%@ page import="it.polimi.db2.telcoservice_sc42.utils.BuySessionRegistry" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <title> BUY </title>
@@ -15,9 +16,10 @@
 <body>
 
 <div>
+    <% Integer packageId = (Integer) request.getSession().getAttribute(BuySessionRegistry.selectedPackage); %>
 
     <p>
-        PACKAGE: <%= request.getSession().getAttribute("selectedPackage") %>
+        PACKAGE: <%= packageId %>
     </p>
 
     <form action="../BuyPage" method="POST">
@@ -37,7 +39,7 @@
     </form>
 
     <br> <br>
-    <% if ( request.getSession().getAttribute("selectedPackage") != null ) { %>
+    <% if ( packageId != null ) { %>
         <form action="../BuyPage" method="POST">
             <fieldset>
                 <legend>Selected Service Package</legend>

@@ -2,6 +2,7 @@ package it.polimi.db2.telcoservice_sc42.servlets;
 
 import it.polimi.db2.telcoservice_sc42.entities.ServicePackage;
 import it.polimi.db2.telcoservice_sc42.services.PackageService;
+import it.polimi.db2.telcoservice_sc42.utils.BuySessionRegistry;
 import it.polimi.db2.telcoservice_sc42.utils.SafeParser;
 import jakarta.ejb.EJB;
 import jakarta.servlet.http.*;
@@ -26,7 +27,7 @@ public class BuyPageServlet extends HttpServlet {
     /**
      * The method prepares the refresh of the current page
      * @param request the HttpServletRequest of the page
-     * @param response the HttpServletResponde of the page
+     * @param response the HttpServletResponse of the page
      * @throws IOException if something goes wrong
      */
     private void refresh(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -38,7 +39,7 @@ public class BuyPageServlet extends HttpServlet {
     /**
      * The method prepares the redirection to the ConfirmationPage
      * @param request the HttpServletRequest of the page
-     * @param response the HttpServletResponde of the page
+     * @param response the HttpServletResponse of the page
      * @throws IOException if something goes wrong
      */
     private void buy(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -65,9 +66,10 @@ public class BuyPageServlet extends HttpServlet {
      * @param request the HttpServletRequest of the page
      */
     private void prepareConfirmationPage(HttpServletRequest request) {
-        request.getSession().setAttribute("chosen_validity", request.getParameter("available_validity"));
-        request.getSession().setAttribute("chosen_optionals", request.getParameterValues("available_optional"));
-        request.getSession().setAttribute("chosen_subscription", request.getParameter("starting_date_of_subscription"));
+        HttpSession session = request.getSession();
+        session.setAttribute(BuySessionRegistry.chosenValidity, request.getParameter("available_validity"));
+        session.setAttribute(BuySessionRegistry.chosenOptionals, request.getParameterValues("available_optional"));
+        session.setAttribute(BuySessionRegistry.chosenSubscription, request.getParameter("starting_date_of_subscription"));
     }
 
     /**
@@ -77,7 +79,7 @@ public class BuyPageServlet extends HttpServlet {
      */
     private ServicePackage setServicePackage(HttpServletRequest request){
         int selectedPackage = SafeParser.safeParseInteger(request.getParameter("selected"));
-        request.getSession().setAttribute("selectedPackage", selectedPackage);
+        request.getSession().setAttribute(BuySessionRegistry.selectedPackage, selectedPackage);
 
         return packageService.findServicePackageById(selectedPackage);
     }

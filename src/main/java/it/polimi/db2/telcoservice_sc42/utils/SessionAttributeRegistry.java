@@ -3,6 +3,10 @@ package it.polimi.db2.telcoservice_sc42.utils;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * A class that holds the names of the session's attributes.
+ * This class should be used for general purpose program wide attributes only.
+ */
 public class SessionAttributeRegistry {
     public static final String username = "username";
     public static final String employeeId = "id";

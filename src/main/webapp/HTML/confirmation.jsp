@@ -1,5 +1,6 @@
 <%@ page import="java.math.BigDecimal" %>
-<%@ page import="it.polimi.db2.telcoservice_sc42.utils.SafeParser" %><%--
+<%@ page import="it.polimi.db2.telcoservice_sc42.utils.BuySessionRegistry" %>
+<%--
   Created by IntelliJ IDEA.
   User: niccolodidoni
   Date: 20/12/21
@@ -14,17 +15,17 @@
 </head>
 <body>
 <%
-    int months = (Integer) request.getSession().getAttribute("chosen_validity_months");
+    int months = (Integer) request.getSession().getAttribute(BuySessionRegistry.chosenValidityMonths);
 
-    BigDecimal fee = (BigDecimal) request.getSession().getAttribute("chosen_validity_fee");
+    BigDecimal fee = (BigDecimal) request.getSession().getAttribute(BuySessionRegistry.chosenValidityFee);
 
-    BigDecimal totalOptionalsFee = SafeParser.safeParseBigDecimal( (String) request.getSession().getAttribute("total_optionals_fee"));
+    BigDecimal totalOptionalsFee = (BigDecimal) request.getSession().getAttribute(BuySessionRegistry.totalOptionalsFee);
     if ( totalOptionalsFee == null ) totalOptionalsFee = new BigDecimal(0);
     BigDecimal price = ( fee.add(totalOptionalsFee) ).multiply(BigDecimal.valueOf(months));
 %>
 <div>
     <%
-    Object attribute = request.getSession().getAttribute("selectedPackage_name");
+    Object attribute = request.getSession().getAttribute(BuySessionRegistry.selectedPackageName);
     if ( attribute instanceof Integer ) {
     %>
     <h4><%= attribute %></h4>
@@ -58,7 +59,7 @@
 </div>
 
 <div>
-    <h4>Date of subscription:</h4> <%= request.getSession().getAttribute("chosen_subscription")%>
+    <h4>Date of subscription:</h4> <%= request.getSession().getAttribute(BuySessionRegistry.chosenSubscription) %>
 </div>
 
 <div>
