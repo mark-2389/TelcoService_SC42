@@ -1,6 +1,5 @@
 <%@ page import="it.polimi.db2.telcoservice_sc42.utils.ParameterRegistry" %>
-<%@ page import="java.util.List" %><%--
-  Created by IntelliJ IDEA.
+<%--  Created by IntelliJ IDEA.
   User: Mark
   Date: 28/12/2021
   Time: 19:23
@@ -21,138 +20,281 @@
 </a>
 
 <div class="Purchases">
-    <h2>Purchases per package</h2>
-    <fieldset style="width:500px">
+    <table style="width: 550px; border: 3px solid black; border-collapse: collapse">
+        <caption>
+            <br> <br>
+            <b style="font-size: 30px">Purchases Per Package</b>
+            <br><br>
+        </caption>
 
-        <% if ( request.getSession().getAttribute(ParameterRegistry.allPurchasesPerPackage) == null ) { %>
-            <c:out value="NO PURCHASES TO BE SHOWN"></c:out>
-        <% } else { %>
-            <%--@elvariable id="purchases" type="List<java.lang.String>"--%>
-            <c:forEach var="p" items="${purchases}">
-                <div>
-                    <c:out value="${p}"></c:out>
-                </div>
-            </c:forEach>
-        <% } %>
-
-    </fieldset>
+        <thead style="background-color: darkgrey">
+        <tr style="border: 3px solid black">
+            <th colspan="1" style="border: 3px solid black"><b>PACKAGE ID</b></th>
+            <th colspan="1" style="border: 3px solid black"><b>PACKAGE NAME</b></th>
+            <th colspan="1" style="border: 3px solid black"><b>N. PURCHASES</b></th>
+        </tr>
+        </thead>
+        <tbody>
+        <%--@elvariable id="purchases" type="java.util.List<java.util.Map<java.lang.String, java.lang.String>>"--%>
+        <c:forEach var="p" items="${purchases}">
+            <tr style="border: 1px black">
+                <td style="border: 1px solid black; border-right: 3px solid black">${p.get("ID")}</td>
+                <td style="border: 1px solid black; border-right: 3px solid black">${p.get("NAME")}</td>
+                <td style="border: 1px solid black; border-right: 3px solid black">${p.get("PURCHASES")}</td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
 </div>
 <div class="PurchasesWithValidity">
-    <h2>Purchases per package and Validity</h2>
-    <fieldset style="width:500px">
-        <% if ( request.getSession().getAttribute(ParameterRegistry.allPurchasesPerPackageValidity) == null ) { %>
-            <c:out value="NO PURCHASES PER PACKAGE AND VALIDITY TO BE SHOWN"></c:out>
-        <% } else { %>
-            <%--@elvariable id="purchasesValidity" type="List<java.lang.String>"--%>
-            <c:forEach var="p" items="${purchasesValidity}">
-                <div>
-                    <c:out value="${p}"></c:out>
-                </div>
-            </c:forEach>
-        <% } %>
-    </fieldset>
+    <table style="width: 550px; border: 3px solid black; border-collapse: collapse">
+        <caption>
+            <br> <br>
+            <b style="font-size: 30px">Purchases Per Package And Validity</b>
+            <br><br>
+        </caption>
+
+        <thead style="background-color: darkgrey">
+        <tr style="border: 3px solid black">
+            <th colspan="1" style="border: 3px solid black"><b>PACKAGE ID</b></th>
+            <th colspan="1" style="border: 3px solid black"><b>PACKAGE NAME</b></th>
+            <th colspan="1" style="border: 3px solid black"><b>VALIDITY ID</b></th>
+            <th colspan="1" style="border: 3px solid black"><b>VALIDITY PERIOD</b></th>
+            <th colspan="1" style="border: 3px solid black"><b>N. PURCHASES</b></th>
+        </tr>
+        </thead>
+        <tbody>
+        <%--@elvariable id="purchasesValidity" type="java.util.List<java.util.Map<java.lang.String, java.lang.String>>"--%>
+        <c:forEach var="p" items="${purchasesValidity}">
+            <tr style="border: 1px black">
+                <td style="border: 1px solid black; border-right: 3px solid black">${p.get("PACKAGEID")}</td>
+                <td style="border: 1px solid black; border-right: 3px solid black">${p.get("PACKAGENAME")}</td>
+                <td style="border: 1px solid black; border-right: 3px solid black">${p.get("VALIDITYID")}</td>
+                <td style="border: 1px solid black; border-right: 3px solid black">${p.get("PERIOD")}</td>
+                <td style="border: 1px solid black; border-right: 3px solid black">${p.get("PURCHASES")}</td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
 </div>
 <div class="ValuesWithoutOp">
-    <h2>Total value of sales per package without optional products</h2>
-    <fieldset style="width:500px">
-        <% if ( request.getSession().getAttribute(ParameterRegistry.allValuesPerPackageWithoutOp) == null ) { %>
-            <c:out value="NO SALES PER PACKAGE TO BE SHOWN"></c:out>
-        <% } else { %>
-            <%--@elvariable id="values" type="List<java.lang.String>"--%>
-            <c:forEach var="v" items="${values}">
-                <div>
-                    <c:out value="${v}"></c:out>
-                </div>
-            </c:forEach>
-        <% } %>
-    </fieldset>
+    <table style="width: 550px; border: 3px solid black; border-collapse: collapse">
+        <caption>
+            <br> <br>
+            <b style="font-size: 30px">Total value of sales per package without optional products</b>
+            <br><br>
+        </caption>
+
+        <thead style="background-color: darkgrey">
+        <tr style="border: 3px solid black">
+            <th colspan="1" style="border: 3px solid black"><b>PACKAGE ID</b></th>
+            <th colspan="1" style="border: 3px solid black"><b>PACKAGE NAME</b></th>
+            <th colspan="1" style="border: 3px solid black"><b>VALUE OF SALES</b></th>
+        </tr>
+        </thead>
+        <tbody>
+        <%--@elvariable id="values" type="java.util.List<java.util.Map<java.lang.String, java.lang.String>>"--%>
+        <c:forEach var="p" items="${values}">
+            <tr style="border: 1px black">
+                <td style="border: 1px solid black; border-right: 3px solid black">${p.get("ID")}</td>
+                <td style="border: 1px solid black; border-right: 3px solid black">${p.get("NAME")}</td>
+                <td style="border: 1px solid black; border-right: 3px solid black">${p.get("VALUE")}</td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
 </div>
 <div class="ValuesWithOp">
-    <h2>Total value of sales per package with optional products</h2>
-    <fieldset style="width:500px">
-        <% if ( request.getSession().getAttribute(ParameterRegistry.allValuesPerPackageOptionalProduct) == null ) { %>
-            <c:out value="NO SALES PER PACKAGE WITH OPTIONAL PRODUCT TO BE SHOWN"></c:out>
-        <% } else { %>
-            <%--@elvariable id="valuesPackageOptional" type="List<java.lang.String>"--%>
-            <c:forEach var="v" items="${valuesPackageOptional}">
-                <div>
-                    <c:out value="${v}"></c:out>
-                </div>
-            </c:forEach>
-        <% } %>
-    </fieldset>
+    <table style="width: 550px; border: 3px solid black; border-collapse: collapse">
+        <caption>
+            <br> <br>
+            <b style="font-size: 30px">Total value of sales per package with optional products</b>
+            <br><br>
+        </caption>
+
+        <thead style="background-color: darkgrey">
+        <tr style="border: 3px solid black">
+            <th colspan="1" style="border: 3px solid black"><b>PACKAGE ID</b></th>
+            <th colspan="1" style="border: 3px solid black"><b>PACKAGE NAME</b></th>
+            <th colspan="1" style="border: 3px solid black"><b>VALUE OF SALES</b></th>
+        </tr>
+        </thead>
+        <tbody>
+        <%--@elvariable id="valuesPackageOptional" type="java.util.List<java.util.Map<java.lang.String, java.lang.String>>"--%>
+        <c:forEach var="p" items="${valuesPackageOptional}">
+            <tr style="border: 1px black">
+                <td style="border: 1px solid black; border-right: 3px solid black">${p.get("ID")}</td>
+                <td style="border: 1px solid black; border-right: 3px solid black">${p.get("NAME")}</td>
+                <td style="border: 1px solid black; border-right: 3px solid black">${p.get("VALUE")}</td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
 </div>
 <div class="Averages">
-    <h2>Average number of optional products per service package</h2>
-    <fieldset style="width:500px">
-        <% if ( request.getSession().getAttribute(ParameterRegistry.allAverageOptionalProduct) == null ) { %>
-            <c:out value="NO AVERAGES PER PACKAGE TO BE SHOWN"></c:out>
-        <% } else { %>
-            <%--@elvariable id="averages" type="List<java.lang.String>"--%>
-            <c:forEach var="a" items="${averages}">
-                <div>
-                    <c:out value="${a}"></c:out>
-                </div>
-            </c:forEach>
-        <% } %>
-    </fieldset>
+    <table style="width: 550px; border: 3px solid black; border-collapse: collapse">
+        <caption>
+            <br> <br>
+            <b style="font-size: 30px">Average number of optional products per service package</b>
+            <br><br>
+        </caption>
+
+        <thead style="background-color: darkgrey">
+        <tr style="border: 3px solid black">
+            <th colspan="1" style="border: 3px solid black"><b>PACKAGE ID</b></th>
+            <th colspan="1" style="border: 3px solid black"><b>PACKAGE NAME</b></th>
+            <th colspan="1" style="border: 3px solid black"><b>AVERAGE</b></th>
+        </tr>
+        </thead>
+        <tbody>
+        <%--@elvariable id="averages" type="java.util.List<java.util.Map<java.lang.String, java.lang.String>>"--%>
+        <c:forEach var="p" items="${averages}">
+            <tr style="border: 1px black">
+                <td style="border: 1px solid black; border-right: 3px solid black">${p.get("ID")}</td>
+                <td style="border: 1px solid black; border-right: 3px solid black">${p.get("NAME")}</td>
+                <td style="border: 1px solid black; border-right: 3px solid black">${p.get("AVERAGE")}</td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
 </div>
 <div class="BestOptional">
-    <h2>Best Optional product</h2>
-        <fieldset style="width:500px" >
-            <% if ( request.getSession().getAttribute("best") == null ) { %>
-                <c:out value="NO BEST PRODUCT"></c:out>
-            <% } else { %>
-                <%--@elvariable id="best" type="java.lang.String"--%>
-                <c:out value="BEST: ${best}"></c:out>
-            <% } %>
-        </fieldset>
+    <table style="width: 550px; border: 3px solid black; border-collapse: collapse">
+        <caption>
+            <br> <br>
+            <b style="font-size: 30px">Best optional product</b>
+            <br><br>
+        </caption>
+
+        <thead style="background-color: darkgrey">
+        <tr style="border: 3px solid black">
+            <th colspan="1" style="border: 3px solid black"><b>OPTIONAL ID</b></th>
+            <th colspan="1" style="border: 3px solid black"><b>OPTIONAL NAME</b></th>
+            <th colspan="1" style="border: 3px solid black"><b>VALUE OF SALES</b></th>
+        </tr>
+        </thead>
+        <tbody>
+        <%--@elvariable id="best" type="java.util.Map<java.lang.String, java.lang.String>"--%>
+        <tr style="border: 1px black">
+            <td style="border: 1px solid black; border-right: 3px solid black">${best.get("ID")}</td>
+            <td style="border: 1px solid black; border-right: 3px solid black">${best.get("NAME")}</td>
+            <td style="border: 1px solid black; border-right: 3px solid black">${best.get("VALUE")}</td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 <div class="InsolventClients">
-    <h2>Insolvent Clients</h2>
-    <fieldset style="width:500px">
-        <% if ( request.getSession().getAttribute(ParameterRegistry.insolventUsers) == null ) { %>
-            <c:out value="NO INSOLVENT USERS TO BE SHOWN"></c:out>
-        <% } else { %>
-            <%--@elvariable id="it.polimi.db2.telcoservice_SC42.ParameterRegistry.allPurcheasesPerPackageValidity" type="List<java.lang.String>"--%>
-            <c:forEach var="i" items="${insolvents}">
-                <div>
-                    <c:out value="${i}"></c:out>
-                </div>
-            </c:forEach>
-        <% } %>
-    </fieldset>
+    <table style="width: 550px; border: 3px solid black; border-collapse: collapse">
+        <caption>
+            <br> <br>
+            <b style="font-size: 30px">Insolvent clients</b>
+            <br><br>
+        </caption>
+
+        <thead style="background-color: darkgrey">
+        <tr style="border: 3px solid black">
+            <th colspan="1" style="border: 3px solid black"><b>USERNAME</b></th>
+            <th colspan="1" style="border: 3px solid black"><b>EMAIL</b></th>
+            <th colspan="1" style="border: 3px solid black"><b>REJECTIONS</b></th>
+        </tr>
+        </thead>
+        <tbody>
+            <% if(  request.getSession().getAttribute(ParameterRegistry.insolventUsers) == null  ) { %>
+                <td style="border: 1px solid black; border-right: 3px solid black"></td>
+                <td style="border: 1px solid black; border-right: 3px solid black"></td>
+                <td style="border: 1px solid black; border-right: 3px solid black"></td>
+            <% } else { %>
+                <%--@elvariable id="insolvents" type="java.util.List<java.util.Map<java.lang.String, java.lang.String>>"--%>
+                <c:forEach var="p" items="${insolvents}">
+                    <tr style="border: 1px black">
+                        <td style="border: 1px solid black; border-right: 3px solid black">${p.get("USERNAME")}</td>
+                        <td style="border: 1px solid black; border-right: 3px solid black">${p.get("EMAIL")}</td>
+                        <td style="border: 1px solid black; border-right: 3px solid black">${p.get("REJECTIONS")}</td>
+                    </tr>
+                </c:forEach>
+            <% } %>
+        </tbody>
+    </table>
 </div>
 <div class="SuspendedOrders">
-    <h2>Suspended Orders</h2>
-    <fieldset style="width:500px">
-        <% if ( request.getSession().getAttribute(ParameterRegistry.suspendedOrders) == null ) { %>
-            <c:out value="NO SUSPENDED ORDERS TO BE SHOWN"></c:out>
-        <% } else { %>
-        <%--@elvariable id="orders" type="List<java.lang.String>"--%>
-        <c:forEach var="o" items="${orders}">
-            <div>
-                <c:out value="${o}"></c:out>
-            </div>
-        </c:forEach>
-        <% } %>
-    </fieldset>
+    <table style="width: 550px; border: 3px solid black; border-collapse: collapse">
+        <caption>
+            <br> <br>
+            <b style="font-size: 30px">Suspended orders</b>
+            <br><br>
+        </caption>
+
+        <thead style="background-color: darkgrey">
+        <tr style="border: 3px solid black">
+            <th colspan="1" style="border: 3px solid black"><b>ORDER ID</b></th>
+            <th colspan="1" style="border: 3px solid black"><b>CREATION DATE</b></th>
+            <th colspan="1" style="border: 3px solid black"><b>CREATION HOUR</b></th>
+            <th colspan="1" style="border: 3px solid black"><b>DATE SUBSCRIPTION</b></th>
+            <th colspan="1" style="border: 3px solid black"><b>TOTAL COST</b></th>
+        </tr>
+        </thead>
+        <tbody>
+            <% if(  request.getSession().getAttribute(ParameterRegistry.suspendedOrders) == null  ) { %>
+                <td style="border: 1px solid black; border-right: 3px solid black"></td>
+                <td style="border: 1px solid black; border-right: 3px solid black"></td>
+                <td style="border: 1px solid black; border-right: 3px solid black"></td>
+                <td style="border: 1px solid black; border-right: 3px solid black"></td>
+                <td style="border: 1px solid black; border-right: 3px solid black"></td>
+            <% } else { %>
+                <%--@elvariable id="orders" type="java.util.List<java.util.Map<java.lang.String, java.lang.String>>"--%>
+                <c:forEach var="p" items="${orders}">
+                    <tr style="border: 1px black">
+                        <td style="border: 1px solid black; border-right: 3px solid black">${p.get("ORDER_ID")}</td>
+                        <td style="border: 1px solid black; border-right: 3px solid black">${p.get("CREATION_DATE")}</td>
+                        <td style="border: 1px solid black; border-right: 3px solid black">${p.get("CREATION_HOUR")}</td>
+                        <td style="border: 1px solid black; border-right: 3px solid black">${p.get("DATE_SUBSCRIPTION")}</td>
+                        <td style="border: 1px solid black; border-right: 3px solid black">${p.get("TOTAL_COST")}</td>
+                    </tr>
+                </c:forEach>
+            <% } %>
+        </tbody>
+    </table>
 </div>
 <div class="ActiveAlerts">
-    <h2>Active Alerts</h2>
-    <fieldset style="width:500px">
-        <% if ( request.getSession().getAttribute(ParameterRegistry.activeAlerts) == null ) { %>
-            <c:out value="NO ALERTS TO BE SHOWN"></c:out>
-        <% } else { %>
-            <%--@elvariable id="alerts" type="List<java.lang.String>"--%>
-            <c:forEach var="a" items="${alerts}">
-                <div>
-                    <c:out value="${a}"></c:out>
-                </div>
-            </c:forEach>
-        <% } %>
-    </fieldset>
+    <table style="width: 550px; border: 3px solid black; border-collapse: collapse">
+        <caption>
+            <br> <br>
+            <b style="font-size: 30px">Active alerts</b>
+            <br><br>
+        </caption>
+
+        <thead style="background-color: darkgrey">
+        <tr style="border: 3px solid black">
+            <th colspan="1" style="border: 3px solid black"><b>ORDER ID</b></th>
+            <th colspan="1" style="border: 3px solid black"><b>CREATION DATE</b></th>
+            <th colspan="1" style="border: 3px solid black"><b>CREATION HOUR</b></th>
+            <th colspan="1" style="border: 3px solid black"><b>DATE SUBSCRIPTION</b></th>
+            <th colspan="1" style="border: 3px solid black"><b>TOTAL COST</b></th>
+        </tr>
+        </thead>
+        <tbody>
+            <% if(  request.getSession().getAttribute(ParameterRegistry.activeAlerts) == null  ) { %>
+                <td style="border: 1px solid black; border-right: 3px solid black"></td>
+                <td style="border: 1px solid black; border-right: 3px solid black"></td>
+                <td style="border: 1px solid black; border-right: 3px solid black"></td>
+                <td style="border: 1px solid black; border-right: 3px solid black"></td>
+                <td style="border: 1px solid black; border-right: 3px solid black"></td>
+            <% } else { %>
+                <%--@elvariable id="alerts" type="java.util.List<java.util.Map<java.lang.String, java.lang.String>>"--%>
+                <c:forEach var="p" items="${alerts}">
+                    <tr style="border: 1px black">
+                        <td style="border: 1px solid black; border-right: 3px solid black">${p.get("USERNAME")}</td>
+                        <td style="border: 1px solid black; border-right: 3px solid black">${p.get("EMAIL")}</td>
+                        <td style="border: 1px solid black; border-right: 3px solid black">${p.get("AMOUNT")}</td>
+                        <td style="border: 1px solid black; border-right: 3px solid black">${p.get("REJECTION_DATE")}</td>
+                        <td style="border: 1px solid black; border-right: 3px solid black">${p.get("REJECTION_TIME")}</td>
+                    </tr>
+                </c:forEach>
+            <% } %>
+        </tbody>
+    </table>
 </div>
 
+<br> <br>
 </body>
 </html>

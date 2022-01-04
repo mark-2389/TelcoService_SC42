@@ -39,16 +39,16 @@ public class Auditing implements Serializable {
     @Column(name = "IS_ACTIVE", nullable = true)
     private Boolean isActive;
 
-    public Client getUsername() {
-        return username;
+    public String getUsername() {
+        return username.getUsername();
     }
 
     public void setUsername(Client username) {
         this.username = username;
     }
 
-    public Client getEmail() {
-        return email;
+    public String getEmail() {
+        return email.getEmail();
     }
 
     public void setEmail(Client email) {
