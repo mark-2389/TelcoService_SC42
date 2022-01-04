@@ -4,14 +4,13 @@ import it.polimi.db2.telcoservice_sc42.entities.Order;
 import it.polimi.db2.telcoservice_sc42.entities.ServicePackage;
 import it.polimi.db2.telcoservice_sc42.services.OrderService;
 import it.polimi.db2.telcoservice_sc42.services.PackageService;
+import it.polimi.db2.telcoservice_sc42.utils.ClientHomeSessionRegistry;
 import it.polimi.db2.telcoservice_sc42.utils.SessionAttributeRegistry;
 import jakarta.ejb.EJB;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 
 @WebServlet(name = "GoToHomePageServlet", value = "/HomePage")
@@ -93,12 +92,12 @@ public class GoToHomePageServlet extends HttpServlet {
     private void preparePackages(HttpServletRequest request) {
         List<ServicePackage> packages = packageService.findValidServicePackages();
 
-        request.getSession().setAttribute("packages", packages);
+        request.getSession().setAttribute(ClientHomeSessionRegistry.packages, packages);
     }
 
     private void prepareRejectedOrders(HttpServletRequest request, String username) {
         List<Order> rejectedOrders = orderService.findRejectedOrdersByClient(username);
 
-        request.getSession().setAttribute("rejected", rejectedOrders);
+        request.getSession().setAttribute(ClientHomeSessionRegistry.rejected, rejectedOrders);
     }
 }

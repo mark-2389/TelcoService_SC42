@@ -8,6 +8,7 @@ import it.polimi.db2.telcoservice_sc42.exception.ClientNotFoundException;
 import it.polimi.db2.telcoservice_sc42.exception.NonUniqueClientException;
 import it.polimi.db2.telcoservice_sc42.services.ClientService;
 import it.polimi.db2.telcoservice_sc42.services.EmployeeService;
+import it.polimi.db2.telcoservice_sc42.utils.BuySessionRegistry;
 import it.polimi.db2.telcoservice_sc42.utils.SessionAttributeRegistry;
 import jakarta.ejb.EJB;
 import jakarta.servlet.http.*;
@@ -63,7 +64,7 @@ public class LoginServlet extends HttpServlet {
     private void handleErrorRedirect(HttpServletRequest request, HttpServletResponse response, String error) throws IOException {
         String caller = getCaller(request);
 
-        request.getSession().setAttribute("error", error);
+        request.getSession().setAttribute(SessionAttributeRegistry.error, error);
 
         if ( caller != null ) {
             response.sendRedirect(request.getServletContext().getContextPath() + "/" + caller);
@@ -88,7 +89,7 @@ public class LoginServlet extends HttpServlet {
         }
 
         System.out.println("Login ok");
-        request.getSession().setAttribute("id", employee.getUsername());
+        request.getSession().setAttribute(SessionAttributeRegistry.employeeId, employee.getUsername());
         response.sendRedirect(request.getServletContext().getContextPath() + "/HomePage");
     }
 
@@ -106,11 +107,11 @@ public class LoginServlet extends HttpServlet {
             return;
         }
 
-        request.getSession().setAttribute("username", client.getUsername());
+        request.getSession().setAttribute(SessionAttributeRegistry.username, client.getUsername());
 
         String redirectPage = "/HomePage";
 
-        if ( request.getSession().getAttribute("selectedPackage") != null ) {
+        if ( request.getSession().getAttribute(BuySessionRegistry.selectedPackage) != null ) {
             // if a package has already been selected the user was in the confirmation page
             redirectPage = "/HTML/confirmation.jsp";
         }

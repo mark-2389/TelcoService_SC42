@@ -1,11 +1,11 @@
-<%--
+<%@ page import="it.polimi.db2.telcoservice_sc42.utils.SessionAttributeRegistry" %><%--
   Created by IntelliJ IDEA.
   User: niccolodidoni
   Date: 20/12/21
   Time: 17:20
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <title> LOGIN </title>
@@ -15,12 +15,12 @@
     <div class="form">
         <form action="../login" method="POST">
             <div class="form">
-                <%--@declare id="username"--%><label for="username">Username:</label>
-                <input type="text" name="username" required>
+                <label id="username_label" for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
             </div>
             <div class="form">
-                <%--@declare id="password"--%><label for="password">Password:</label>
-                <input type="password" name="password" required>
+                <label id="password_label" for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
             </div>
             <div class="form">
                 <input type="submit" class="btn" value="login" name="loginForm">
@@ -29,10 +29,14 @@
     </div>
     <%
         System.out.println(request.getSession(false));
-        if ( request.getSession(false) == null || request.getSession().getAttribute("error") != null  ) {
+
+        if ( request.getSession(false) != null ) {
+            String errorMsg = (String) request.getSession().getAttribute(SessionAttributeRegistry.error);
+            if ( errorMsg != null ) {
     %>
-    <p>Login error: <%= request.getSession().getAttribute("error") %></p>
+                <p>Login error: <%= errorMsg %></p>
     <%
+            }
         }
     %>
 </body>

@@ -1,5 +1,6 @@
 <%@ page import="java.util.List" %>
 <%@ page import="it.polimi.db2.telcoservice_sc42.entities.Order" %>
+<%@ page import="it.polimi.db2.telcoservice_sc42.utils.ClientHomeSessionRegistry" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
@@ -37,7 +38,7 @@
         <br/>
         <br/>
         <%
-            List<Order> rejected = (List<Order>) request.getSession().getAttribute("rejected");
+            List<Order> rejected = (List<Order>) request.getSession().getAttribute(ClientHomeSessionRegistry.rejected);
             if ( rejected != null && !rejected.isEmpty() ) {
         %>
         <h3>Rejected orders</h3>

@@ -16,16 +16,6 @@ public class SessionAttributeRegistry {
     public static final String error = "error";
 
     /**
-     * Employee's home attribute that saves all the available services.
-     */
-    public static final String allServices = "services";
-
-    /**
-     * Employee's home attribute that saves all the available optional products.
-     */
-    public static final String allOptionals = "optionals";
-
-    /**
      * Employee's home attribute that saves all added validities.
      */
     public static final String validities = "validities";

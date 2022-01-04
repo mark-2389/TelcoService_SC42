@@ -10,12 +10,12 @@
 <div class="landingLoginForm">
     <form action="login" method="POST">
         <div class="form">
-            <%--@declare id="username"--%><label for="username">Username:</label>
-            <input type="text" name="username" required>
+            <label id="username_label" for="log_username">Username:</label>
+            <input id="log_username" type="text" name="username" required>
         </div>
         <div class="form">
-            <%--@declare id="password"--%><label for="password">Password:</label>
-            <input type="password" name="password" required>
+            <label id="password_label" for="log_password">Password:</label>
+            <input id="log_password" type="password" name="password" required>
         </div>
         <div class="form">
             <input type="submit" class="btn" value="login" name="landingLoginForm">
@@ -27,16 +27,16 @@
 <div class="form">
     <form action="register" method="POST">
         <div class="form">
-            <%--@declare id="username"--%><label for="username">Username:</label>
-            <input type="text" name="username" required>
+            <label id="reg_username_label" for="reg_username">Username:</label>
+            <input type="text" id="reg_username" name="username" required>
         </div>
         <div class="form">
-            <%--@declare id="email"--%><label for="email">Mail:</label>
-            <input type="text" name="email" required>
+            <label id="reg_email_label" for="reg_email">Mail:</label>
+            <input type="text" id="reg_email" name="email" required>
         </div>
         <div class="form">
-            <%--@declare id="password"--%><label for="password">Password:</label>
-            <input type="password" name="password" required>
+            <label id="reg_password_label" for="reg_password">Password:</label>
+            <input id="reg_password" type="password" name="password" required>
         </div>
         <div class="form">
             <input type="submit" class="btn" value="register" name="landingRegister">
