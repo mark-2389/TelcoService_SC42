@@ -21,4 +21,11 @@ public enum ServiceType {
 
         return null;
     }
+
+    public boolean equal(String string) {
+        if ( string.equals("Fixed phone") && this == FIXED_PHONE ) return true;
+        else if ( string.equals("Mobile phone") && this == MOBILE_PHONE ) return true;
+        else if ( string.equals("Fixed internet") && this == FIXED_INTERNET ) return true;
+        else return string.equals("Mobile internet") && this == MOBILE_INTERNET;
+    }
 }

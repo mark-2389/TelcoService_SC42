@@ -1,10 +1,10 @@
 package it.polimi.db2.telcoservice_sc42.services;
 
 import it.polimi.db2.telcoservice_sc42.entities.*;
+import it.polimi.db2.telcoservice_sc42.exception.InvalidChoiceServiceException;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import jakarta.validation.Valid;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -56,7 +56,7 @@ public class PackageService {
      * @param serviceIds a list of id of the Services that the new ServicePackage offers
      * @param optionalIds a list of id of the OptionalProducts that have to be added to the Package
      */
-    public ServicePackage createServicePackage(String name, Date expirationDate, List<Integer> serviceIds, List<Integer> optionalIds, List<IndependentValidityPeriod> periods){
+    public ServicePackage createServicePackage(String name, Date expirationDate, List<Integer> serviceIds, List<Integer> optionalIds, List<IndependentValidityPeriod> periods) throws InvalidChoiceServiceException {
         ServicePackage servicePackage = new ServicePackage(name, expirationDate);
         System.out.println(servicePackage);
 
@@ -67,6 +67,9 @@ public class PackageService {
         for (int id: serviceIds) {
             services.add(em.find(Service.class, id));
         }
+
+        checkCorrectnessServices(services);
+
 
         // get the actual optionals
         for (int id: optionalIds) {
@@ -125,6 +128,15 @@ public class PackageService {
         System.out.println(validities);
 
         return servicePackage;
+    }
+
+    private void checkCorrectnessServices(List<Service> services) throws InvalidChoiceServiceException {
+        List<ServiceType> types = services.stream().map(Service::getType).collect(Collectors.toList());
+
+        for(ServiceType t : ServiceType.values())
+            if ( types.stream().filter(s -> s.equal(t.description())).count() > 1 )
+                throw new InvalidChoiceServiceException("Cannot choose two or more services of the same type");
+
     }
 
     public void modifyExpirationDate(int toModifyId, Date newDate){
