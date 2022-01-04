@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.util.List;
 
 @WebServlet(name = "paymentServlet", value = "/Payment")
 public class PaymentServlet extends HttpServlet {
@@ -37,6 +38,13 @@ public class PaymentServlet extends HttpServlet {
             return;
         }
 
+        List<String> attributes = BuySessionRegistry.getAllFields();
+        System.out.println("ATTRIBUTES: " + attributes);
+        for (String attribute: attributes) {
+            System.out.println("Setting " + attribute + " to null");
+            session.setAttribute(attribute, null);
+        }
+
         String msg;
         if ( handleExternalPayment() ) {
             // if the payment has been successful mark the order as accepted
@@ -56,6 +64,8 @@ public class PaymentServlet extends HttpServlet {
     }
 
     private boolean handleExternalPayment() {
-        return Math.random() > 0.5;
+        // return Math.random() > 1;
+        return Math.random() > 0;
+        // return Math.random() > 0.5;
     }
 }

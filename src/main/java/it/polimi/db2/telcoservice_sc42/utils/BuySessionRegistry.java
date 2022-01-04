@@ -1,5 +1,10 @@
 package it.polimi.db2.telcoservice_sc42.utils;
 
+import java.lang.reflect.Modifier;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class BuySessionRegistry extends SessionAttributeRegistry {
 
     /**
@@ -58,11 +63,27 @@ public class BuySessionRegistry extends SessionAttributeRegistry {
      */
     public static String chosenOptionalsDescriptions = "chosen_optionals_desc";
 
-
     /**
      * Holds a message that describes if the payment of an order happened successfully.
      * Type:  String
      */
     public static String paymentMsg = "payment_msg";
+
+    public static List<String> getAllFields() {
+        List<String> superFields = SessionAttributeRegistry.getAllFields();
+        System.out.println(superFields);
+
+        return Arrays.stream(BuySessionRegistry.class.getDeclaredFields())
+                .filter(f -> Modifier.isStatic(f.getModifiers()) && Modifier.isPublic(f.getModifiers()))
+                .map(f -> {
+                    try {
+                        return (String) f.get(String.class);
+                    } catch (IllegalAccessException e) {
+                        return null;
+                    }
+                })
+                .filter(f -> f != null && !superFields.contains(f))
+                .collect(Collectors.toList());
+    }
 
 }
