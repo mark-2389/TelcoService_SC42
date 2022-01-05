@@ -61,7 +61,7 @@
                 <c:forEach var="o" items="${optionals}">
                     <div>
                         <input type="checkbox" id="available_optionals" name="available_optional" value="${o.getId()}" >
-                        <label for="${o.getId()}">${o.toString()}</label>
+                        <label for="${o.getId()}">${o.clientString()}</label>
                     </div>
                 </c:forEach>
                 <h4>Starting date of subscription</h4>

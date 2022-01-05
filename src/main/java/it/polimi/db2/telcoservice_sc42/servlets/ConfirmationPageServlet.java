@@ -94,7 +94,7 @@ public class ConfirmationPageServlet extends HttpServlet {
             id = SafeParser.safeParseInteger(sid);
             if ( id != null ) {
                 optional = optionalService.findOptionalProductById(id);
-                optionals.add(optional.toString());
+                optionals.add(optional.clientString());
                 totalFee = totalFee.add(optional.getMonthlyFee());
             }
         }

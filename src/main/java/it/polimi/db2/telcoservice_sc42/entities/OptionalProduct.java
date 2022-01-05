@@ -1,5 +1,6 @@
 package it.polimi.db2.telcoservice_sc42.entities;
 
+import it.polimi.db2.telcoservice_sc42.utils.Representable;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -13,7 +14,7 @@ import java.util.Objects;
 @Table(name = "optional_product")
 @NamedQuery(name = "OptionalProduct.all", query = "SELECT p FROM OptionalProduct p")
 @NamedQuery(name = "OptionalProduct.valid", query = "SELECT p FROM OptionalProduct p WHERE p.expirationDate = null OR p.expirationDate >= current_date ")
-public class OptionalProduct implements Serializable {
+public class OptionalProduct implements Serializable, Representable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -66,6 +67,15 @@ public class OptionalProduct implements Serializable {
         this(name);
         this.monthlyFee = fee;
         this.expirationDate = expirationDate;
+    }
+
+    public String clientString() {
+        // maybe the id isn't needed
+        return name + " - " + monthlyFee + " €/month";
+    }
+
+    public String employeeString() {
+        return this.toString();
     }
 
     @Override
