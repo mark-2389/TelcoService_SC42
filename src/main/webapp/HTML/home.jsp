@@ -32,7 +32,7 @@
         <%--@elvariable id="packages" type="List<ServicePackage>"--%>
         <c:forEach var="p" items="${packages}">
             <div>
-                ${p.name}
+                ${p.clientString()}
             </div>
         </c:forEach>
         <br/>

@@ -22,7 +22,12 @@
     BigDecimal totalOptionalsFee = (BigDecimal) request.getSession().getAttribute(BuySessionRegistry.totalOptionalsFee);
     if ( totalOptionalsFee == null ) totalOptionalsFee = new BigDecimal(0);
     BigDecimal price = ( fee.add(totalOptionalsFee) ).multiply(BigDecimal.valueOf(months));
+
+    String servicePackage = (String) request.getSession().getAttribute(BuySessionRegistry.selectedPackageName);
 %>
+<div>
+    <h3> <%= servicePackage %></h3>
+</div>
 <div>
     <%
     Object attribute = request.getSession().getAttribute(BuySessionRegistry.selectedPackageName);

@@ -2,6 +2,8 @@ package it.polimi.db2.telcoservice_sc42.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+
+import it.polimi.db2.telcoservice_sc42.utils.Representable;
 import jakarta.persistence.*;
 
 import java.util.Collection;
@@ -10,7 +12,7 @@ import java.util.List;
 @Entity
 @Table(name = "service_package")
 @NamedQuery(name = "ServicePackage.valid", query = "SELECT p FROM ServicePackage p WHERE ( p.expirationDate >= current_date OR p.expirationDate = null ) ")
-public class ServicePackage implements Serializable {
+public class ServicePackage implements Serializable, Representable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -135,6 +137,16 @@ public class ServicePackage implements Serializable {
     public void removeOptionalProduct(OptionalProduct oldOptional) {
         getProducts().remove(oldOptional);
         oldOptional.removePackage(this);
+    }
+
+    @Override
+    public String clientString() {
+        return id + " - " + name;
+    }
+
+    @Override
+    public String employeeString() {
+        return this.toString();
     }
 
     @Override

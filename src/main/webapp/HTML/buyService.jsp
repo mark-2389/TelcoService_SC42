@@ -31,7 +31,7 @@
                     <c:forEach var="p" items="${packages}">
                         <option value="${p.getId()}"
                                 <c:if test="${p.getId() eq selectedPackage}">selected="selected"</c:if>
-                        >${p.getName()}</option>
+                        >${p.clientString()}</option>
                     </c:forEach>
                 </select>
                 <input type="submit" class="btn" value="select">

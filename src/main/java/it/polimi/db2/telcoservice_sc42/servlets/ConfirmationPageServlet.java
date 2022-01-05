@@ -55,7 +55,7 @@ public class ConfirmationPageServlet extends HttpServlet {
         ServicePackage servicePackage = packageService.findServicePackageById(id);
 
         // save the name of the selected package
-        request.getSession().setAttribute(BuySessionRegistry.selectedPackageName, servicePackage.getName());
+        request.getSession().setAttribute(BuySessionRegistry.selectedPackageName, servicePackage.clientString());
     }
 
     private void prepareValidityDetails(HttpServletRequest request) {
