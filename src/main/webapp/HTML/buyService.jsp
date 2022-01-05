@@ -53,7 +53,7 @@
                 <c:forEach var="v" items="${validities}">
                     <div>
                         <input type="radio" id="validity" name="available_validity" value="${v.getId()}" required>
-                        <label for="validity">${v.toString()}</label>
+                        <label for="validity">${v.clientString()}</label>
                     </div>
                 </c:forEach>
                 <h4>Available optional products</h4>

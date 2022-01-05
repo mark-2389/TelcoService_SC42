@@ -1,5 +1,6 @@
 package it.polimi.db2.telcoservice_sc42.entities;
 
+import it.polimi.db2.telcoservice_sc42.utils.Representable;
 import jakarta.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -8,7 +9,7 @@ import java.util.List;
 
 @Entity
 @IdClass(ValidityPrimaryKey.class)
-public class Validity implements Serializable {
+public class Validity implements Serializable, Representable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -88,6 +89,17 @@ public class Validity implements Serializable {
 
     public void setOrders(List<Order> orders) {
         this.orders = orders;
+    }
+
+    @Override
+    public String clientString() {
+        String s = period == 1 ? "" : "s";
+        return monthlyFee + " €/month for " + period + " month" + s;
+    }
+
+    @Override
+    public String employeeString() {
+        return this.toString();
     }
 
     @Override
