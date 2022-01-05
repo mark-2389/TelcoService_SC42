@@ -1,10 +1,8 @@
 package it.polimi.db2.telcoservice_sc42.servlets;
 
 import it.polimi.db2.telcoservice_sc42.services.SalesReportService;
-import it.polimi.db2.telcoservice_sc42.utils.ParameterRegistry;
-import it.polimi.db2.telcoservice_sc42.views.*;
+import it.polimi.db2.telcoservice_sc42.utils.EmployeeSessionRegistry;
 import jakarta.ejb.EJB;
-import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
@@ -41,7 +39,7 @@ public class LoadSalesReportServlet extends HttpServlet {
 
         // save the averages in the session, if there are some
         if ( averages.isEmpty() ) return;
-        request.getSession().setAttribute(ParameterRegistry.allAverageOptionalProduct, averages);
+        request.getSession().setAttribute(EmployeeSessionRegistry.allAverageOptionalProduct, averages);
     }
 
     private void loadBestOptionalProduct(HttpServletRequest request) {
@@ -49,7 +47,7 @@ public class LoadSalesReportServlet extends HttpServlet {
         String best = salesReportService.findBestOptionalProduct();
 
         // save the best product in the session,
-        request.getSession().setAttribute(ParameterRegistry.bestOptionalProduct, best);
+        request.getSession().setAttribute(EmployeeSessionRegistry.bestOptionalProduct, best);
     }
 
     private void loadPurchasesPerPackage(HttpServletRequest request) {
@@ -58,7 +56,7 @@ public class LoadSalesReportServlet extends HttpServlet {
 
         // save purchases in the session, if there are some
         if ( purchases.isEmpty() ) return;
-        request.getSession().setAttribute(ParameterRegistry.allPurchasesPerPackage, purchases);
+        request.getSession().setAttribute(EmployeeSessionRegistry.allPurchasesPerPackage, purchases);
     }
 
     private void loadPurchasesPerPackageValidity(HttpServletRequest request) {
@@ -67,7 +65,7 @@ public class LoadSalesReportServlet extends HttpServlet {
 
         // save purchasesValidity in the session, if there are some
         if ( purchasesValidity.isEmpty() ) return;
-        request.getSession().setAttribute(ParameterRegistry.allPurchasesPerPackageValidity, purchasesValidity);
+        request.getSession().setAttribute(EmployeeSessionRegistry.allPurchasesPerPackageValidity, purchasesValidity);
     }
 
     private void loadValuesPerPackageOptionalProduct(HttpServletRequest request) {
@@ -76,7 +74,7 @@ public class LoadSalesReportServlet extends HttpServlet {
 
         // save values in the session, if there are some
         if ( valuesOptional.isEmpty() ) return;
-        request.getSession().setAttribute(ParameterRegistry.allValuesPerPackageOptionalProduct, valuesOptional);
+        request.getSession().setAttribute(EmployeeSessionRegistry.allValuesPerPackageOptionalProduct, valuesOptional);
     }
 
     private void loadValuesPerPackageWithoutOp(HttpServletRequest request) {
@@ -85,7 +83,7 @@ public class LoadSalesReportServlet extends HttpServlet {
 
         // save values in the session, if there are some
         if ( values.isEmpty() ) return;
-        request.getSession().setAttribute(ParameterRegistry.allValuesPerPackageWithoutOp, values);
+        request.getSession().setAttribute(EmployeeSessionRegistry.allValuesPerPackageWithoutOp, values);
     }
 
     private void loadInsolventUsers(HttpServletRequest request) {
@@ -94,7 +92,7 @@ public class LoadSalesReportServlet extends HttpServlet {
 
         // save users in the session, if there are some
         if ( users.isEmpty() ) return;
-        request.getSession().setAttribute(ParameterRegistry.insolventUsers, users);
+        request.getSession().setAttribute(EmployeeSessionRegistry.insolventUsers, users);
     }
 
     private void loadSuspendedOrders(HttpServletRequest request) {
@@ -103,7 +101,7 @@ public class LoadSalesReportServlet extends HttpServlet {
 
         // save orders in the session, if there are some
         if ( orders.isEmpty() ) return;
-        request.getSession().setAttribute(ParameterRegistry.suspendedOrders, orders);
+        request.getSession().setAttribute(EmployeeSessionRegistry.suspendedOrders, orders);
     }
 
     private void loadAlerts(HttpServletRequest request) {
@@ -112,7 +110,7 @@ public class LoadSalesReportServlet extends HttpServlet {
 
         // save alerts in the session, if there are some
         if ( alerts.isEmpty() ) return;
-        request.getSession().setAttribute(ParameterRegistry.activeAlerts, alerts);
+        request.getSession().setAttribute(EmployeeSessionRegistry.activeAlerts, alerts);
     }
 
 

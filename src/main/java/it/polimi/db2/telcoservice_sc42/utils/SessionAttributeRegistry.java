@@ -11,14 +11,7 @@ import java.util.stream.Collectors;
 public class SessionAttributeRegistry {
     public static final String username = "username";
     public static final String employeeId = "id";
-
-
     public static final String error = "error";
-
-    /**
-     * Employee's home attribute that saves all added validities.
-     */
-    public static final String validities = "validities";
 
     private static List<String> fields = null;
 

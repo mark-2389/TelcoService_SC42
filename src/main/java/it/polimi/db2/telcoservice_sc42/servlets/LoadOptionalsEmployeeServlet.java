@@ -4,8 +4,8 @@ import it.polimi.db2.telcoservice_sc42.entities.OptionalProduct;
 import it.polimi.db2.telcoservice_sc42.entities.Service;
 import it.polimi.db2.telcoservice_sc42.services.OptionalProductService;
 import it.polimi.db2.telcoservice_sc42.services.ServiceService;
+import it.polimi.db2.telcoservice_sc42.utils.EmployeeSessionRegistry;
 import jakarta.ejb.EJB;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,9 +23,6 @@ public class LoadOptionalsEmployeeServlet extends HttpServlet {
     @EJB(name = "it.polimi.db2.telcoservice_sc42.services/ServiceService")
     ServiceService serviceService;
 
-    final String allOptionalsAttribute = "optionals";
-    final String allServicesAttribute = "services";
-
     public LoadOptionalsEmployeeServlet() { }
 
     @Override
@@ -41,7 +38,7 @@ public class LoadOptionalsEmployeeServlet extends HttpServlet {
         List<OptionalProduct> optionals = optionalProductService.findValidOptionalProducts();
 
         // save the optionals in the session
-        request.getSession().setAttribute(allOptionalsAttribute, optionals);
+        request.getSession().setAttribute(EmployeeSessionRegistry.allOptionalsAttribute, optionals);
     }
 
     private void loadServices(HttpServletRequest request) {
@@ -49,7 +46,7 @@ public class LoadOptionalsEmployeeServlet extends HttpServlet {
         List<Service> services = serviceService.findValidServices();
 
         // save the optionals in the session
-        request.getSession().setAttribute(allServicesAttribute, services);
+        request.getSession().setAttribute(EmployeeSessionRegistry.allServicesAttribute, services);
     }
 
     private void redirectSuccess(HttpServletRequest request, HttpServletResponse response) throws IOException {

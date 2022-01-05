@@ -7,6 +7,7 @@
 --%>
 <%@ page import="java.time.LocalDate" %>
 <%@ page import="it.polimi.db2.telcoservice_sc42.entities.ServiceType" %>
+<%@ page import="it.polimi.db2.telcoservice_sc42.utils.SessionAttributeRegistry" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
@@ -22,10 +23,11 @@
 </a>
 <br/>
 <%
-    if ( request.getSession().getAttribute("id") != null ) {
+    String id = (String) request.getSession().getAttribute(SessionAttributeRegistry.employeeId);
+    if ( id != null ) {
 %>
 <label>
-    Logged in as: <%= request.getSession().getAttribute("id") %>
+    Logged in as: <%= id %>
 </label>
 <%
     }
@@ -140,7 +142,7 @@
     </form>
     <div>
         <%
-            String error = (String) request.getSession().getAttribute("error");
+            String error = (String) request.getSession().getAttribute(SessionAttributeRegistry.error);
             if ( error != null ) {
         %>
         <p> <%= error %> </p>
@@ -203,7 +205,7 @@
     </form>
     <div>
         <%
-            error = (String) request.getSession().getAttribute("error");
+            error = (String) request.getSession().getAttribute(SessionAttributeRegistry.error);
             if ( error != null ) {
         %>
         <p> <%= error %> </p>

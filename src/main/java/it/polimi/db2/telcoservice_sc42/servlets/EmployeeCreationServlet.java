@@ -6,6 +6,7 @@ import it.polimi.db2.telcoservice_sc42.exception.BadlyFormattedOptionalProductEx
 import it.polimi.db2.telcoservice_sc42.services.OptionalProductService;
 import it.polimi.db2.telcoservice_sc42.services.PackageService;
 import it.polimi.db2.telcoservice_sc42.services.ServiceService;
+import it.polimi.db2.telcoservice_sc42.utils.EmployeeSessionRegistry;
 import it.polimi.db2.telcoservice_sc42.utils.ParameterRegistry;
 import it.polimi.db2.telcoservice_sc42.utils.SafeParser;
 import it.polimi.db2.telcoservice_sc42.utils.SessionAttributeRegistry;
@@ -110,7 +111,7 @@ public class EmployeeCreationServlet extends HttpServlet {
 
         IndependentValidityPeriod validityPeriod = new IndependentValidityPeriod(period, fee, expirationDate);
 
-        Object attribute = request.getSession().getAttribute(SessionAttributeRegistry.validities);
+        Object attribute = request.getSession().getAttribute(EmployeeSessionRegistry.validities);
         List<IndependentValidityPeriod> periods;
 
         // add the added validity to the list of validities or create a new list
@@ -127,7 +128,7 @@ public class EmployeeCreationServlet extends HttpServlet {
         }
 
         periods.add(validityPeriod);
-        request.getSession().setAttribute(SessionAttributeRegistry.validities, periods);
+        request.getSession().setAttribute(EmployeeSessionRegistry.validities, periods);
         System.out.println(periods);
 
         redirectSuccess(request, response);
@@ -255,7 +256,7 @@ public class EmployeeCreationServlet extends HttpServlet {
     }
 
     private void redirectFailure(HttpServletRequest request, HttpServletResponse response, String error) throws IOException {
-        request.getSession().setAttribute("error", error);
+        request.getSession().setAttribute(SessionAttributeRegistry.error, error);
         response.sendRedirect(request.getServletContext().getContextPath() + "/employee/home.jsp");
     }
 }
