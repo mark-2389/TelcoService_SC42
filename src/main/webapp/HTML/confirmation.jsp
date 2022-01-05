@@ -42,7 +42,7 @@
     <div>
         <%--@elvariable id="services" type="java.util.List<it.polimi.db2.telcoservice_sc42.entities.Service>"--%>
         <c:forEach var="service" items="${services}">
-            <c:out value="${service}"> </c:out>
+            <c:out value="${service.clientString()}"> </c:out>
         </c:forEach>
     </div>
 

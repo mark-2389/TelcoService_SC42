@@ -62,7 +62,7 @@
             <c:forEach var="s" items="${services}">
                 <div>
                     <input type="checkbox" id="services" name="services" value="${s.id}" >
-                    <label for="${s.id}">${s.toString()}</label>
+                    <label for="${s.id}">${s.employeeString()}</label>
                 </div>
             </c:forEach>
 

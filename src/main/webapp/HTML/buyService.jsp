@@ -46,7 +46,7 @@
                 <h4>Included services</h4>
                 <%--@elvariable id="services" type="List<it.polimi.db2.telcoservice_sc42.entities.Service>"--%>
                 <c:forEach var="s" items="${services}">
-                    <p>${s.toString()}</p>
+                    <p>${s.clientString()}</p>
                 </c:forEach>
                 <h4>Available validity periods</h4>
                 <%--@elvariable id="validities" type="List<it.polimi.db2.telcoservice_sc42.entities.Validity>"--%>

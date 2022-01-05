@@ -24,6 +24,14 @@ public class FixedInternetService extends Service {
 
     }
 
+    public String clientString() {
+        return super.clientString() + " - " + gigaByte + " gb ( " + gigaByteFee + " € )";
+    }
+
+    public String employeeString() {
+        return this.toString();
+    }
+
     public String toString() {
         String str = super.toString();
         return str + " - " + gigaByte + " gb ( " + gigaByteFee + " € )";

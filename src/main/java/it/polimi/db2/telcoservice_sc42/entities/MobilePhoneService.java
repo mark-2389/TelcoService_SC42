@@ -25,6 +25,16 @@ public class MobilePhoneService extends Service {
         // by default the empty constructor should set numeric values to 0 when not specified (please check)
     }
 
+    public String clientString() {
+        return super.clientString() + " - " +
+                minutes + " minutes ( " + minutesFee + " € ) - " +
+                sms + " sms ( " + smsFee + " € )";
+    }
+
+    public String employeeString() {
+        return this.toString();
+    }
+
     public String toString() {
         String str = super.toString();
         return str + " - " + minutes + " minutes ( " + minutesFee + " € ) - " + sms + " sms ( " + smsFee + " € )";

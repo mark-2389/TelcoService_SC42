@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import it.polimi.db2.telcoservice_sc42.utils.Representable;
 import jakarta.persistence.*;
 
 @Entity
@@ -16,14 +17,9 @@ import jakarta.persistence.*;
         name="TYPE",
         discriminatorType = DiscriminatorType.STRING
 )
-// @DiscriminatorFormula(
-//         "CASE WHEN `type` = 'FIXED_PHONE' THEN 'FIXED_PHONE' " +
-//              "WHEN `type` = 'MOBILE_PHONE' THEN 'MOBILE_PHONE' " +
-//              "WHEN `type` = 'MOBILE_INTERNET' OR type = 'FIXED_INTERNET' THEN 'INTERNET' end"
-// )
 @DiscriminatorValue("FIXED_PHONE")
 @NamedQuery(name = "Service.valid", query = "SELECT s FROM Service s WHERE ( s.expirationDate = NULL OR s.expirationDate >= current_date )")
-public class Service implements Serializable {
+public class Service implements Serializable, Representable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -58,6 +54,14 @@ public class Service implements Serializable {
     public Service(ServiceType type, Date expirationDate) {
         this.type = type;
         this.expirationDate = expirationDate;
+    }
+
+    public String clientString() {
+        return this.type.description();
+    }
+
+    public String employeeString() {
+        return toString();
     }
 
     public String toString() {
