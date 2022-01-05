@@ -1,6 +1,8 @@
 package it.polimi.db2.telcoservice_sc42.entities;
 
 import java.io.Serializable;
+
+import it.polimi.db2.telcoservice_sc42.utils.Representable;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -13,7 +15,7 @@ import java.util.Date;
 @Entity
 @Table(name = "`order`")
 @NamedQuery(name = "Order.rejected", query = "SELECT o FROM Order o WHERE o.status = it.polimi.db2.telcoservice_sc42.entities.OrderStatus.REJECTED")
-public class Order implements Serializable {
+public class Order implements Serializable, Representable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -155,6 +157,16 @@ public class Order implements Serializable {
 
     public void setStatus(OrderStatus status) {
         this.status = status;
+    }
+
+    @Override
+    public String clientString() {
+        return "Order for " + servicePackage.getName() + ": " + totalCost + " € (subscription started on " + subscriptionDate + ", valid through" + " )";
+    }
+
+    @Override
+    public String employeeString() {
+        return this.toString();
     }
 
     @Override
