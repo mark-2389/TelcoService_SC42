@@ -25,6 +25,20 @@ public class BuySessionRegistry extends SessionAttributeRegistry {
      */
     public static String chosenValidity = "chosen_validity";
 
+
+    /**
+     * Holds the id of the order currently processed. This session attribute is set only if the order is a rejected
+     * order.
+     * Type: Integer
+     */
+    public static String orderId = "orderId";
+
+    /**
+     * Holds the Services attached to the package the user wants to buy.
+     * Type: List<Service>
+     */
+    public static String services = "services";
+
     /**
      * Holds the number of months of the validity associated to the package the user wants to buy.
      * Type:  Integer

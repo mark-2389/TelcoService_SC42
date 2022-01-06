@@ -55,7 +55,7 @@ public class BuyPageServlet extends HttpServlet {
      * @param servicePackage the servicePackage that was chosen in advance and already retrieved
      */
     private void prepareRefresh(HttpServletRequest request, ServicePackage servicePackage) {
-        request.getSession().setAttribute("services", servicePackage.getServices());
+        request.getSession().setAttribute(BuySessionRegistry.services, servicePackage.getServices());
         request.getSession().setAttribute("validities", servicePackage.getValidities());
         request.getSession().setAttribute("optionals", servicePackage.getProducts());
     }

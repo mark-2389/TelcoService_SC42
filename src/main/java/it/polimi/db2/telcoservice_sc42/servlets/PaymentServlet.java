@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "paymentServlet", value = "/Payment")
@@ -25,17 +26,23 @@ public class PaymentServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
-        String username = (String) session.getAttribute(SessionAttributeRegistry.username);
-        int validityId = SafeParser.safeParseInteger((String) session.getAttribute(BuySessionRegistry.chosenValidity));
-        int packageId = (Integer) session.getAttribute(BuySessionRegistry.selectedPackage);
-        Date subscriptionDate = Date.valueOf( (String) session.getAttribute(BuySessionRegistry.chosenSubscription));
+        Integer orderId = (Integer) session.getAttribute(BuySessionRegistry.orderId);
 
-        // first we create the order
-        Integer orderId = orderService.createOrder(username, validityId, packageId, subscriptionDate);
+        // if we aren't handling a rejected order
+        if (orderId == null) {
+            String username = (String) session.getAttribute(SessionAttributeRegistry.username);
+            int validityId = SafeParser.safeParseInteger((String) session.getAttribute(BuySessionRegistry.chosenValidity));
+            int packageId = (Integer) session.getAttribute(BuySessionRegistry.selectedPackage);
+            Date subscriptionDate = Date.valueOf((String) session.getAttribute(BuySessionRegistry.chosenSubscription));
+            List<Integer> optionals = getOptionalProducts(session);
 
-        if ( orderId == null ) {
-            System.out.println("An error occurred while creating the order");
-            return;
+            // first we create the order
+            orderId = orderService.createOrder(username, validityId, packageId, subscriptionDate, optionals);
+
+            if (orderId == null) {
+                System.out.println("An error occurred while creating the order");
+                return;
+            }
         }
 
         List<String> attributes = BuySessionRegistry.getAllFields();
@@ -46,7 +53,7 @@ public class PaymentServlet extends HttpServlet {
         }
 
         String msg;
-        if ( handleExternalPayment() ) {
+        if ( handleExternalPayment(request) ) {
             // if the payment has been successful mark the order as accepted
             orderService.setOrderStatus(orderId, OrderStatus.ACCEPTED);
             msg = "Your order has been confirmed. ";
@@ -63,9 +70,30 @@ public class PaymentServlet extends HttpServlet {
         response.sendRedirect(request.getServletContext().getContextPath() + "/HomePage");
     }
 
-    private boolean handleExternalPayment() {
-        // return Math.random() > 1;
-        return Math.random() > 0;
-        // return Math.random() > 0.5;
+    private List<Integer> getOptionalProducts(HttpSession session) {
+        String[] optionalIds = (String[]) session.getAttribute(BuySessionRegistry.chosenOptionals);
+        List<Integer> optionalProducts = new ArrayList<>();
+
+        Integer id;
+        for (String sid: optionalIds) {
+            id = SafeParser.safeParseInteger(sid);
+            if (id != null) {
+                optionalProducts.add(id);
+            }
+        }
+
+        return optionalProducts;
+    }
+
+    private boolean handleExternalPayment(HttpServletRequest request) {
+        String fail = request.getParameter("fail");
+
+        System.out.println(fail);
+
+        if ( fail == null ) return Math.random() > 0.5;
+        if (fail.equals("1")) return false;
+        if (fail.equals("0")) return true;
+
+        return Math.random() > 0.5;
     }
 }

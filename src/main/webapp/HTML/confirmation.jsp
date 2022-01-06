@@ -77,6 +77,14 @@
         <form method="get" action="../Payment">
             <button type="submit" > BUY </button>
         </form>
+        <form method="get" action="../Payment">
+            <input hidden id="fail_input" name="fail" value="1" >
+            <button type="submit" > BUY(FAIL) </button>
+        </form>
+        <form method="get" action="../Payment">
+            <input hidden id="success_input" name="fail" value="0" >
+            <button type="submit" > BUY(SUCCESS) </button>
+        </form>
 <%
     } else {
 %>

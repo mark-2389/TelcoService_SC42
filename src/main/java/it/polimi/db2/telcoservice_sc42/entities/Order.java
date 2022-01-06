@@ -9,7 +9,10 @@ import java.math.BigDecimal;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Date;
+import java.util.ArrayList;
+import java.sql.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Entity
@@ -25,14 +28,12 @@ public class Order implements Serializable, Representable {
     @Column(name = "HOUR_CREATION")
     private Time creationHour;
 
-    @Temporal(TemporalType.DATE)
     @Column(name = "DATE_CREATION")
     private Date creationDate;
 
     @Column(name = "NUMBER_REJECTIONS")
     private Integer numberOfRejections;
 
-    @Temporal(TemporalType.DATE)
     @Column(name = "DATE_SUBSCRIPTION")
     private Date subscriptionDate;
 
@@ -65,15 +66,23 @@ public class Order implements Serializable, Representable {
     @JoinColumn(name = "CLIENT")
     private Client client;
 
+    @ManyToMany
+    @JoinTable(
+            name = "order_optional_composition",
+            joinColumns = @JoinColumn(name="ORDER_ID"),
+            inverseJoinColumns = @JoinColumn(name="OPTIONAL_PRODUCT_ID"))
+    private List<OptionalProduct> optionals;
+
     public Order() {
         this.id = 0;
         this.creationDate = java.sql.Date.valueOf(LocalDate.now());
         this.creationHour = Time.valueOf(LocalTime.now());
         this.status = OrderStatus.DEFAULT;
         this.numberOfRejections = 0;
+        this.optionals = new ArrayList<>();
     }
 
-    public Order(Client client, Validity validityId, ServicePackage packageId, Date subscriptionDate ) {
+    public Order(Client client, Validity validityId, ServicePackage packageId, Date subscriptionDate, List<OptionalProduct> optionals ) {
         this();
         this.client = client;
         this.validity = validityId;
@@ -88,6 +97,7 @@ public class Order implements Serializable, Representable {
         BigDecimal bigPeriod = new BigDecimal(validityId.getPeriod());
 
         this.totalCost = ( validityId.getMonthlyFee().add(totalFee) ).multiply(bigPeriod);
+        this.optionals = new ArrayList<>(optionals);
     }
     public int getId() {
         return id;
@@ -95,6 +105,23 @@ public class Order implements Serializable, Representable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public Validity getValidity() {
+        return this.validity;
+    }
+
+    public Integer getValidityId() {
+        if ( this.validity == null ) return null;
+        return validity.getId();
+    }
+
+    public List<OptionalProduct> getOptionals() {
+        return optionals;
+    }
+
+    public List<Integer> getOptionalIds() {
+        return getOptionals().stream().map(OptionalProduct::getId).collect(Collectors.toList());
     }
 
     public Time getHour() {
@@ -145,6 +172,11 @@ public class Order implements Serializable, Representable {
 
     public ServicePackage getPackage() {
         return servicePackage;
+    }
+
+    public Integer getPackageId() {
+        if ( servicePackage == null ) return null;
+        return servicePackage.getId();
     }
 
     public void setPackage(ServicePackage servicePackage) {

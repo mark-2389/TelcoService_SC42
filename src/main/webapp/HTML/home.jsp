@@ -42,10 +42,11 @@
             if ( rejected != null && !rejected.isEmpty() ) {
         %>
         <h3>Rejected orders</h3>
+        <p>Click on a rejected order to pay it</p>
         <%--@elvariable id="rejected" type="List<Order>"--%>
         <c:forEach var="o" items="${rejected}">
             <div>
-                ${o.getPackage().getName()}
+                <a href="../confirmation?order=${o.getId()}"> ${o.getPackage().getName()} <a>
                 <br/>
                 ${o.getTotalCost()}
                 <br/>

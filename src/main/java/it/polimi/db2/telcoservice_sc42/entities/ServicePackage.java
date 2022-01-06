@@ -1,6 +1,7 @@
 package it.polimi.db2.telcoservice_sc42.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 
 import it.polimi.db2.telcoservice_sc42.utils.Representable;
@@ -8,6 +9,7 @@ import jakarta.persistence.*;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "service_package")
@@ -97,6 +99,11 @@ public class ServicePackage implements Serializable, Representable {
 
     public void setServices(List<Service> services) {
         this.services = services;
+    }
+
+    public List<Integer> getServiceIds() {
+        if ( services == null ) return new ArrayList<>();
+        return services.stream().map(Service::getId).collect(Collectors.toList());
     }
 
     public List<OptionalProduct> getProducts() {
