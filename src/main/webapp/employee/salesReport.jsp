@@ -1,4 +1,4 @@
-<%@ page import="it.polimi.db2.telcoservice_sc42.utils.ParameterRegistry" %>
+<%@ page import="it.polimi.db2.telcoservice_sc42.utils.EmployeeSessionRegistry" %>
 <%--
   Created by IntelliJ IDEA.
   User: Mark
@@ -200,7 +200,7 @@
         </tr>
         </thead>
         <tbody>
-            <% if(  request.getSession().getAttribute(ParameterRegistry.insolventUsers) == null  ) { %>
+            <% if(  request.getSession().getAttribute(EmployeeSessionRegistry.insolventUsers) == null  ) { %>
                 <td style="border: 1px solid black; border-right: 3px solid black"></td>
                 <td style="border: 1px solid black; border-right: 3px solid black"></td>
                 <td style="border: 1px solid black; border-right: 3px solid black"></td>
@@ -235,7 +235,7 @@
         </tr>
         </thead>
         <tbody>
-            <% if(  request.getSession().getAttribute(ParameterRegistry.suspendedOrders) == null  ) { %>
+            <% if(  request.getSession().getAttribute(EmployeeSessionRegistry.suspendedOrders) == null  ) { %>
                 <td style="border: 1px solid black; border-right: 3px solid black"></td>
                 <td style="border: 1px solid black; border-right: 3px solid black"></td>
                 <td style="border: 1px solid black; border-right: 3px solid black"></td>
@@ -274,7 +274,7 @@
         </tr>
         </thead>
         <tbody>
-            <% if(  request.getSession().getAttribute(ParameterRegistry.activeAlerts) == null  ) { %>
+            <% if(  request.getSession().getAttribute(EmployeeSessionRegistry.activeAlerts) == null  ) { %>
                 <td style="border: 1px solid black; border-right: 3px solid black"></td>
                 <td style="border: 1px solid black; border-right: 3px solid black"></td>
                 <td style="border: 1px solid black; border-right: 3px solid black"></td>
