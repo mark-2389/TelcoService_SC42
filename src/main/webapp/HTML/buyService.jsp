@@ -14,7 +14,27 @@
     <title> BUY </title>
 </head>
 <body>
-
+<div>
+    <h1 style="background-color:cadetblue">BUY SERVICE PACKAGE PAGE</h1>
+</div>
+<hr style="height:2px;border-width:0;color:darkblue;background-color:darkblue">
+<div>
+    <%
+        if ( request.getSession().getAttribute("username") != null ) {
+    %>
+        <label>
+            Logged in as: <b> <%= request.getSession().getAttribute("username") %> </b>
+        </label>
+    <%
+        }
+    %>
+</div>
+<br>
+<div>
+    <a href="home.jsp">GO BACK TO HOME PAGE</a>
+</div>
+<hr style="height:2px;border-width:0;color:darkblue;background-color:darkblue">
+<br>
 <div>
     <% Integer packageId = (Integer) request.getSession().getAttribute(BuySessionRegistry.selectedPackage); %>
 

@@ -8,6 +8,7 @@ import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @WebServlet(name = "LoadSalesReportServlet", value = "/load_reports")
 public class LoadSalesReportServlet extends HttpServlet {
@@ -35,7 +36,7 @@ public class LoadSalesReportServlet extends HttpServlet {
 
     private void loadAverageOptionalProduct(HttpServletRequest request) {
         // get all the averages per optionalProduct per package
-        List<String> averages = salesReportService.getAllAveragesOptionalProductsPerPackage();
+        List<Map<String, String>> averages = salesReportService.getAllAveragesOptionalProductsPerPackage();
 
         // save the averages in the session, if there are some
         if ( averages.isEmpty() ) return;
@@ -44,7 +45,7 @@ public class LoadSalesReportServlet extends HttpServlet {
 
     private void loadBestOptionalProduct(HttpServletRequest request) {
         // retrieve the best optionalProduct
-        String best = salesReportService.findBestOptionalProduct();
+        Map<String, String> best = salesReportService.findBestOptionalProduct();
 
         // save the best product in the session,
         request.getSession().setAttribute(EmployeeSessionRegistry.bestOptionalProduct, best);
@@ -52,7 +53,7 @@ public class LoadSalesReportServlet extends HttpServlet {
 
     private void loadPurchasesPerPackage(HttpServletRequest request) {
         // get all purchases per package
-        List<String> purchases = salesReportService.getAllPurchasesPerPackage();
+        List<Map<String, String>> purchases = salesReportService.getAllPurchasesPerPackage();
 
         // save purchases in the session, if there are some
         if ( purchases.isEmpty() ) return;
@@ -61,7 +62,7 @@ public class LoadSalesReportServlet extends HttpServlet {
 
     private void loadPurchasesPerPackageValidity(HttpServletRequest request) {
         // retrieve purchases per package and validity
-        List<String> purchasesValidity = salesReportService.getAllPurchasesPerPackageValidity();
+        List<Map<String, String>> purchasesValidity = salesReportService.getAllPurchasesPerPackageValidity();
 
         // save purchasesValidity in the session, if there are some
         if ( purchasesValidity.isEmpty() ) return;
@@ -70,7 +71,7 @@ public class LoadSalesReportServlet extends HttpServlet {
 
     private void loadValuesPerPackageOptionalProduct(HttpServletRequest request) {
         // retrieve values of sales per package with OptionalProducts
-        List<String> valuesOptional = salesReportService.getAllValuePerPackageWithOptionalProduct();
+        List<Map<String, String>> valuesOptional = salesReportService.getAllValuePerPackageWithOptionalProduct();
 
         // save values in the session, if there are some
         if ( valuesOptional.isEmpty() ) return;
@@ -79,7 +80,7 @@ public class LoadSalesReportServlet extends HttpServlet {
 
     private void loadValuesPerPackageWithoutOp(HttpServletRequest request) {
         // retrieve values of sales per package with OptionalProducts
-        List<String> values = salesReportService.getAllValuePerPackageWithoutOp();
+        List<Map<String, String>> values = salesReportService.getAllValuePerPackageWithoutOp();
 
         // save values in the session, if there are some
         if ( values.isEmpty() ) return;
@@ -88,7 +89,7 @@ public class LoadSalesReportServlet extends HttpServlet {
 
     private void loadInsolventUsers(HttpServletRequest request) {
         // retrieve insolvent Users
-        List<String> users = salesReportService.insolventUsers();
+        List<Map<String, String>> users = salesReportService.insolventUsers();
 
         // save users in the session, if there are some
         if ( users.isEmpty() ) return;
@@ -97,7 +98,7 @@ public class LoadSalesReportServlet extends HttpServlet {
 
     private void loadSuspendedOrders(HttpServletRequest request) {
         // retrieve suspended Orders
-        List<String> orders = salesReportService.suspendedOrders();
+        List<Map<String, String>> orders = salesReportService.suspendedOrders();
 
         // save orders in the session, if there are some
         if ( orders.isEmpty() ) return;
@@ -106,7 +107,7 @@ public class LoadSalesReportServlet extends HttpServlet {
 
     private void loadAlerts(HttpServletRequest request) {
         // retrieve active alerts
-        List<String> alerts = salesReportService.getAlerts();
+        List<Map<String, String>> alerts = salesReportService.getAlerts();
 
         // save alerts in the session, if there are some
         if ( alerts.isEmpty() ) return;

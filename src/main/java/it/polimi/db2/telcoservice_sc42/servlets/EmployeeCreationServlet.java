@@ -5,6 +5,7 @@ import it.polimi.db2.telcoservice_sc42.entities.ServicePackage;
 import it.polimi.db2.telcoservice_sc42.entities.ServiceType;
 import it.polimi.db2.telcoservice_sc42.exception.BadParametersException;
 import it.polimi.db2.telcoservice_sc42.exception.BadlyFormattedOptionalProductException;
+import it.polimi.db2.telcoservice_sc42.exception.InvalidChoiceServiceException;
 import it.polimi.db2.telcoservice_sc42.services.OptionalProductService;
 import it.polimi.db2.telcoservice_sc42.services.PackageService;
 import it.polimi.db2.telcoservice_sc42.services.ServiceService;
@@ -271,7 +272,13 @@ public class EmployeeCreationServlet extends HttpServlet {
         }
 
 
-        ServicePackage sp = packageService.createServicePackage(name, expirationDate, services, optionals, periods);
+        try {
+            ServicePackage sp = packageService.createServicePackage(name, expirationDate, services, optionals, periods);
+        } catch (InvalidChoiceServiceException e) {
+            System.out.println(e.getMessage());
+            redirectFailure(request, response, e.getMessage());
+            return;
+        }
 
         // List<Validity> validities = periods.stream().map(p -> p.getValidityWith(sp)).collect(Collectors.toList());
         // for (Validity v: validities) {

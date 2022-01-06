@@ -57,7 +57,7 @@
         <%
             }
         %>
-        <!-- TODO create servlet to prepare new page and redirection -->
+
         <a href="buyService.jsp"> START BUYING </a>
     </body>
 </html>
