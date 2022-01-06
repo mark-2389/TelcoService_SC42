@@ -1,6 +1,6 @@
 -- Average number of optional products sold together with each service package
 
-create table average_OpProducts_per_ServPackage (
+create table IF NOT EXISTS average_OpProducts_per_ServPackage (
 		PACKAGE_ID int,
         AVERAGE_PRODUCTS int
 );
@@ -25,7 +25,7 @@ begin
 	
 	if ( old.is_valid <> 'ACCEPTED' and new.is_valid = 'ACCEPTED' ) then
     
-		create temporary table prod_per_order ( SELECT O.ID as ID, count(OPTIONAL_PRODUCT_ID) as NUM_PROD
+		create temporary table IF NOT EXISTS prod_per_order ( SELECT O.ID as ID, count(OPTIONAL_PRODUCT_ID) as NUM_PROD
 												FROM telcoservice_db.order O  LEFT JOIN order_optional_composition OpComp on O.ID = OpComp.ORDER_ID
 												WHERE O.PACKAGE_ID = new.PACKAGE_ID
 												GROUP BY O.ID );

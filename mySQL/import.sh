@@ -2,12 +2,15 @@
 
 USER='telco'
 PASSWORD='jAv_4:Ski:FO'
-FILE_PATH=Triggers
+FILE_PATHS="Tables Triggers Views"
 
-for FILE in "${FILE_PATH}"/*.sql
+for PATH in ${FILE_PATHS};
 do
-   echo 'importing '"${FILE}"
-   mysql -u$USER -p$PASSWORD < "${FILE}";
-   echo ' '
-   echo ' '
+  for FILE in "${PATH}"/*.sql
+  do
+     echo 'importing '"${FILE}"
+     mysql -u$USER -p$PASSWORD < "${FILE}";
+     echo ' '
+     echo ' '
+  done
 done

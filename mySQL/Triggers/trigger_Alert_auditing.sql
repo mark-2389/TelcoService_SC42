@@ -5,7 +5,7 @@ create trigger alert_auditing
 after update on telcoservice_db.client
 for each row
 begin
-
+    -- TODO: is it correct to have a value of 0 when inserting a tuple?
 	if ( old.number_rejections = 2 AND new.number_rejections = 3 ) then
 		insert into auditing values ( new.username, ( SELECT C.email
 								 	                   FROM telcoservice_db.client C

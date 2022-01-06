@@ -1,6 +1,6 @@
 -- Number of total purchases per package and validity period
 
-create table purchase_per_package_validity (
+create table IF NOT EXISTS purchase_per_package_validity (
 	PACKAGE_ID int,
     VALIDITY_ID int,
     PURCHASES int

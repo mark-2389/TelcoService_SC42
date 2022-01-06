@@ -8,6 +8,10 @@
 <%@ page import="java.time.LocalDate" %>
 <%@ page import="it.polimi.db2.telcoservice_sc42.entities.ServiceType" %>
 <%@ page import="it.polimi.db2.telcoservice_sc42.utils.SessionAttributeRegistry" %>
+<%@ page import="it.polimi.db2.telcoservice_sc42.utils.BuySessionRegistry" %>
+<%@ page import="it.polimi.db2.telcoservice_sc42.utils.EmployeeSessionRegistry" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.sql.Date" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
@@ -39,13 +43,27 @@
     </a>
 </div>
 
+
+<%
+    // preprocessing for the package creation form
+    @SuppressWarnings("unchecked")
+    List<Integer> selectedOptionals = (List<Integer>) session.getAttribute(EmployeeSessionRegistry.selectedOptionals);
+
+    @SuppressWarnings("unchecked")
+    List<Integer> selectedServices = (List<Integer>) session.getAttribute(EmployeeSessionRegistry.selectedServices);
+
+    String name = (String) session.getAttribute(EmployeeSessionRegistry.selectedServiceName);
+    if ( name == null ) name = "";
+
+    Date expiration = (Date) session.getAttribute(EmployeeSessionRegistry.selectedExpiration);
+%>
 <div class="packageForm">
     <h3> Service Package Creation </h3>
     <form action="../new" method="POST">
         <div>
             <div class="form">
                 <label for="package_name_input">Name:</label>
-                <input type="text" id="package_name_input" name="package_name_input" required>
+                <input type="text" id="package_name_input" name="package_name_input" value="<%= name %>" required>
             </div>
             <div class="form">
                 <input type="radio" id="package_no_expiration_date" name="package_expiration_date" value="no" checked>

@@ -1,5 +1,6 @@
 <%@ page import="java.math.BigDecimal" %>
 <%@ page import="it.polimi.db2.telcoservice_sc42.utils.BuySessionRegistry" %>
+<%@ page import="java.text.DecimalFormat" %>
 <%--
   Created by IntelliJ IDEA.
   User: niccolodidoni
@@ -39,7 +40,7 @@
 
 <div>
     <h5>Number of months:</h5><%= months %>
-    <h5>Monthly fee:</h5><%= fee %>
+    <h5>Monthly fee:</h5><%= new DecimalFormat("#.00").format(fee) %>
 </div>
 
 <div>

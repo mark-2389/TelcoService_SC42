@@ -1,6 +1,6 @@
 -- Number of total purchases per package
 
-create table purchase_per_package (
+create table IF NOT EXISTS purchase_per_package (
 	PACKAGE_ID int,
     PURCHASES int
 );

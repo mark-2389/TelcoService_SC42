@@ -20,6 +20,26 @@ public class EmployeeSessionRegistry extends SessionAttributeRegistry {
      */
     public static final String validities = "validities";
 
+    /**
+     * The name of the service package inserted by the employee.
+     * Type: String
+     */
+    public static final String selectedServiceName = "selected_service_name";
+
+    /**
+     * The name of the service package inserted by the employee.
+     * Type: String
+     */
+    public static final String selectedOptionals = "selected_optionals";
+
+    /**
+     * The name of the service package inserted by the employee.
+     * Type: String
+     */
+    public static final String selectedServices = "selected_services";
+
+    public static final String selectedExpiration = "selected_expiration_date";
+
     // The following hold the values needed for employee's sales report.
     public static final String allAverageOptionalProduct = "averages";
     public static final String bestOptionalProduct = "best";

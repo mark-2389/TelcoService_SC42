@@ -49,7 +49,16 @@ BEGIN
         );
 
         -- a table containing the id of an optional product and the relative total value
-        CREATE TEMPORARY TABLE new_volume_of_sales (
+        CREATE TEMPORARY TABLE IF NOT EXISTS new_volume_of_sales1 (
+            SELECT OP.id AS Id, OP.monthly_fee * duration AS total_value
+            FROM telcoservice_db.Order_Optional_Composition OOC JOIN telcoservice_db.optional_product as OP
+                                                                     ON OOC.optional_Product_Id = OP.id
+            WHERE OOC.order_Id = new.id -- select only the optionals of the new order
+        );
+
+        -- apparently we can't use the same temporary table twice
+        -- TODO: consider adding a buffer table instead
+        CREATE TEMPORARY TABLE IF NOT EXISTS new_volume_of_sales (
             SELECT OP.id AS Id, OP.monthly_fee * duration AS total_value
             FROM telcoservice_db.Order_Optional_Composition OOC JOIN telcoservice_db.optional_product as OP
                                                                      ON OOC.optional_Product_Id = OP.id
@@ -65,7 +74,7 @@ BEGIN
         )
         WHERE VOS.id IN (
             SELECT id
-            FROM new_volume_of_sales
+            FROM new_volume_of_sales1
         );
     END IF;
 END; //

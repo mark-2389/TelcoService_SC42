@@ -1,16 +1,15 @@
 package it.polimi.db2.telcoservice_sc42.entities;
 
-import java.io.Serializable;
-
 import it.polimi.db2.telcoservice_sc42.utils.Representable;
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.sql.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -144,8 +143,8 @@ public class Order implements Serializable, Representable {
         return numberOfRejections;
     }
 
-    public void setNumberOfRejections(int numberOfRejections) {
-        this.numberOfRejections = numberOfRejections;
+    public void incrementNumberOfRejections(int by) {
+        this.numberOfRejections += by;
     }
 
     public Client getClient() {

@@ -2,6 +2,8 @@ package it.polimi.db2.telcoservice_sc42.entities;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * A Validity that can be used to detach a Validity from a ServicePackage
@@ -18,9 +20,28 @@ public class IndependentValidityPeriod {
         this.expirationDate = expirationDate;
     }
 
+    /**
+     * Cut a the decimal part of a number.
+     *
+     * For instance if number is 3.56742 and decimals is 2 then "3.56" is returned.
+     * @param number the number to be cut.
+     * @param decimals the number of decimals to be kept.
+     * @return a cut version of the input.
+     */
+    private String cutDecimal(BigDecimal number, int decimals) {
+        String s = number.toString();
+        List<String> parts = Arrays.asList(s.split("\\."));
+
+        if ( parts.size() < 2 ) {
+            return s;
+        }
+
+        return parts.get(0) + "." + parts.get(1).substring(0, decimals);
+    }
+
     @Override
     public String toString() {
-        return period + "months - " + fee + "€/month";
+        return period + "months - " + cutDecimal(fee, 2) + "€/month";
     }
 
     public boolean equals(Object other) {

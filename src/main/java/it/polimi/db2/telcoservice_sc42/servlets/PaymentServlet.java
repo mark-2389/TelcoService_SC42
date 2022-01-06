@@ -56,6 +56,7 @@ public class PaymentServlet extends HttpServlet {
         if ( handleExternalPayment(request) ) {
             // if the payment has been successful mark the order as accepted
             orderService.setOrderStatus(orderId, OrderStatus.ACCEPTED);
+
             msg = "Your order has been confirmed. ";
         } else {
             // if the payment has been unsuccessful, mark the order as rejected.

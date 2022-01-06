@@ -1,4 +1,5 @@
 <%@ page import="it.polimi.db2.telcoservice_sc42.utils.ParameterRegistry" %>
+<%@ page import="it.polimi.db2.telcoservice_sc42.utils.EmployeeSessionRegistry" %>
 <%--
   Created by IntelliJ IDEA.
   User: Mark
@@ -24,7 +25,7 @@
     <h2>Purchases per package</h2>
     <fieldset style="width:500px">
 
-        <% if ( request.getSession().getAttribute(ParameterRegistry.allPurchasesPerPackage) == null ) { %>
+        <% if ( request.getSession().getAttribute(EmployeeSessionRegistry.allPurchasesPerPackage) == null ) { %>
             <c:out value="NO PURCHASES TO BE SHOWN"> </c:out>
         <% } else { %>
             <%--@elvariable id="purchases" type="List<java.lang.String>"--%>
@@ -40,7 +41,7 @@
 <div class="PurchasesWithValidity">
     <h2>Purchases per package and Validity</h2>
     <fieldset style="width:500px">
-        <% if ( request.getSession().getAttribute(ParameterRegistry.allPurchasesPerPackageValidity) == null ) { %>
+        <% if ( request.getSession().getAttribute(EmployeeSessionRegistry.allPurchasesPerPackageValidity) == null ) { %>
             <c:out value="NO PURCHASES PER PACKAGE AND VALIDITY TO BE SHOWN"> </c:out>
         <% } else { %>
             <%--@elvariable id="purchasesValidity" type="List<java.lang.String>"--%>
@@ -55,7 +56,7 @@
 <div class="ValuesWithoutOp">
     <h2>Total value of sales per package without optional products</h2>
     <fieldset style="width:500px">
-        <% if ( request.getSession().getAttribute(ParameterRegistry.allValuesPerPackageWithoutOp) == null ) { %>
+        <% if ( request.getSession().getAttribute(EmployeeSessionRegistry.allValuesPerPackageWithoutOp) == null ) { %>
             <c:out value="NO SALES PER PACKAGE TO BE SHOWN"> </c:out>
         <% } else { %>
             <%--@elvariable id="values" type="List<java.lang.String>"--%>
@@ -70,7 +71,7 @@
 <div class="ValuesWithOp">
     <h2>Total value of sales per package with optional products</h2>
     <fieldset style="width:500px">
-        <% if ( request.getSession().getAttribute(ParameterRegistry.allValuesPerPackageOptionalProduct) == null ) { %>
+        <% if ( request.getSession().getAttribute(EmployeeSessionRegistry.allValuesPerPackageOptionalProduct) == null ) { %>
             <c:out value="NO SALES PER PACKAGE WITH OPTIONAL PRODUCT TO BE SHOWN"> </c:out>
         <% } else { %>
             <%--@elvariable id="valuesPackageOptional" type="List<java.lang.String>"--%>
@@ -85,7 +86,7 @@
 <div class="Averages">
     <h2>Average number of optional products per service package</h2>
     <fieldset style="width:500px">
-        <% if ( request.getSession().getAttribute(ParameterRegistry.allAverageOptionalProduct) == null ) { %>
+        <% if ( request.getSession().getAttribute(EmployeeSessionRegistry.allAverageOptionalProduct) == null ) { %>
             <c:out value="NO AVERAGES PER PACKAGE TO BE SHOWN"> </c:out>
         <% } else { %>
             <%--@elvariable id="averages" type="List<java.lang.String>"--%>
@@ -111,10 +112,10 @@
 <div class="InsolventClients">
     <h2>Insolvent Clients</h2>
     <fieldset style="width:500px">
-        <% if ( request.getSession().getAttribute(ParameterRegistry.insolventUsers) == null ) { %>
+        <% if ( request.getSession().getAttribute(EmployeeSessionRegistry.insolventUsers) == null ) { %>
             <c:out value="NO INSOLVENT USERS TO BE SHOWN"> </c:out>
         <% } else { %>
-            <%--@elvariable id="it.polimi.db2.telcoservice_SC42.ParameterRegistry.allPurcheasesPerPackageValidity" type="List<java.lang.String>"--%>
+            <%--@elvariable id="it.polimi.db2.telcoservice_SC42.EmployeeSessionRegistry.allPurcheasesPerPackageValidity" type="List<java.lang.String>"--%>
             <c:forEach var="i" items="${insolvents}">
                 <div>
                     <c:out value="${i}"> </c:out>
@@ -126,7 +127,7 @@
 <div class="SuspendedOrders">
     <h2>Suspended Orders</h2>
     <fieldset style="width:500px">
-        <% if ( request.getSession().getAttribute(ParameterRegistry.suspendedOrders) == null ) { %>
+        <% if ( request.getSession().getAttribute(EmployeeSessionRegistry.suspendedOrders) == null ) { %>
             <c:out value="NO SUSPENDED ORDERS TO BE SHOWN"> </c:out>
         <% } else { %>
         <%--@elvariable id="orders" type="List<java.lang.String>"--%>
@@ -141,7 +142,7 @@
 <div class="ActiveAlerts">
     <h2>Active Alerts</h2>
     <fieldset style="width:500px">
-        <% if ( request.getSession().getAttribute(ParameterRegistry.activeAlerts) == null ) { %>
+        <% if ( request.getSession().getAttribute(EmployeeSessionRegistry.activeAlerts) == null ) { %>
             <c:out value="NO ALERTS TO BE SHOWN"> </c:out>
         <% } else { %>
             <%--@elvariable id="alerts" type="List<java.lang.String>"--%>

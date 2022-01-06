@@ -2,6 +2,7 @@ package it.polimi.db2.telcoservice_sc42.entities;
 
 import it.polimi.db2.telcoservice_sc42.utils.Representable;
 import jakarta.persistence.*;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -96,7 +97,7 @@ public class Validity implements Serializable, Representable {
         String s = period == 1 ? "" : "s";
         return monthlyFee + " €/month for " + period + " month" + s;
     }
-
+    
     @Override
     public String employeeString() {
         return this.toString();

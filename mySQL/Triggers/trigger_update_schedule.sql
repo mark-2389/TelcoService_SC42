@@ -19,7 +19,7 @@ BEGIN
 
         -- insert the service_ids decorated with the name of the user and the starting and ending date
         INSERT INTO telcoservice_db.service_schedule (
-            SELECT NEW.CLIENT, C.SERVICE_ID, NEW.DATE_SUBSCRIPTION, DATE_ADD(NEW.DATE_SUBSCRIPTION, INTERVAL _period MONTH)
+            SELECT NEW.ID, NEW.CLIENT, C.SERVICE_ID, NEW.DATE_SUBSCRIPTION, DATE_ADD(NEW.DATE_SUBSCRIPTION, INTERVAL _period MONTH)
             FROM telcoservice_db.service_composition C
             WHERE C.PACKAGE_ID = NEW.PACKAGE_ID
         );
@@ -49,7 +49,7 @@ BEGIN
 
         -- insert the optional_ids decorated with the name of the user and the starting and ending date
         INSERT INTO telcoservice_db.optional_schedule (
-            SELECT NEW.CLIENT, C.OPTIONAL_PRODUCT_ID, CURRENT_DATE, DATE_ADD(CURRENT_DATE, INTERVAL _period MONTH)
+            SELECT NEW.ID, NEW.CLIENT, C.OPTIONAL_PRODUCT_ID, CURRENT_DATE, DATE_ADD(CURRENT_DATE, INTERVAL _period MONTH)
             FROM telcoservice_db.order_optional_composition C
             WHERE C.ORDER_ID = NEW.ID
         );

@@ -8,8 +8,8 @@ import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
-import java.util.ArrayList;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -127,5 +127,9 @@ public class OrderService {
         if ( order == null ) return;
 
         order.setStatus(status);
+
+        if ( status == OrderStatus.REJECTED ) {
+            order.incrementNumberOfRejections(1);
+        }
     }
 }

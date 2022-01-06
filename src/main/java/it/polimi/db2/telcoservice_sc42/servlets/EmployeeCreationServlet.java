@@ -1,6 +1,8 @@
 package it.polimi.db2.telcoservice_sc42.servlets;
 
-import it.polimi.db2.telcoservice_sc42.entities.*;
+import it.polimi.db2.telcoservice_sc42.entities.IndependentValidityPeriod;
+import it.polimi.db2.telcoservice_sc42.entities.ServicePackage;
+import it.polimi.db2.telcoservice_sc42.entities.ServiceType;
 import it.polimi.db2.telcoservice_sc42.exception.BadParametersException;
 import it.polimi.db2.telcoservice_sc42.exception.BadlyFormattedOptionalProductException;
 import it.polimi.db2.telcoservice_sc42.services.OptionalProductService;
@@ -100,9 +102,7 @@ public class EmployeeCreationServlet extends HttpServlet {
 
         System.out.println("adding validity period");
 
-        // save the selected optionals
-        // List<OptionalProduct> optionals = getSelectedOptionalProducts(request);
-        // request.getSession().setAttribute(SessionAttributeRegistry.selectedOptionals, optionals);
+        saveSelected(request);
 
         // get the added validity
         int period = Integer.parseInt(request.getParameter(ParameterRegistry.validityPeriod));
@@ -132,6 +132,23 @@ public class EmployeeCreationServlet extends HttpServlet {
         System.out.println(periods);
 
         redirectSuccess(request, response);
+    }
+
+    private void saveSelected(HttpServletRequest request) {
+        // probably doesn't work because the validity form differs from the package creation form
+
+        // save the selected name and expiration date
+        String name = request.getParameter("package_name_input");
+        Date expirationDate = getOptionalDate(request, "package_expiration_date", "package_expiration_date_input");
+        request.getSession().setAttribute(EmployeeSessionRegistry.selectedServiceName, name);
+
+        // save the selected optionals
+        List<Integer> optionals = getSelectedOptionalProducts(request);
+        request.getSession().setAttribute(EmployeeSessionRegistry.selectedOptionals, optionals);
+
+        // save the selected services
+        List<Integer> services = getSelectedServices(request);
+        request.getSession().setAttribute(EmployeeSessionRegistry.selectedServices, optionals);
     }
 
     private boolean isValidValidity(IndependentValidityPeriod validity, List<IndependentValidityPeriod> validities) {
@@ -164,14 +181,18 @@ public class EmployeeCreationServlet extends HttpServlet {
      * @return a list of Integer ids of the services
      */
     private List<Integer> getSelectedServices(HttpServletRequest request) {
-        List<String> selected = Arrays.asList(request.getParameterValues("services"));
-        return selected.stream().map(Integer::parseInt).collect(Collectors.toList());
+        String[] s = request.getParameterValues("services");
+        if ( s == null ) return new ArrayList<>();
+
+        return Arrays.stream(s).map(Integer::parseInt).collect(Collectors.toList());
     }
 
     private List<IndependentValidityPeriod> getSelectedValidityPeriods(HttpServletRequest request) {
         String[] selected = request.getParameterValues("periods");
         IndependentValidityPeriod p;
         List<IndependentValidityPeriod> periods = new ArrayList<>();
+
+        if ( selected == null ) { return periods; }
 
         for (String s: selected) {
             p = getIndependentValidityPeriod(s);
@@ -190,7 +211,12 @@ public class EmployeeCreationServlet extends HttpServlet {
      */
     private Date getOptionalDate(HttpServletRequest request, String checkBoxParameter, String inputParameter) {
         Date date = null;
-        List<String> dateValues = Arrays.asList(request.getParameterValues(checkBoxParameter));
+
+        String[] s = request.getParameterValues(checkBoxParameter);
+        if ( s == null ) return null;
+
+        List<String> dateValues = Arrays.asList(s);
+
         if ( dateValues.contains("yes") ) {
             date = Date.valueOf(request.getParameter(inputParameter)) ;
         }
@@ -230,7 +256,6 @@ public class EmployeeCreationServlet extends HttpServlet {
 
         // get optionals ids
         List<Integer> optionals = getSelectedOptionalProducts(request);
-
         System.out.println("optionals: " + optionals);
 
         // get services
@@ -239,6 +264,11 @@ public class EmployeeCreationServlet extends HttpServlet {
 
         // get periods
         List<IndependentValidityPeriod> periods = getSelectedValidityPeriods(request);
+
+        if ( periods.size() == 0 ) {
+            redirectFailure(request, response, "No selected validity period, please create and select one");
+            return;
+        }
 
 
         ServicePackage sp = packageService.createServicePackage(name, expirationDate, services, optionals, periods);
