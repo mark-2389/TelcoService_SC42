@@ -22,7 +22,12 @@
     BigDecimal totalOptionalsFee = (BigDecimal) request.getSession().getAttribute(BuySessionRegistry.totalOptionalsFee);
     if ( totalOptionalsFee == null ) totalOptionalsFee = new BigDecimal(0);
     BigDecimal price = ( fee.add(totalOptionalsFee) ).multiply(BigDecimal.valueOf(months));
+
+    String servicePackage = (String) request.getSession().getAttribute(BuySessionRegistry.selectedPackageName);
 %>
+<div>
+    <h3> <%= servicePackage %></h3>
+</div>
 <div>
     <%
     Object attribute = request.getSession().getAttribute(BuySessionRegistry.selectedPackageName);
@@ -42,7 +47,7 @@
     <div>
         <%--@elvariable id="services" type="java.util.List<it.polimi.db2.telcoservice_sc42.entities.Service>"--%>
         <c:forEach var="service" items="${services}">
-            <c:out value="${service}"> </c:out>
+            <c:out value="${service.clientString()}"> </c:out>
         </c:forEach>
     </div>
 
@@ -71,6 +76,14 @@
 %>
         <form method="get" action="../Payment">
             <button type="submit" > BUY </button>
+        </form>
+        <form method="get" action="../Payment">
+            <input hidden id="fail_input" name="fail" value="1" >
+            <button type="submit" > BUY(FAIL) </button>
+        </form>
+        <form method="get" action="../Payment">
+            <input hidden id="success_input" name="fail" value="0" >
+            <button type="submit" > BUY(SUCCESS) </button>
         </form>
 <%
     } else {

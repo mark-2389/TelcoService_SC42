@@ -51,7 +51,7 @@
                     <c:forEach var="p" items="${packages}">
                         <option value="${p.getId()}"
                                 <c:if test="${p.getId() eq selectedPackage}">selected="selected"</c:if>
-                        >${p.getName()}</option>
+                        >${p.clientString()}</option>
                     </c:forEach>
                 </select>
                 <input type="submit" class="btn" value="select">
@@ -66,14 +66,14 @@
                 <h4>Included services</h4>
                 <%--@elvariable id="services" type="List<it.polimi.db2.telcoservice_sc42.entities.Service>"--%>
                 <c:forEach var="s" items="${services}">
-                    <p>${s.toString()}</p>
+                    <p>${s.clientString()}</p>
                 </c:forEach>
                 <h4>Available validity periods</h4>
                 <%--@elvariable id="validities" type="List<it.polimi.db2.telcoservice_sc42.entities.Validity>"--%>
                 <c:forEach var="v" items="${validities}">
                     <div>
                         <input type="radio" id="validity" name="available_validity" value="${v.getId()}" required>
-                        <label for="validity">${v.toString()}</label>
+                        <label for="validity">${v.clientString()}</label>
                     </div>
                 </c:forEach>
                 <h4>Available optional products</h4>
@@ -81,7 +81,7 @@
                 <c:forEach var="o" items="${optionals}">
                     <div>
                         <input type="checkbox" id="available_optionals" name="available_optional" value="${o.getId()}" >
-                        <label for="${o.getId()}">${o.toString()}</label>
+                        <label for="${o.getId()}">${o.clientString()}</label>
                     </div>
                 </c:forEach>
                 <h4>Starting date of subscription</h4>

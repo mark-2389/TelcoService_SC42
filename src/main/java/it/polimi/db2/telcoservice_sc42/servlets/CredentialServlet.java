@@ -2,6 +2,7 @@ package it.polimi.db2.telcoservice_sc42.servlets;
 
 import it.polimi.db2.telcoservice_sc42.exception.NonUniqueClientException;
 import it.polimi.db2.telcoservice_sc42.services.ClientService;
+import it.polimi.db2.telcoservice_sc42.utils.BuySessionRegistry;
 import it.polimi.db2.telcoservice_sc42.utils.SessionAttributeRegistry;
 import jakarta.ejb.EJB;
 import jakarta.servlet.http.*;
@@ -52,7 +53,7 @@ public class CredentialServlet extends HttpServlet {
 
         String redirectPage = "/index.jsp";
 
-        if ( request.getSession().getAttribute("selectedPackage") != null ) {
+        if ( request.getSession().getAttribute(BuySessionRegistry.selectedPackage) != null ) {
             // if a package has already been selected the user was in the confirmation page
             redirectPage = "/HTML/confirmation.jsp";
         }
@@ -82,7 +83,7 @@ public class CredentialServlet extends HttpServlet {
      */
     private void handleErrorRedirect(HttpServletRequest request, HttpServletResponse response, String error) throws IOException{
         String caller = getCaller(request);
-        request.getSession().setAttribute("error", error);
+        request.getSession().setAttribute(SessionAttributeRegistry.error, error);
 
         if ( caller != null ) {
             response.sendRedirect(getServletContext().getContextPath() + "/" + caller);

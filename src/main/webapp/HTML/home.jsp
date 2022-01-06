@@ -1,5 +1,6 @@
 <%@ page import="java.util.List" %>
 <%@ page import="it.polimi.db2.telcoservice_sc42.entities.Order" %>
+<%@ page import="it.polimi.db2.telcoservice_sc42.utils.ClientHomeSessionRegistry" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
@@ -31,20 +32,21 @@
         <%--@elvariable id="packages" type="List<ServicePackage>"--%>
         <c:forEach var="p" items="${packages}">
             <div>
-                ${p.name}
+                ${p.clientString()}
             </div>
         </c:forEach>
         <br/>
         <br/>
         <%
-            List<Order> rejected = (List<Order>) request.getSession().getAttribute("rejected");
+            List<Order> rejected = (List<Order>) request.getSession().getAttribute(ClientHomeSessionRegistry.rejected);
             if ( rejected != null && !rejected.isEmpty() ) {
         %>
         <h3>Rejected orders</h3>
+        <p>Click on a rejected order to pay it</p>
         <%--@elvariable id="rejected" type="List<Order>"--%>
         <c:forEach var="o" items="${rejected}">
             <div>
-                ${o.getPackage().getName()}
+                <a href="../confirmation?order=${o.getId()}"> ${o.getPackage().getName()} <a>
                 <br/>
                 ${o.getTotalCost()}
                 <br/>

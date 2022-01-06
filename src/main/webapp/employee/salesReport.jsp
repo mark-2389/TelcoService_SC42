@@ -1,5 +1,6 @@
 <%@ page import="it.polimi.db2.telcoservice_sc42.utils.ParameterRegistry" %>
-<%--  Created by IntelliJ IDEA.
+<%--
+  Created by IntelliJ IDEA.
   User: Mark
   Date: 28/12/2021
   Time: 19:23

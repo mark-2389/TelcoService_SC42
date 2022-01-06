@@ -1,7 +1,8 @@
 package it.polimi.db2.telcoservice_sc42.utils;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.lang.reflect.Modifier;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * A class that holds the names of the session's attributes.
@@ -10,27 +11,32 @@ import java.util.Map;
 public class SessionAttributeRegistry {
     public static final String username = "username";
     public static final String employeeId = "id";
-
-
-    public static final String selectedOptionals = "optionals";
     public static final String error = "error";
 
-    /**
-     * Employee's home attribute that saves all the available services.
-     */
-    public static final String allServices = "services";
+    private static List<String> fields = null;
+
 
     /**
-     * Employee's home attribute that saves all the available optional products.
+     * Idk, it should return all the values of static attributes.
+     * @return A list of values of the static attributes.
      */
-    public static final String allOptionals = "optionals";
+    public static List<String> getAllFields() {
+        if ( fields == null ) {
+            fields = Arrays.stream(SessionAttributeRegistry.class.getDeclaredFields())
+                    .filter(f -> Modifier.isStatic(f.getModifiers()) && Modifier.isPublic(f.getModifiers()))
+                    .map(f -> {
+                        try {
+                            return (String) f.get(String.class);
+                        } catch (IllegalAccessException e) {
+                            return null;
+                        }
+                    })
+                    .filter(Objects::nonNull)
+                    .collect(Collectors.toList());
+        }
 
-    /**
-     * Employee's home attribute that saves all added validities.
-     */
-    public static final String validities = "validities";
-
-
+        return fields;
+    }
 
     private static final Map<String, String> runtimeAttributes = new HashMap<>();
 

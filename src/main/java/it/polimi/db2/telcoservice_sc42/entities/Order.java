@@ -1,19 +1,24 @@
 package it.polimi.db2.telcoservice_sc42.entities;
 
 import java.io.Serializable;
+
+import it.polimi.db2.telcoservice_sc42.utils.Representable;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Date;
+import java.util.ArrayList;
+import java.sql.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Entity
 @Table(name = "`order`")
 @NamedQuery(name = "Order.rejected", query = "SELECT o FROM Order o WHERE o.status = it.polimi.db2.telcoservice_sc42.entities.OrderStatus.REJECTED")
-public class Order implements Serializable {
+public class Order implements Serializable, Representable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -23,14 +28,12 @@ public class Order implements Serializable {
     @Column(name = "HOUR_CREATION")
     private Time creationHour;
 
-    @Temporal(TemporalType.DATE)
     @Column(name = "DATE_CREATION")
     private Date creationDate;
 
     @Column(name = "NUMBER_REJECTIONS")
     private Integer numberOfRejections;
 
-    @Temporal(TemporalType.DATE)
     @Column(name = "DATE_SUBSCRIPTION")
     private Date subscriptionDate;
 
@@ -63,15 +66,23 @@ public class Order implements Serializable {
     @JoinColumn(name = "CLIENT")
     private Client client;
 
+    @ManyToMany
+    @JoinTable(
+            name = "order_optional_composition",
+            joinColumns = @JoinColumn(name="ORDER_ID"),
+            inverseJoinColumns = @JoinColumn(name="OPTIONAL_PRODUCT_ID"))
+    private List<OptionalProduct> optionals;
+
     public Order() {
         this.id = 0;
         this.creationDate = java.sql.Date.valueOf(LocalDate.now());
         this.creationHour = Time.valueOf(LocalTime.now());
         this.status = OrderStatus.DEFAULT;
         this.numberOfRejections = 0;
+        this.optionals = new ArrayList<>();
     }
 
-    public Order(Client client, Validity validityId, ServicePackage packageId, Date subscriptionDate ) {
+    public Order(Client client, Validity validityId, ServicePackage packageId, Date subscriptionDate, List<OptionalProduct> optionals ) {
         this();
         this.client = client;
         this.validity = validityId;
@@ -86,6 +97,7 @@ public class Order implements Serializable {
         BigDecimal bigPeriod = new BigDecimal(validityId.getPeriod());
 
         this.totalCost = ( validityId.getMonthlyFee().add(totalFee) ).multiply(bigPeriod);
+        this.optionals = new ArrayList<>(optionals);
     }
     public int getId() {
         return id;
@@ -93,6 +105,23 @@ public class Order implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public Validity getValidity() {
+        return this.validity;
+    }
+
+    public Integer getValidityId() {
+        if ( this.validity == null ) return null;
+        return validity.getId();
+    }
+
+    public List<OptionalProduct> getOptionals() {
+        return optionals;
+    }
+
+    public List<Integer> getOptionalIds() {
+        return getOptionals().stream().map(OptionalProduct::getId).collect(Collectors.toList());
     }
 
     public Time getHour() {
@@ -145,6 +174,11 @@ public class Order implements Serializable {
         return servicePackage;
     }
 
+    public Integer getPackageId() {
+        if ( servicePackage == null ) return null;
+        return servicePackage.getId();
+    }
+
     public void setPackage(ServicePackage servicePackage) {
         this.servicePackage = servicePackage;
     }
@@ -155,6 +189,16 @@ public class Order implements Serializable {
 
     public void setStatus(OrderStatus status) {
         this.status = status;
+    }
+
+    @Override
+    public String clientString() {
+        return "Order for " + servicePackage.getName() + ": " + totalCost + " € (subscription started on " + subscriptionDate + ", valid through" + " )";
+    }
+
+    @Override
+    public String employeeString() {
+        return this.toString();
     }
 
     @Override

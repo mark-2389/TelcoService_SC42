@@ -9,7 +9,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -67,14 +67,18 @@ public class OrderService {
      * @param validityId the id of the chosen validity period
      * @param packageId the id of the chosen servicePackage to be bought
      * @param dateSubscription the date of the activation of the servicePackage
+     * @param optionals the list of ids of OptionalProducts bought with the ServicePackage
      * @return the id of the order that has been created, null if some error occurred
      */
-    public Integer createOrder (String clientUsername, int validityId, int packageId, Date dateSubscription ) {
+    public Integer createOrder (String clientUsername, int validityId, int packageId, Date dateSubscription, List<Integer> optionals ) {
         Client costumer = em.find(Client.class, clientUsername);
         ServicePackage servicePackage = em.find(ServicePackage.class, packageId);
         Validity validity = validityService.findValidityByKey(validityId, packageId);
 
-        Order order = new Order( costumer, validity, servicePackage, dateSubscription );
+        List<OptionalProduct> optionalProducts = new ArrayList<>();
+        for (Integer id: optionals) optionalProducts.add(em.find(OptionalProduct.class, id));
+
+        Order order = new Order( costumer, validity, servicePackage, dateSubscription, optionalProducts );
 
         // for debugging: let's check if mission is managed
         System.out.println("Method createOrder before client.addMission(mission)");
