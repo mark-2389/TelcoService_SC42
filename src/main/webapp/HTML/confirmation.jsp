@@ -16,7 +16,7 @@
 </head>
 <body>
 <%
-    int months = (Integer) request.getSession().getAttribute(BuySessionRegistry.chosenValidityMonths);
+    Integer months = (Integer) request.getSession().getAttribute(BuySessionRegistry.chosenValidityMonths);
 
     BigDecimal fee = (BigDecimal) request.getSession().getAttribute(BuySessionRegistry.chosenValidityFee);
 
