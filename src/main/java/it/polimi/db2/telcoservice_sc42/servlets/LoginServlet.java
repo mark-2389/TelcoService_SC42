@@ -1,18 +1,21 @@
 package it.polimi.db2.telcoservice_sc42.servlets;
 
-import java.io.*;
-
 import it.polimi.db2.telcoservice_sc42.entities.Client;
 import it.polimi.db2.telcoservice_sc42.entities.Employee;
 import it.polimi.db2.telcoservice_sc42.exception.ClientNotFoundException;
+import it.polimi.db2.telcoservice_sc42.exception.CredentialErrorException;
 import it.polimi.db2.telcoservice_sc42.exception.NonUniqueClientException;
 import it.polimi.db2.telcoservice_sc42.services.ClientService;
 import it.polimi.db2.telcoservice_sc42.services.EmployeeService;
 import it.polimi.db2.telcoservice_sc42.utils.BuySessionRegistry;
 import it.polimi.db2.telcoservice_sc42.utils.SessionAttributeRegistry;
 import jakarta.ejb.EJB;
-import jakarta.servlet.http.*;
-import jakarta.servlet.annotation.*;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
 
 
 @WebServlet(name = "loginServlet", value = "/login")
@@ -81,7 +84,7 @@ public class LoginServlet extends HttpServlet {
 
         try {
             employee = employeeService.checkCredentials(username, password);
-        } catch (NonUniqueClientException | ClientNotFoundException exception) {
+        } catch (NonUniqueClientException | ClientNotFoundException | CredentialErrorException exception) {
             System.out.println(exception.getClass().getSimpleName());
             String error = exception.getClass().getSimpleName().replace("Exception", "");
             handleErrorRedirect(request, response, error);
@@ -101,7 +104,7 @@ public class LoginServlet extends HttpServlet {
 
         try {
             client = clientService.checkCredentials(username, password);
-        } catch (NonUniqueClientException | ClientNotFoundException exception) {
+        } catch (NonUniqueClientException | ClientNotFoundException | CredentialErrorException exception) {
             String error = exception.getClass().getSimpleName().replace("Exception", "");
             handleErrorRedirect(request, response, error);
             return;

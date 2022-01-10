@@ -1,8 +1,8 @@
 package it.polimi.db2.telcoservice_sc42.services;
 
-import java.util.List;
-
+import it.polimi.db2.telcoservice_sc42.entities.Client;
 import it.polimi.db2.telcoservice_sc42.exception.ClientNotFoundException;
+import it.polimi.db2.telcoservice_sc42.exception.CredentialErrorException;
 import it.polimi.db2.telcoservice_sc42.exception.NonUniqueClientException;
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
@@ -10,7 +10,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.PersistenceException;
 
-import it.polimi.db2.telcoservice_sc42.entities.Client;
+import java.util.List;
 /**
  * Session Bean implementation class LoginService
  */
@@ -35,9 +35,13 @@ public class ClientService {
      * @param password the password of the Client.
      * @return the client added to the database.
      * @throws NonUniqueClientException if the client already exists.
+     * @throws CredentialErrorException if the credentials doesn't satisfy the database's constraints.
      */
-    public Client addClient(String username, String email, String password) throws NonUniqueClientException {
+    public Client addClient(String username, String email, String password) throws NonUniqueClientException, CredentialErrorException {
         if ( isRegistered(username) ) { throw new NonUniqueClientException(); }
+        if ( !isPasswordValid(password) || !isUsernameValid(password) || !isEmailValid(email)) {
+            throw new CredentialErrorException();
+        }
 
         Client newClient = new Client(username, email, password);
         em.persist(newClient);
@@ -66,9 +70,12 @@ public class ClientService {
      * @return the specified client if it's found on the database, null otherwise.
      * @throws ClientNotFoundException if the Client with the specified credentials doesn't exist.
      * @throws NonUniqueClientException if more Clients with the specified credentials exist.
+     * @throws CredentialErrorException if the credentials doesn't respect with the database constraints.
      */
-    public Client checkCredentials(String username, String pwd) throws ClientNotFoundException, NonUniqueClientException {
+    public Client checkCredentials(String username, String pwd) throws ClientNotFoundException, NonUniqueClientException, CredentialErrorException {
         List<Client> uList;
+
+        if ( !isUsernameValid(username) || !isPasswordValid(pwd) ) throw new CredentialErrorException();
 
         try {
             uList = em.createNamedQuery("Client.withCredentials", Client.class)
@@ -87,6 +94,18 @@ public class ClientService {
         else if (uList.size() == 1)
             return uList.get(0);
         throw new NonUniqueClientException();
+    }
+
+    private boolean isUsernameValid(String username) {
+        return username.length() <= 255 && username.length() > 0;
+    }
+
+    private boolean isPasswordValid(String password) {
+        return password.length() <= 31 && password.length() > 0;
+    }
+
+    private boolean isEmailValid(String email) {
+        return email.length() <= 255;
     }
 
 }
