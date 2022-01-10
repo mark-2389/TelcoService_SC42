@@ -34,6 +34,10 @@ public class OptionalProductService {
             throw new PastDateException();
         }
 
+        if ( !isNameValid(name) ) {
+            throw new BadlyFormattedOptionalProductException();
+        }
+
         //the compareTo method return -1, 0, 1 if the fee is numerical less than, equal or greater than BigDecimal.Zero
         //For more information check the BigDecimal's javadoc
         if ( fee.compareTo(BigDecimal.ZERO) < 0 ) {
@@ -44,6 +48,10 @@ public class OptionalProductService {
         em.persist(optionalProduct);
 
         return optionalProduct;
+    }
+
+    private boolean isNameValid(String name) {
+        return name.length() > 0 && name.length() <= 255;
     }
 
     public OptionalProduct findOptionalProductById(int id) {

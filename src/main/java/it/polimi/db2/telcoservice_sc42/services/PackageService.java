@@ -1,6 +1,7 @@
 package it.polimi.db2.telcoservice_sc42.services;
 
 import it.polimi.db2.telcoservice_sc42.entities.*;
+import it.polimi.db2.telcoservice_sc42.exception.BadParametersException;
 import it.polimi.db2.telcoservice_sc42.exception.InvalidChoiceServiceException;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
@@ -56,10 +57,12 @@ public class PackageService {
      * @param serviceIds a list of id of the Services that the new ServicePackage offers
      * @param optionalIds a list of id of the OptionalProducts that have to be added to the Package
      */
-    public ServicePackage createServicePackage(String name, Date expirationDate, List<Integer> serviceIds, List<Integer> optionalIds, List<IndependentValidityPeriod> periods) throws InvalidChoiceServiceException {
-        ServicePackage servicePackage = new ServicePackage(name, expirationDate);
-        System.out.println(servicePackage);
+    public ServicePackage createServicePackage(String name, Date expirationDate, List<Integer> serviceIds, List<Integer> optionalIds, List<IndependentValidityPeriod> periods) throws InvalidChoiceServiceException, BadParametersException {
+        if ( !isNameValid(name) ) {
+            throw new BadParametersException();
+        }
 
+        ServicePackage servicePackage = new ServicePackage(name, expirationDate);
         List<Service> services = new ArrayList<>();
         List<OptionalProduct> optionals = new ArrayList<>();
 
@@ -98,16 +101,6 @@ public class PackageService {
         em.persist(servicePackage);
         em.flush();
 
-
-
-        //// add the validities
-        //List<Validity> validities = periods.stream()
-        //        .map(p -> p.getValidityWith(servicePackage))
-        //        .collect(Collectors.toList());
-        //for (Validity v: validities) {
-        //    addValidity(servicePackage.getId(), v);
-        //}
-
         List<Validity> validities = new ArrayList<>();
 
         //get all Validities
@@ -128,6 +121,10 @@ public class PackageService {
         System.out.println(validities);
 
         return servicePackage;
+    }
+
+    private boolean isNameValid(String name) {
+        return name.length() > 0 && name.length() <= 255;
     }
 
     private void checkCorrectnessServices(List<Service> services) throws InvalidChoiceServiceException {
