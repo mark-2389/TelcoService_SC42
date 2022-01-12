@@ -1,12 +1,15 @@
 package it.polimi.db2.telcoservice_sc42.servlets;
 
+import it.polimi.db2.telcoservice_sc42.exception.CredentialErrorException;
 import it.polimi.db2.telcoservice_sc42.exception.NonUniqueClientException;
 import it.polimi.db2.telcoservice_sc42.services.ClientService;
 import it.polimi.db2.telcoservice_sc42.utils.BuySessionRegistry;
 import it.polimi.db2.telcoservice_sc42.utils.SessionAttributeRegistry;
 import jakarta.ejb.EJB;
-import jakarta.servlet.http.*;
-import jakarta.servlet.annotation.*;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
@@ -37,17 +40,15 @@ public class CredentialServlet extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
-        if ( !isPasswordValid(password) ) {
-            // TODO: consider giving a more precise description depending on the error.
-            handleErrorRedirect(request, response, "Invalid password");
-        }
-
         try {
             clientService.addClient(username, email, password);
         } catch ( NonUniqueClientException e ) {
             System.out.println("Client already in database");
             handleErrorRedirect(request, response, "Client already registered");
-
+            return;
+        } catch (CredentialErrorException e ) {
+            System.out.println("Credential error");
+            handleErrorRedirect(request, response, "Client already registered");
             return;
         }
 
@@ -59,17 +60,6 @@ public class CredentialServlet extends HttpServlet {
         }
 
         response.sendRedirect(getServletContext().getContextPath() + redirectPage);
-    }
-
-    /**
-     * Check if the password is valid.
-     *
-     * A password is valid if its length is not bigger than 31.
-     * @param password The password to be checked.
-     * @return true if the password satisfies all the constraints, false otherwise.
-     */
-    private boolean isPasswordValid(String password) {
-        return password.length() <= 31;
     }
 
     /**

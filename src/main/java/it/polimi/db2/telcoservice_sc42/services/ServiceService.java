@@ -7,8 +7,8 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
 import java.sql.Date;
+import java.util.Arrays;
 import java.util.List;
 
 @Stateless
@@ -45,7 +45,22 @@ public class ServiceService {
     }
 
     private boolean areParametersValid(ServiceType type, Date expirationDate, BigDecimal gbFee, Integer gbs, BigDecimal smsFee, Integer sms, BigDecimal callFee, Integer minutes) {
-        return Arrays.stream(ServiceType.values()).anyMatch(t -> t == type);
+        BigDecimal zero = new BigDecimal(0);
+        BigDecimal max = new BigDecimal("9999.99");
+
+        return Arrays.stream(ServiceType.values()).anyMatch(t -> t == type) &&
+                smallerEqualTo(gbFee, max) && biggerThan(gbFee, zero) &&
+                smallerEqualTo(smsFee, max) && biggerThan(smsFee, zero) &&
+                smallerEqualTo(callFee, max) && biggerThan(callFee, zero) &&
+                gbs >= 0 && sms >= 0 && minutes >= 0;
+    }
+
+    private boolean smallerEqualTo(BigDecimal left, BigDecimal right) {
+        return left.compareTo(right) <= 0;
+    }
+
+    private boolean biggerThan(BigDecimal left, BigDecimal right) {
+        return left.compareTo(right) > 0;
     }
 
     public Service createFixedPhoneService(Date expirationDate) {

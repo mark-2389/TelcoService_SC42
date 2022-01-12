@@ -74,9 +74,10 @@ public class OrderService {
         Client costumer = em.find(Client.class, clientUsername);
         ServicePackage servicePackage = em.find(ServicePackage.class, packageId);
         Validity validity = validityService.findValidityByKey(validityId, packageId);
-
         List<OptionalProduct> optionalProducts = new ArrayList<>();
         for (Integer id: optionals) optionalProducts.add(em.find(OptionalProduct.class, id));
+
+        if ( !isNameValid(clientUsername) ) return null;
 
         Order order = new Order( costumer, validity, servicePackage, dateSubscription, optionalProducts );
 
@@ -103,6 +104,10 @@ public class OrderService {
         return order.getId();
     }
 
+    private boolean isNameValid(String name) {
+        return name.length() > 0 && name.length() <= 255;
+    }
+
     /**
      * This method allows to delete an order
      * @param orderId the id of the order to be deleted
@@ -114,7 +119,7 @@ public class OrderService {
         Client costumer = em.find(Client.class, client);
 
         if (order.getClient() != costumer) {
-            throw new ClientNotCorrespondingException("Reporter not authorized to delete this mission");
+            throw new ClientNotCorrespondingException("Client deleting not owned order");
         }
         client.removeOrder(order); // this updates both directions of the associations
 

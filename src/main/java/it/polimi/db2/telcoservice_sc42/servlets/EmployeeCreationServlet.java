@@ -271,21 +271,23 @@ public class EmployeeCreationServlet extends HttpServlet {
             return;
         }
 
-
+        ServicePackage sp;
         try {
-            ServicePackage sp = packageService.createServicePackage(name, expirationDate, services, optionals, periods);
+            sp = packageService.createServicePackage(name, expirationDate, services, optionals, periods);
         } catch (InvalidChoiceServiceException e) {
             System.out.println(e.getMessage());
             redirectFailure(request, response, e.getMessage());
             return;
+        } catch (BadParametersException e) {
+            redirectFailure(request, response, "Bad name. Name too long or too short. ");
+            return;
         }
 
-        // List<Validity> validities = periods.stream().map(p -> p.getValidityWith(sp)).collect(Collectors.toList());
-        // for (Validity v: validities) {
-        //     packageService.addValidity(sp.getId(), v);
-        // }
-
-        redirectSuccess(request, response);
+        if ( sp == null ) {
+            redirectFailure(request, response, "Error while creating the package. ");
+        } else {
+            redirectSuccess(request, response);
+        }
     }
 
     private void redirectSuccess(HttpServletRequest request, HttpServletResponse response) throws IOException {
