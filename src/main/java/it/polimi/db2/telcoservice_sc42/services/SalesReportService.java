@@ -150,7 +150,9 @@ public class SalesReportService {
 
         //for each array we create an HashMap to better organize the retrieved attributes
         for (Client c : insolvent ){
-            System.out.println("NAME: " + c.getUsername() + "\tEMAIL: " + c.getEmail() + "\tREJECTIONS: " + c.getNumberOfRejections());
+            System.out.println("BEFORE REFRESH:\nNAME: " + c.getUsername() + "\tEMAIL: " + c.getEmail() + "\tREJECTIONS: " + c.getNumberOfRejections());
+            em.refresh(c);
+            System.out.println("AFTER REFRESH:\nNAME: " + c.getUsername() + "\tEMAIL: " + c.getEmail() + "\tREJECTIONS: " + c.getNumberOfRejections());
             Map<String, String> temp = new HashMap<>();
             temp.put("USERNAME", c.getUsername());
             temp.put("EMAIL", c.getEmail());

@@ -19,11 +19,8 @@ public class Auditing implements Serializable {
     @JoinColumn (name = "username")
     private Client username;
 
-    @ManyToOne
-    @JoinColumn (name = "email")
-    private Client email;
+    private String email;
 
-    @Basic
     @Column(name = "AMOUNT", nullable = false, precision = 2)
     private BigDecimal amount;
 
@@ -35,7 +32,6 @@ public class Auditing implements Serializable {
     @Column(name = "REJECTION_TIME", nullable = false)
     private Time rejectionTime;
 
-    @Basic
     @Column(name = "IS_ACTIVE", nullable = true)
     private Boolean isActive;
 
@@ -43,48 +39,24 @@ public class Auditing implements Serializable {
         return username.getUsername();
     }
 
-    public void setUsername(Client username) {
-        this.username = username;
-    }
-
     public String getEmail() {
-        return email.getEmail();
-    }
-
-    public void setEmail(Client email) {
-        this.email = email;
+        return email;
     }
 
     public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
-    }
-
     public Date getRejectionDate() {
         return rejectionDate;
-    }
-
-    public void setRejectionDate(Date rejectionDate) {
-        this.rejectionDate = rejectionDate;
     }
 
     public Time getRejectionTime() {
         return rejectionTime;
     }
 
-    public void setRejectionTime(Time rejectionTime) {
-        this.rejectionTime = rejectionTime;
-    }
-
     public Boolean getIsActive() {
         return isActive;
-    }
-
-    public void setIsActive(Boolean isActive) {
-        this.isActive = isActive;
     }
 
     @Override
