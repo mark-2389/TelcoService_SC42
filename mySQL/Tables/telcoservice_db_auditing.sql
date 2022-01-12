@@ -12,7 +12,6 @@ CREATE TABLE `auditing` (
   `REJECTION_DATE` date DEFAULT ( current_date ),
   `REJECTION_TIME` time DEFAULT ( current_time ),
   `IS_ACTIVE` boolean DEFAULT true,  -- This attribute is kept for history
-  -- todo create trigger to handle IS_ACTIVE attribute
 
   PRIMARY KEY (`USERNAME`, `REJECTION_DATE`, `REJECTION_TIME`),
 
