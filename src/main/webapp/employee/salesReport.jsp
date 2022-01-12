@@ -16,7 +16,7 @@
 <body>
 <h1><%= "SALES REPORT" %></h1>
 <br/>
-<a href="home.jsp" >
+<a href="../HomePage" >
     Go back
 </a>
 

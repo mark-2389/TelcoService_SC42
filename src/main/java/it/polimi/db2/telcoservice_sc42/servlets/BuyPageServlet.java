@@ -67,6 +67,7 @@ public class BuyPageServlet extends HttpServlet {
      */
     private void prepareConfirmationPage(HttpServletRequest request) {
         HttpSession session = request.getSession();
+        //optionalService.getOptionalWithId(
         session.setAttribute(BuySessionRegistry.chosenValidity, request.getParameter("available_validity"));
         session.setAttribute(BuySessionRegistry.chosenOptionals, request.getParameterValues("available_optional"));
         session.setAttribute(BuySessionRegistry.chosenSubscription, request.getParameter("starting_date_of_subscription"));

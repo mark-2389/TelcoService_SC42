@@ -2,7 +2,7 @@
 
 create table IF NOT EXISTS average_OpProducts_per_ServPackage (
 		PACKAGE_ID int,
-        AVERAGE_PRODUCTS int
+        AVERAGE_PRODUCTS float
 );
 
 delimiter //
