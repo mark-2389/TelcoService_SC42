@@ -49,9 +49,9 @@ public class ServiceService {
         BigDecimal max = new BigDecimal("9999.99");
 
         return Arrays.stream(ServiceType.values()).anyMatch(t -> t == type) &&
-                smallerEqualTo(gbFee, max) && biggerThan(gbFee, zero) &&
-                smallerEqualTo(smsFee, max) && biggerThan(smsFee, zero) &&
-                smallerEqualTo(callFee, max) && biggerThan(callFee, zero) &&
+                smallerEqualTo(gbFee, max) && biggerEqualThan(gbFee, zero) &&
+                smallerEqualTo(smsFee, max) && biggerEqualThan(smsFee, zero) &&
+                smallerEqualTo(callFee, max) && biggerEqualThan(callFee, zero) &&
                 gbs >= 0 && sms >= 0 && minutes >= 0;
     }
 
@@ -59,8 +59,8 @@ public class ServiceService {
         return left.compareTo(right) <= 0;
     }
 
-    private boolean biggerThan(BigDecimal left, BigDecimal right) {
-        return left.compareTo(right) > 0;
+    private boolean biggerEqualThan(BigDecimal left, BigDecimal right) {
+        return left.compareTo(right) >= 0;
     }
 
     public Service createFixedPhoneService(Date expirationDate) {

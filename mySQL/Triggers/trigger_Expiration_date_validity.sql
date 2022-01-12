@@ -9,6 +9,8 @@ BEGIN
 										WHERE new.PACKAGE_ID = SP.ID);
 	IF ( date_to_set is not null AND new.EXPIRATION_DATE > date_to_set ) THEN
 		SET new.EXPIRATION_DATE = date_to_set;
+	ELSEIF ( date_to_set is not null and new.EXPIRATION_DATE is null ) THEN
+        SET new.EXPIRATION_DATE = date_to_set;
 	END IF;
 END; //
 

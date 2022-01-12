@@ -88,14 +88,14 @@ public class Order implements Serializable, Representable {
         this.servicePackage = packageId;
         this.subscriptionDate = subscriptionDate;
 
-        BigDecimal totalFee = new BigDecimal(0);
-        for ( OptionalProduct o: packageId.getProducts() ) {
-            totalFee = totalFee.add(o.getMonthlyFee());
+        BigDecimal optionalsFee = new BigDecimal(0);
+        for ( OptionalProduct o: optionals ) {
+            optionalsFee = optionalsFee.add(o.getMonthlyFee());
         }
 
         BigDecimal bigPeriod = new BigDecimal(validityId.getPeriod());
 
-        this.totalCost = ( validityId.getMonthlyFee().add(totalFee) ).multiply(bigPeriod);
+        this.totalCost = ( validityId.getMonthlyFee().add(optionalsFee) ).multiply(bigPeriod);
         this.optionals = new ArrayList<>(optionals);
     }
     public int getId() {

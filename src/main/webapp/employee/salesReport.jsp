@@ -16,7 +16,7 @@
 <body>
 <h1><%= "SALES REPORT" %></h1>
 <br/>
-<a href="home.jsp" >
+<a href="../HomePage" >
     Go back
 </a>
 
@@ -267,10 +267,10 @@
         <thead style="background-color: darkgrey">
         <tr style="border: 3px solid black">
             <th colspan="1" style="border: 3px solid black"><b>ORDER ID</b></th>
+            <th colspan="1" style="border: 3px solid black"><b>EMAIL</b></th>
+            <th colspan="1" style="border: 3px solid black"><b>AMOUNT</b></th>
             <th colspan="1" style="border: 3px solid black"><b>CREATION DATE</b></th>
             <th colspan="1" style="border: 3px solid black"><b>CREATION HOUR</b></th>
-            <th colspan="1" style="border: 3px solid black"><b>DATE SUBSCRIPTION</b></th>
-            <th colspan="1" style="border: 3px solid black"><b>TOTAL COST</b></th>
         </tr>
         </thead>
         <tbody>

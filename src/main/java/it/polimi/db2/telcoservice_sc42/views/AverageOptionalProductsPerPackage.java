@@ -16,13 +16,13 @@ public class AverageOptionalProductsPerPackage implements Serializable {
     private Integer packageId;
 
     @Column(name = "average_products")
-    private Integer averageProducts;
+    private Float averageProducts;
 
     public Integer getPackageId() {
         return packageId;
     }
 
-    public Integer getAverageProducts() {
+    public Float getAverageProducts() {
         return averageProducts;
     }
 }

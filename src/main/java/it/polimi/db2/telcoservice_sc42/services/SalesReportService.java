@@ -135,7 +135,7 @@ public class SalesReportService {
 
         formattedResult.put("ID", object[0].toString());
         formattedResult.put("NAME", object[1].toString());
-        formattedResult.put("AVERAGE", object[2].toString());
+        formattedResult.put("VALUE", object[2].toString());
 
         return formattedResult;
     }
@@ -148,8 +148,11 @@ public class SalesReportService {
         List<Client> insolvent = em.createNamedQuery("Client.insolvent", Client.class).getResultList();
         List<Map<String, String>> formattedResults = new ArrayList<>();
 
-        //for each array we create an HashMap to bette organize the retrieved attributes
+        //for each array we create an HashMap to better organize the retrieved attributes
         for (Client c : insolvent ){
+            System.out.println("BEFORE REFRESH:\nNAME: " + c.getUsername() + "\tEMAIL: " + c.getEmail() + "\tREJECTIONS: " + c.getNumberOfRejections());
+            em.refresh(c);
+            System.out.println("AFTER REFRESH:\nNAME: " + c.getUsername() + "\tEMAIL: " + c.getEmail() + "\tREJECTIONS: " + c.getNumberOfRejections());
             Map<String, String> temp = new HashMap<>();
             temp.put("USERNAME", c.getUsername());
             temp.put("EMAIL", c.getEmail());
@@ -171,7 +174,7 @@ public class SalesReportService {
         //for each array we create an HashMap to bette organize the retrieved attributes
         for (Order o : suspended ){
             Map<String, String> temp = new HashMap<>();
-            temp.put("ORDER ID", String.valueOf(o.getId()));
+            temp.put("ORDER_ID", String.valueOf(o.getId()));
             temp.put("CREATION_DATE", String.valueOf(o.getDate()));
             temp.put("CREATION_HOUR", String.valueOf(o.getHour()));
             temp.put("DATE_SUBSCRIPTION", String.valueOf(o.getSubscriptionDate()));
