@@ -16,7 +16,8 @@ begin
 		insert into auditing values ( new.username, ( SELECT C.email
 								 	                   FROM telcoservice_db.client C
 									                   WHERE C.username = new.username ), total_value, current_date, current_time, true );
-    elseif ( new.NUMBER_REJECTIONS > 3 ) then
+    elseif ( new.NUMBER_REJECTIONS <> old.NUMBER_REJECTIONS
+                 and ( select * from telcoservice_db.auditing A where A.USERNAME = new.USERNAME and A.IS_ACTIVE ) is not null ) then
         set total_value = (
             SELECT sum(O.TOTAL_COST)
             FROM telcoservice_db.`order` O
