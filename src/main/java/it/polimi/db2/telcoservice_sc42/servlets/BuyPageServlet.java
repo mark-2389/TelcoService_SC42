@@ -117,10 +117,13 @@ public class BuyPageServlet extends HttpServlet {
 
 
     private List<OptionalProduct> retrieveOptionalProduct(HttpServletRequest request){
+        String[] availableOptionals = (request.getParameterValues("available_optional"));
 
-        return Arrays.stream(request.getParameterValues("available_optional")).
-                        map(SafeParser::safeParseInteger).
-                            map(id -> optionalService.findOptionalProductById(id)).
-                                collect(Collectors.toList());
+        if ( availableOptionals == null ) return null;
+
+        return Arrays.stream(availableOptionals).
+                    map(SafeParser::safeParseInteger).
+                        map(id -> optionalService.findOptionalProductById(id)).
+                            collect(Collectors.toList());
     }
 }

@@ -136,6 +136,9 @@ public class ConfirmationPageServlet extends HttpServlet {
         if ( optionalIds == null ) {
 
             List<Object> listParameter = (List<Object>) (request.getSession().getAttribute(BuySessionRegistry.chosenOptionals));
+
+            if ( listParameter == null ) return;
+
             List<OptionalProduct> parameters = listParameter.stream().map(i -> (OptionalProduct)i).collect(Collectors.toList());
 
             for ( OptionalProduct optional : parameters ){
