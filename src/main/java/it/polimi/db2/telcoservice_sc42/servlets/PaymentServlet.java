@@ -1,6 +1,8 @@
 package it.polimi.db2.telcoservice_sc42.servlets;
 
 import it.polimi.db2.telcoservice_sc42.entities.OrderStatus;
+import it.polimi.db2.telcoservice_sc42.entities.ServicePackage;
+import it.polimi.db2.telcoservice_sc42.entities.Validity;
 import it.polimi.db2.telcoservice_sc42.services.OrderService;
 import it.polimi.db2.telcoservice_sc42.utils.BuySessionRegistry;
 import it.polimi.db2.telcoservice_sc42.utils.SafeParser;
@@ -31,8 +33,8 @@ public class PaymentServlet extends HttpServlet {
         // if we aren't handling a rejected order
         if (orderId == null) {
             String username = (String) session.getAttribute(SessionAttributeRegistry.username);
-            int validityId = SafeParser.safeParseInteger((String) session.getAttribute(BuySessionRegistry.chosenValidity));
-            int packageId = (Integer) session.getAttribute(BuySessionRegistry.selectedPackage);
+            int validityId = ((Validity) session.getAttribute(BuySessionRegistry.chosenValidity)).getId();
+            int packageId = ((ServicePackage) session.getAttribute(BuySessionRegistry.selectedPackage)).getId();
             Date subscriptionDate = Date.valueOf((String) session.getAttribute(BuySessionRegistry.chosenSubscription));
             List<Integer> optionals = getOptionalProducts(session);
 
@@ -74,6 +76,8 @@ public class PaymentServlet extends HttpServlet {
     private List<Integer> getOptionalProducts(HttpSession session) {
         String[] optionalIds = (String[]) session.getAttribute(BuySessionRegistry.chosenOptionals);
         List<Integer> optionalProducts = new ArrayList<>();
+
+        if ( optionalIds == null ) return optionalProducts;
 
         Integer id;
         for (String sid: optionalIds) {
