@@ -68,7 +68,7 @@ public class PaymentServlet extends HttpServlet {
 
         session.setAttribute(BuySessionRegistry.paymentMsg, msg);
 
-        response.sendRedirect(request.getServletContext().getContextPath() + "/HomePage");
+        response.sendRedirect(request.getServletContext().getContextPath() + "/HTML/PaymentResult.jsp");
     }
 
     private List<Integer> getOptionalProducts(HttpSession session) {

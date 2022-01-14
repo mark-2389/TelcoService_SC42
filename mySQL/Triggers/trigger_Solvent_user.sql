@@ -8,7 +8,7 @@ BEGIN
    -- rejections is 0 then the user should become solvent
    IF ( old.INSOLVENT = 'INSOLVENT' AND new.INSOLVENT = 'SOLVENT' ) THEN
       UPDATE telcoservice_db.auditing
-         SET IS_ACTIVE = 0
+         SET IS_ACTIVE = false
          WHERE auditing.USERNAME = NEW.USERNAME;
    END IF;
 END; //
