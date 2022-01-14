@@ -1,20 +1,34 @@
 package it.polimi.db2.telcoservice_sc42.servlets;
 
+import it.polimi.db2.telcoservice_sc42.entities.OptionalProduct;
 import it.polimi.db2.telcoservice_sc42.entities.ServicePackage;
+import it.polimi.db2.telcoservice_sc42.entities.Validity;
+import it.polimi.db2.telcoservice_sc42.services.OptionalProductService;
 import it.polimi.db2.telcoservice_sc42.services.PackageService;
+import it.polimi.db2.telcoservice_sc42.services.ValidityService;
 import it.polimi.db2.telcoservice_sc42.utils.BuySessionRegistry;
 import it.polimi.db2.telcoservice_sc42.utils.SafeParser;
 import jakarta.ejb.EJB;
-import jakarta.servlet.http.*;
-import jakarta.servlet.annotation.*;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @WebServlet(name = "BuyPageServlet", value = "/BuyPage")
 public class BuyPageServlet extends HttpServlet {
 
     @EJB(name = "it.polimi.db2.telcoservice_sc42.services/PackageService")
     PackageService packageService;
+    @EJB(name = "it.polimi.db2.telcoservice_sc42.services/ValidityService")
+    ValidityService validityService;
+    @EJB(name = "it.polimi.db2.telcoservice_sc42.services/OptionalProductService")
+    OptionalProductService optionalService;
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -31,7 +45,7 @@ public class BuyPageServlet extends HttpServlet {
      * @throws IOException if something goes wrong
      */
     private void refresh(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        ServicePackage servicePackage = setServicePackage(request);
+        ServicePackage servicePackage = handleServicePackage(request, "selected", true);
         prepareRefresh(request, servicePackage);
         response.sendRedirect(getServletContext().getContextPath() + "/" + "HTML/buyService.jsp");
     }
@@ -67,9 +81,10 @@ public class BuyPageServlet extends HttpServlet {
      */
     private void prepareConfirmationPage(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        //optionalService.getOptionalWithId(
-        session.setAttribute(BuySessionRegistry.chosenValidity, request.getParameter("available_validity"));
-        session.setAttribute(BuySessionRegistry.chosenOptionals, request.getParameterValues("available_optional"));
+
+        session.setAttribute(BuySessionRegistry.selectedPackage, handleServicePackage(request, BuySessionRegistry.selectedPackage, false));
+        session.setAttribute(BuySessionRegistry.chosenValidity, retrieveChosenValidity(request));
+        session.setAttribute(BuySessionRegistry.chosenOptionals, retrieveOptionalProduct(request));
         session.setAttribute(BuySessionRegistry.chosenSubscription, request.getParameter("starting_date_of_subscription"));
     }
 
@@ -78,10 +93,34 @@ public class BuyPageServlet extends HttpServlet {
      * @param request the HttpServletRequest of the page
      * @return the chosen ServicePackage
      */
-    private ServicePackage setServicePackage(HttpServletRequest request){
-        int selectedPackage = SafeParser.safeParseInteger(request.getParameter("selected"));
-        request.getSession().setAttribute(BuySessionRegistry.selectedPackage, selectedPackage);
+    private ServicePackage handleServicePackage(HttpServletRequest request, String parameter, boolean saveById){
+        Integer selectedPackage;
+
+        if ( saveById ) {
+            selectedPackage = SafeParser.safeParseInteger(request.getParameter(parameter));
+            request.getSession().setAttribute(BuySessionRegistry.selectedPackage, selectedPackage);
+        }
+        else
+            selectedPackage = (Integer) request.getSession().getAttribute(parameter);
 
         return packageService.findServicePackageById(selectedPackage);
+    }
+
+    private Validity retrieveChosenValidity(HttpServletRequest request){
+        String parameter = request.getParameter("available_validity");
+
+        //safeParser
+        int validityId = SafeParser.safeParseInteger(parameter);
+
+        return validityService.findValidityById(validityId);
+    }
+
+
+    private List<OptionalProduct> retrieveOptionalProduct(HttpServletRequest request){
+
+        return Arrays.stream(request.getParameterValues("available_optional")).
+                        map(SafeParser::safeParseInteger).
+                            map(id -> optionalService.findOptionalProductById(id)).
+                                collect(Collectors.toList());
     }
 }
