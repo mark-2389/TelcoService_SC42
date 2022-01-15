@@ -49,7 +49,7 @@ public class OrderService {
 
         return orders.stream()
                 .filter( o -> o.getStatus() == OrderStatus.REJECTED )
-                .collect(Collectors.toList());
+                    .collect(Collectors.toList());
     }
 
     /**
@@ -72,12 +72,15 @@ public class OrderService {
      */
     public Integer createOrder (String clientUsername, int validityId, int packageId, Date dateSubscription, List<Integer> optionals ) {
         Client costumer = em.find(Client.class, clientUsername);
-        ServicePackage servicePackage = em.find(ServicePackage.class, packageId);
-        Validity validity = validityService.findValidityByKey(validityId, packageId);
-        List<OptionalProduct> optionalProducts = new ArrayList<>();
-        for (Integer id: optionals) optionalProducts.add(em.find(OptionalProduct.class, id));
 
         if ( !isNameValid(clientUsername) ) return null;
+
+        ServicePackage servicePackage = em.find(ServicePackage.class, packageId);
+        Validity validity = validityService.findValidityByKey(validityId, packageId);
+
+        List<OptionalProduct> optionalProducts = optionals.stream().
+                                                    map(id -> em.find(OptionalProduct.class, id)).
+                                                        collect(Collectors.toList());
 
         Order order = new Order( costumer, validity, servicePackage, dateSubscription, optionalProducts );
 

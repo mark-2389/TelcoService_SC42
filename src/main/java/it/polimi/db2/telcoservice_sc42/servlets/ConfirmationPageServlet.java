@@ -42,7 +42,6 @@ public class ConfirmationPageServlet extends HttpServlet {
         if ( orderId != null ) {
             prepareInsolventDetails(request, orderId);
         } else {
-            System.out.println("NO NEED OF PREPARING DETAILS");
             prepareDetails(request);
         }
 
@@ -53,10 +52,12 @@ public class ConfirmationPageServlet extends HttpServlet {
         // get the id of the order as an integer
         Integer oid = SafeParser.safeParseInteger(orderId);
         if ( oid == null ) return;
-        request.getSession().setAttribute(BuySessionRegistry.orderId, oid);
 
+        //retrieve the order correctly
         Order order = orderService.findOrderById(oid);
         if ( order == null ) return;
+
+        request.getSession().setAttribute(BuySessionRegistry.orderId, oid);
 
         prepareServicePackageDetails(request, order.getPackageId());
         prepareValidityDetails(request, order.getValidityId());
@@ -91,9 +92,10 @@ public class ConfirmationPageServlet extends HttpServlet {
 
             servicePackage = (ServicePackage) attribute;
         } else {
-            request.getSession().setAttribute(BuySessionRegistry.selectedPackage, packageId);
             // get the servicePackage
             servicePackage = packageService.findServicePackageById(packageId);
+
+            request.getSession().setAttribute(BuySessionRegistry.selectedPackage, packageId);
         }
 
         // save the name of the selected package
@@ -110,10 +112,10 @@ public class ConfirmationPageServlet extends HttpServlet {
 
             validity = (Validity) attribute;
         } else {
-            request.getSession().setAttribute(BuySessionRegistry.chosenValidity, "" + validityId);
-
             // get the validity
             validity = validityService.findValidityById(validityId);
+
+            request.getSession().setAttribute(BuySessionRegistry.chosenValidity, validity);
         }
 
         if ( validity == null ) {
@@ -129,9 +131,7 @@ public class ConfirmationPageServlet extends HttpServlet {
     }
 
     private void prepareOptionalsDetails(HttpServletRequest request, List<Integer> optionalIds) {
-        String[] optional_Ids;
-        BigDecimal totalFee = new BigDecimal(0);
-        List<String> optionals = new ArrayList<>();
+        List<OptionalProduct> optionals;
 
         if ( optionalIds == null ) {
 
@@ -139,32 +139,27 @@ public class ConfirmationPageServlet extends HttpServlet {
 
             if ( listParameter == null ) return;
 
-            List<OptionalProduct> parameters = listParameter.stream().map(i -> (OptionalProduct)i).collect(Collectors.toList());
-
-            for ( OptionalProduct optional : parameters ){
-                totalFee = totalFee.add(optional.getMonthlyFee());
-                optionals.add(optional.clientString());
-            }
+            optionals = listParameter.stream().map(i -> (OptionalProduct)i).collect(Collectors.toList());
 
         } else {
-            optional_Ids = new String[optionalIds.size()];
-            for (int i=0; i<optionalIds.size(); i++) optional_Ids[i] = optionalIds.get(i) + "";
-            request.getSession().setAttribute(BuySessionRegistry.chosenOptionals, optional_Ids);
+            optionals = new ArrayList<>();
 
-            Integer id;
-            OptionalProduct optional;
-
-            for ( String sid: optional_Ids ) {
-                id = SafeParser.safeParseInteger(sid);
-                if ( id != null ) {
-                    optional = optionalService.findOptionalProductById(id);
-                    optionals.add(optional.clientString());
-                    totalFee = totalFee.add(optional.getMonthlyFee());
-                }
+            for( Integer id : optionalIds ){
+                optionals.add(optionalService.findOptionalProductById(id));
             }
+
+            request.getSession().setAttribute(BuySessionRegistry.chosenOptionals, optionals);
+        }
+
+        BigDecimal totalFee = new BigDecimal(0);
+        List<String> optionalsString = new ArrayList<>();
+
+        for ( OptionalProduct optional : optionals ){
+            totalFee = totalFee.add(optional.getMonthlyFee());
+            optionalsString.add(optional.clientString());
         }
 
         request.getSession().setAttribute(BuySessionRegistry.totalOptionalsFee, totalFee);
-        request.getSession().setAttribute(BuySessionRegistry.chosenOptionalsDescriptions, optionals);
+        request.getSession().setAttribute(BuySessionRegistry.chosenOptionalsDescriptions, optionalsString);
     }
 }

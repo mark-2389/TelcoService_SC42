@@ -1,5 +1,6 @@
 package it.polimi.db2.telcoservice_sc42.servlets;
 
+import it.polimi.db2.telcoservice_sc42.entities.OptionalProduct;
 import it.polimi.db2.telcoservice_sc42.entities.OrderStatus;
 import it.polimi.db2.telcoservice_sc42.entities.ServicePackage;
 import it.polimi.db2.telcoservice_sc42.entities.Validity;
@@ -18,6 +19,7 @@ import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @WebServlet(name = "paymentServlet", value = "/Payment")
 public class PaymentServlet extends HttpServlet {
@@ -30,7 +32,7 @@ public class PaymentServlet extends HttpServlet {
         HttpSession session = request.getSession();
         Integer orderId = (Integer) session.getAttribute(BuySessionRegistry.orderId);
 
-        // if we aren't handling a rejected order
+        // if it is a new purchase, orderId is null since the order has to be created
         if (orderId == null) {
             String username = (String) session.getAttribute(SessionAttributeRegistry.username);
             int validityId = ((Validity) session.getAttribute(BuySessionRegistry.chosenValidity)).getId();
@@ -74,20 +76,13 @@ public class PaymentServlet extends HttpServlet {
     }
 
     private List<Integer> getOptionalProducts(HttpSession session) {
-        String[] optionalIds = (String[]) session.getAttribute(BuySessionRegistry.chosenOptionals);
-        List<Integer> optionalProducts = new ArrayList<>();
+        List<OptionalProduct> optionals = (List<OptionalProduct>) session.getAttribute(BuySessionRegistry.chosenOptionals);
 
-        if ( optionalIds == null ) return optionalProducts;
+        if ( optionals == null ) return new ArrayList<>();
 
-        Integer id;
-        for (String sid: optionalIds) {
-            id = SafeParser.safeParseInteger(sid);
-            if (id != null) {
-                optionalProducts.add(id);
-            }
-        }
-
-        return optionalProducts;
+        return optionals.stream().
+                    map(OptionalProduct::getId).
+                        collect(Collectors.toList());
     }
 
     private boolean handleExternalPayment(HttpServletRequest request) {
