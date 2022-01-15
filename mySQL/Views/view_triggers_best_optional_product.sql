@@ -48,7 +48,7 @@ BEGIN
             WHERE PACKAGE_ID = new.package_Id AND id = new.validity_Id
         );
 
-        -- a table containing the id of an optional product and the relative total value
+        -- a table containing the id of an optional product and the total value of that optional
         CREATE TEMPORARY TABLE IF NOT EXISTS new_volume_of_sales1 (
             SELECT OP.id AS Id, OP.monthly_fee * duration AS total_value
             FROM telcoservice_db.Order_Optional_Composition OOC JOIN telcoservice_db.optional_product as OP
@@ -94,44 +94,6 @@ CREATE TRIGGER update_best_optional_product
                 FROM telcoservice_db.optional_product_volume_of_sales
             )
         );
-
-        -- DECLARE new_id INT DEFAULT (
-        -- 	SELECT id, max(VALUE_OF_SALES)
-        --    FROM telcoservice_db.optional_product_volume_of_sales
-        -- );
-        --
-        -- DECLARE new_id INT DEFAULT (
-        -- 	SELECT id, max(VALUE_OF_SALES)
-        --    FROM telcoservice_db.optional_product_volume_of_sales
-        -- );
-        --
-        -- DECLARE top_id INT DEFAULT (
-        -- 	SELECT id
-        --     FROM best_optional_product
-        -- );
-        --
-        -- IF (new_id = top_id) THEN
-        -- 	UPDATE best_optional_product
-        --     SET VALUE_OF_SALES = (
-        -- 		SELECT VALUE_OF_SALES
-        -- 		FROM optional_product_volume_of_sales VOS
-        -- 		WHERE VOS.id = new_id
-        -- );
-        -- ELSE IF ()
-        -- UPDATE best_optional_product
-        -- SET VALUE_OF_SALES = (
-        --     SELECT VALUE_OF_SALES
-        --     FROM optional_product_volume_of_sales VOS
-        --     WHERE VOS.id = new_id
-        -- );
-        -- UPDATE best_optional_product
-        -- SET VALUE_OF_SALES = (
-        --     SELECT VALUE_OF_SALES
-        --     FROM optional_product_volume_of_sales VOS
-        --     WHERE VOS.id = new_id
-        -- );
-        --
-        -- END IF;
 END; //
 
 delimiter ;

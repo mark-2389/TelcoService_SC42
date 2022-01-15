@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -38,7 +37,7 @@ public class OptionalProduct implements Serializable, Representable {
                     inverseJoinColumns = @JoinColumn(name="order_id"))
     private List<Order> orders;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "products", fetch=FetchType.LAZY)
     @JoinTable
     	(name = "optional_product_composition",
     	joinColumns = @JoinColumn(name="optional_product_id"),
