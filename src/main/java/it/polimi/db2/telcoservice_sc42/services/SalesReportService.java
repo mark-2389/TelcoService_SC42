@@ -4,8 +4,10 @@ import it.polimi.db2.telcoservice_sc42.entities.Auditing;
 import it.polimi.db2.telcoservice_sc42.entities.Client;
 import it.polimi.db2.telcoservice_sc42.entities.Order;
 import jakarta.ejb.Stateless;
+import jakarta.persistence.CacheStoreMode;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.QueryHint;
 
 import java.util.*;
 
@@ -145,14 +147,12 @@ public class SalesReportService {
      * @return a list of string: the string representation of insolvent users
      */
     public List<Map<String, String>> insolventUsers(){
-        List<Client> insolvent = em.createNamedQuery("Client.insolvent", Client.class).getResultList();
+        //"jakarta.persistence.cache.storeMode"
+        List<Client> insolvent = em.createNamedQuery("Client.insolvent", Client.class).setHint("jakarta.persistence.cache.storeMode", CacheStoreMode.REFRESH).getResultList();
         List<Map<String, String>> formattedResults = new ArrayList<>();
 
         //for each array we create an HashMap to better organize the retrieved attributes
         for (Client c : insolvent ){
-            System.out.println("BEFORE REFRESH:\nNAME: " + c.getUsername() + "\tEMAIL: " + c.getEmail() + "\tREJECTIONS: " + c.getNumberOfRejections());
-            em.refresh(c);
-            System.out.println("AFTER REFRESH:\nNAME: " + c.getUsername() + "\tEMAIL: " + c.getEmail() + "\tREJECTIONS: " + c.getNumberOfRejections());
             Map<String, String> temp = new HashMap<>();
             temp.put("USERNAME", c.getUsername());
             temp.put("EMAIL", c.getEmail());
