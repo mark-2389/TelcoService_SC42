@@ -20,15 +20,6 @@ public class PackageService {
     public PackageService() {
     }
 
-    /**
-     * The method retrieves the associated servicePackage, given a certain orderId
-     * @param orderId the id of the given order
-     * @return the servicePackage related to the order
-     */
-    public ServicePackage findServicePackageByOrder(int orderId){
-        Order order = em.find(Order.class, orderId);
-        return order.getPackage();
-    }
 
     /**
      * The method retrieves the specific servicePackage with the corresponding id
