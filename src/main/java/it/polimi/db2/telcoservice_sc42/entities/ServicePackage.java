@@ -28,10 +28,14 @@ public class ServicePackage implements Serializable, Representable {
     @OneToMany(mappedBy = "servicePackage", fetch=FetchType.LAZY)
     private List<Order> orders;
 
-    @ManyToMany(mappedBy = "packages", fetch=FetchType.EAGER)
+    @ManyToMany ( fetch = FetchType.EAGER )
+    @JoinTable(
+            name = "service_composition",
+            joinColumns = @JoinColumn(name="PACKAGE_ID"),
+            inverseJoinColumns = @JoinColumn(name="SERVICE_ID"))
     private List<Service> services;
 
-    @ManyToMany
+    @ManyToMany ( fetch = FetchType.EAGER )
     @JoinTable
             (name = "optional_product_composition",
                     joinColumns = @JoinColumn(name="package_id"),

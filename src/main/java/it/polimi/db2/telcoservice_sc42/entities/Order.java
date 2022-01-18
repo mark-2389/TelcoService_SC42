@@ -65,7 +65,7 @@ public class Order implements Serializable, Representable {
     @JoinColumn(name = "CLIENT")
     private Client client;
 
-    @ManyToMany
+    @ManyToMany ( fetch = FetchType.EAGER )
     @JoinTable(
             name = "order_optional_composition",
             joinColumns = @JoinColumn(name="ORDER_ID"),

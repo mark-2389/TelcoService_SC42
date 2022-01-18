@@ -30,18 +30,10 @@ public class OptionalProduct implements Serializable, Representable {
     private Date expirationDate;
 
 
-    @ManyToMany(mappedBy = "optionals", fetch=FetchType.EAGER)
-    @JoinTable
-            (name = "order_optional_composition",
-                    joinColumns = @JoinColumn(name="optional_product_id"),
-                    inverseJoinColumns = @JoinColumn(name="order_id"))
+    @ManyToMany(mappedBy = "optionals", fetch=FetchType.LAZY)
     private List<Order> orders;
 
     @ManyToMany(mappedBy = "products", fetch=FetchType.LAZY)
-    @JoinTable
-    	(name = "optional_product_composition",
-    	joinColumns = @JoinColumn(name="optional_product_id"),
-    	inverseJoinColumns = @JoinColumn(name="package_id"))
     private List<ServicePackage> packages;
 
 

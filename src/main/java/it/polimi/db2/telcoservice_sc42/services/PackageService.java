@@ -114,6 +114,7 @@ public class PackageService {
         for (Validity v : validities){
             System.out.println("WHEN SETTING SERVICE PACKAGE: " + em.contains(v) );
             //v.setServicePackage(servicePackage);
+            //TODO delete persist
             em.persist(v);
             System.out.println("WHEN AFTER SETTING SERVICE PACKAGE: " + em.contains(v) );
         }
@@ -135,63 +136,4 @@ public class PackageService {
                 throw new InvalidChoiceServiceException("Cannot choose two or more services of the same type");
 
     }
-
-    public void modifyExpirationDate(int toModifyId, Date newDate){
-        ServicePackage servicePackage = findServicePackageById(toModifyId);
-
-        servicePackage.setExpirationDate(newDate);
-    }
-
-    public void addService(int toModifyId,Service newService){
-        ServicePackage servicePackage = findServicePackageById(toModifyId);
-
-        servicePackage.addService(newService);
-
-        em.persist(servicePackage);
-    }
-
-    public void removeService(int toModifyId,Service oldService){
-        ServicePackage servicePackage = findServicePackageById(toModifyId);
-
-        servicePackage.removeService(oldService);
-
-        em.persist(servicePackage);
-    }
-
-    public void addOptionalProduct(ServicePackage toModify,Service newService){
-        ServicePackage servicePackage = em.find(ServicePackage.class, toModify);
-
-        servicePackage.addService(newService);
-
-        em.persist(servicePackage);
-    }
-
-    public void removeOptionalProduct(int toModifyId,Service oldService){
-        ServicePackage servicePackage = findServicePackageById(toModifyId);
-
-        servicePackage.removeService(oldService);
-
-        em.persist(servicePackage);
-    }
-
-    public void addValidity(int toModifyId, Validity validity){
-        ServicePackage servicePackage = findServicePackageById(toModifyId);
-        em.refresh(servicePackage);
-
-        servicePackage.addValidity(validity);
-        validity.setServicePackage(servicePackage);
-
-        em.persist(validity);
-    }
-
-    public void removeValidity(int toModifyId,int oldValidityId){
-        ServicePackage servicePackage = findServicePackageById(toModifyId);
-        Validity validity = em.find(Validity.class, oldValidityId);
-
-        servicePackage.removeValidity(validity);
-        //TODO how to handle the remove of the validity? New column for unavailability?
-
-        em.persist(validity);
-    }
-
 }

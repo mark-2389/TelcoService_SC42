@@ -48,34 +48,20 @@ BEGIN
             WHERE PACKAGE_ID = new.package_Id AND id = new.validity_Id
         );
 
-        -- a table containing the id of an optional product and the total value of that optional
-        CREATE TEMPORARY TABLE IF NOT EXISTS new_volume_of_sales1 (
-            SELECT OP.id AS Id, OP.monthly_fee * duration AS total_value
-            FROM telcoservice_db.Order_Optional_Composition OOC JOIN telcoservice_db.optional_product as OP
-                                                                     ON OOC.optional_Product_Id = OP.id
-            WHERE OOC.order_Id = new.id -- select only the optionals of the new order
-        );
-
-        -- apparently we can't use the same temporary table twice
-        -- TODO: consider adding a buffer table instead
-        CREATE TEMPORARY TABLE IF NOT EXISTS new_volume_of_sales (
-            SELECT OP.id AS Id, OP.monthly_fee * duration AS total_value
-            FROM telcoservice_db.Order_Optional_Composition OOC JOIN telcoservice_db.optional_product as OP
-                                                                     ON OOC.optional_Product_Id = OP.id
-            WHERE OOC.order_Id = new.id -- select only the optionals of the new order
-        );
-
         -- update the product in the table
         UPDATE telcoservice_db.optional_product_volume_of_sales VOS
         SET VALUE_OF_SALES = VALUE_OF_SALES + (
-            SELECT total_value
-            FROM new_volume_of_sales N
-            WHERE VOS.id = N.id
+            SELECT OP.monthly_fee * duration
+            FROM telcoservice_db.Order_Optional_Composition OOC JOIN telcoservice_db.optional_product as OP
+                                                                     ON OOC.optional_Product_Id = OP.id
+            WHERE OOC.order_Id = new.id and VOS.ID = OP.ID
         )
         WHERE VOS.id IN (
-            SELECT id
-            FROM new_volume_of_sales1
+            SELECT OOC.OPTIONAL_PRODUCT_ID
+            FROM telcoservice_db.Order_Optional_Composition OOC
+            WHERE OOC.ORDER_ID = new.ID
         );
+
     END IF;
 END; //
 delimiter ;

@@ -33,11 +33,7 @@ public class Service implements Serializable, Representable {
     @Column(name = "expiration_date")
     private Date expirationDate;
 
-    @ManyToMany
-    @JoinTable(
-            name = "service_composition",
-                    joinColumns = @JoinColumn(name="SERVICE_ID"),
-                    inverseJoinColumns = @JoinColumn(name="PACKAGE_ID"))
+    @ManyToMany (mappedBy = "services", fetch = FetchType.LAZY )
     private List<ServicePackage> packages;
 
     @ManyToMany
