@@ -1,13 +1,11 @@
 package it.polimi.db2.telcoservice_sc42.entities;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-
 import it.polimi.db2.telcoservice_sc42.utils.Representable;
 import jakarta.persistence.*;
 
-import java.util.Collection;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,7 +31,11 @@ public class ServicePackage implements Serializable, Representable {
     @ManyToMany(mappedBy = "packages", fetch=FetchType.EAGER)
     private List<Service> services;
 
-    @ManyToMany(mappedBy = "packages", fetch=FetchType.EAGER)
+    @ManyToMany
+    @JoinTable
+            (name = "optional_product_composition",
+                    joinColumns = @JoinColumn(name="package_id"),
+                    inverseJoinColumns = @JoinColumn(name="optional_product_id"))
     private List<OptionalProduct> products;
 
     @OneToMany(mappedBy = "servicePackage", fetch = FetchType.EAGER)
