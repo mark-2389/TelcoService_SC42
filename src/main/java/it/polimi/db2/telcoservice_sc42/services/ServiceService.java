@@ -82,9 +82,4 @@ public class ServiceService {
     public List<Service> findValidServices() {
         return entityManager.createNamedQuery("Service.valid", Service.class).getResultList();
     }
-
-    public Service findServiceById(int id) {
-        return entityManager.createQuery("SELECT s from Service s WHERE s.id = ?1", Service.class)
-                .setParameter(1, id).getSingleResult();
-    }
 }
