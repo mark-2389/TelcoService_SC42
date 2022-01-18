@@ -84,49 +84,16 @@ public class OrderService {
 
         Order order = new Order( costumer, validity, servicePackage, dateSubscription, optionalProducts );
 
-        // for debugging: let's check if mission is managed
-        System.out.println("Method createOrder before client.addMission(mission)");
-        System.out.println("Is order object managed?  " + em.contains(order));
-
         costumer.addOrder(order); // updates both sides of the relationship
         servicePackage.addOrder(order); // updates both sides of the relationship
 
         em.persist(order);
-        em.flush();
-
-        // for debugging: let's check if mission is managed
-        System.out.println("Method createOrder AFTER client.addMission(mission)");
-        System.out.println("Is order object managed?  " + em.contains(order));
-
-        // em.persist(costumer); // makes also order object managed via cascading
-        // em.persist(servicePackage); // makes also order object managed via cascading
-
-        System.out.println("Method createOrder after em.persist()");
-        System.out.println("Is order object managed?  " + em.contains(order));
 
         return order.getId();
     }
 
     private boolean isNameValid(String name) {
         return name.length() > 0 && name.length() <= 255;
-    }
-
-    /**
-     * This method allows to delete an order
-     * @param orderId the id of the order to be deleted
-     * @param client the client who is withdrawing the order
-     * @throws ClientNotCorrespondingException the order was not made by the client so there is not any correspondence
-     */
-    public void deleteOrder(int orderId, Client client) throws ClientNotCorrespondingException {
-        Order order = em.find(Order.class, orderId);
-        Client costumer = em.find(Client.class, client);
-
-        if (order.getClient() != costumer) {
-            throw new ClientNotCorrespondingException("Client deleting not owned order");
-        }
-        client.removeOrder(order); // this updates both directions of the associations
-
-        em.remove(order);
     }
 
     public void setOrderStatus(int id, OrderStatus status) {

@@ -17,18 +17,6 @@ public class OptionalProductService {
     @PersistenceContext(unitName = "TelcoService_EJB")
     private EntityManager em;
 
-    public void changeMonthlyFee(int optionalID, BigDecimal monthlyFee){
-        OptionalProduct optionalProduct = findOptionalProductById(optionalID);
-        optionalProduct.setMonthlyFee(monthlyFee);
-        em.persist(optionalProduct);
-    }
-
-    public void changeExpirationDate(int optionalID, Date newExpirationDate){
-        OptionalProduct optionalProduct = findOptionalProductById(optionalID);
-        optionalProduct.setExpirationDate(newExpirationDate);
-        em.persist(optionalProduct);
-    }
-
     public OptionalProduct createOptionalProduct(String name, BigDecimal fee, Date expirationDate) throws BadlyFormattedOptionalProductException {
         if ( expirationDate != null && expirationDate.before(new Date()) ) {
             throw new PastDateException();
