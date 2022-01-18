@@ -46,10 +46,6 @@ public class OptionalProductService {
         return em.find(OptionalProduct.class, id);
     }
 
-    public List<OptionalProduct> findAllOptionalProducts() {
-        return em.createNamedQuery("OptionalProduct.all", OptionalProduct.class).getResultList();
-    }
-
     public List<OptionalProduct> findValidOptionalProducts() {
         return em.createNamedQuery("OptionalProduct.valid", OptionalProduct.class).getResultList();
     }
