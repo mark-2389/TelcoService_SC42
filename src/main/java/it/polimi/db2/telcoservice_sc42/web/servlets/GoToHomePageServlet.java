@@ -16,10 +16,10 @@ import java.util.List;
 @WebServlet(name = "GoToHomePageServlet", value = "/HomePage")
 public class GoToHomePageServlet extends HttpServlet {
 
-    @EJB(name = "it.polimi.db2.telcoservice_sc42.services/OrderService")
+    @EJB(name = "it.polimi.db2.telcoservice_sc42.ejb.services/OrderService")
     OrderService orderService;
 
-    @EJB(name = "it.polimi.db2.telcoservice_sc42.services/PackageService")
+    @EJB(name = "it.polimi.db2.telcoservice_sc42.ejb.services/PackageService")
     PackageService packageService;
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {

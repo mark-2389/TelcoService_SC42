@@ -57,7 +57,7 @@
 <div>
     <h4>Selected optionals</h4>
     <div>
-        <%--@elvariable id="chosen_optionals_desc" type="java.util.List<it.polimi.db2.telcoservice_sc42.entities.String>"--%>
+        <%--@elvariable id="chosen_optionals_desc" type="java.util.List<java.lang.String>"--%>
         <c:forEach var="optional" items="${chosen_optionals_desc}">
             <c:out value="${optional}"> </c:out>
         </c:forEach>

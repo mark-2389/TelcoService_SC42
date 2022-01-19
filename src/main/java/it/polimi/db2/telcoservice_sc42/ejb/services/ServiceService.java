@@ -4,7 +4,6 @@ import it.polimi.db2.telcoservice_sc42.ejb.entities.FixedInternetService;
 import it.polimi.db2.telcoservice_sc42.ejb.entities.MobileInternetService;
 import it.polimi.db2.telcoservice_sc42.ejb.entities.MobilePhoneService;
 import it.polimi.db2.telcoservice_sc42.ejb.entities.Service;
-import it.polimi.db2.telcoservice_sc42.entities.*;
 import it.polimi.db2.telcoservice_sc42.exception.BadParametersException;
 import it.polimi.db2.telcoservice_sc42.ejb.enums.ServiceType;
 import jakarta.ejb.Stateless;

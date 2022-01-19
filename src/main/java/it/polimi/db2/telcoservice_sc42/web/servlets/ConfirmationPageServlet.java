@@ -1,7 +1,6 @@
 package it.polimi.db2.telcoservice_sc42.web.servlets;
 
 import it.polimi.db2.telcoservice_sc42.ejb.entities.*;
-import it.polimi.db2.telcoservice_sc42.entities.*;
 import it.polimi.db2.telcoservice_sc42.ejb.services.OptionalProductService;
 import it.polimi.db2.telcoservice_sc42.ejb.services.OrderService;
 import it.polimi.db2.telcoservice_sc42.ejb.services.PackageService;
@@ -23,16 +22,16 @@ import java.util.stream.Collectors;
 @WebServlet(name = "confirmationPageServlet", value = "/confirmation")
 public class ConfirmationPageServlet extends HttpServlet {
 
-    @EJB(name = "it.polimi.db2.telcoservice_sc42.services/OrderService")
+    @EJB(name = "it.polimi.db2.telcoservice_sc42.ejb.services/OrderService")
     OrderService orderService;
 
-    @EJB(name = "it.polimi.db2.telcoservice_sc42.services/PackageService")
+    @EJB(name = "it.polimi.db2.telcoservice_sc42.ejb.services/PackageService")
     PackageService packageService;
 
-    @EJB(name = "it.polimi.db2.telcoservice_sc42.services/ValidityService")
+    @EJB(name = "it.polimi.db2.telcoservice_sc42.ejb.services/ValidityService")
     ValidityService validityService;
 
-    @EJB(name = "it.polimi.db2.telcoservice_sc42.services/OptionalProductService")
+    @EJB(name = "it.polimi.db2.telcoservice_sc42.ejb.services/OptionalProductService")
     OptionalProductService optionalService;
 
     @Override

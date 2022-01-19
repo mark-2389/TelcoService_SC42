@@ -17,10 +17,10 @@ import java.util.List;
 @WebServlet(name = "LoadOptionalsEmployeeServlet", value = "/load_optionals")
 public class LoadOptionalsEmployeeServlet extends HttpServlet {
 
-    @EJB(name = "it.polimi.db2.telcoservice_sc42.services/OptionalProductService")
+    @EJB(name = "it.polimi.db2.telcoservice_sc42.ejb.services/OptionalProductService")
     OptionalProductService optionalProductService;
 
-    @EJB(name = "it.polimi.db2.telcoservice_sc42.services/ServiceService")
+    @EJB(name = "it.polimi.db2.telcoservice_sc42.ejb.services/ServiceService")
     ServiceService serviceService;
 
     public LoadOptionalsEmployeeServlet() { }

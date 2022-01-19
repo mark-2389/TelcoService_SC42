@@ -2,7 +2,6 @@ package it.polimi.db2.telcoservice_sc42.ejb.services;
 
 
 import it.polimi.db2.telcoservice_sc42.ejb.entities.*;
-import it.polimi.db2.telcoservice_sc42.entities.*;
 import it.polimi.db2.telcoservice_sc42.ejb.enums.OrderStatus;
 import jakarta.ejb.EJB;
 import jakarta.ejb.Stateless;
@@ -19,7 +18,7 @@ public class OrderService {
     @PersistenceContext(unitName = "TelcoService_EJB")
     private EntityManager em;
 
-    @EJB(name = "it.polimi.db2.telcoservice_sc42.services/ValidityService")
+    @EJB(name = "it.polimi.db2.telcoservice_sc42.ejb.services/ValidityService")
     ValidityService validityService;
 
     /**
@@ -87,6 +86,8 @@ public class OrderService {
 
         costumer.addOrder(order); // updates both sides of the relationship
         servicePackage.addOrder(order); // updates both sides of the relationship
+        validity.addOrder(order); // updates both sides of the relationship
+        optionalProducts.forEach(o -> o.addOrder(order)); // updates both sides of the relationship
 
         em.persist(order);
         em.flush();

@@ -15,7 +15,7 @@ import java.io.IOException;
 
 @WebServlet(name = "credentialServlet", value = "/register")
 public class CredentialServlet extends HttpServlet {
-    @EJB(name = "it.polimi.db2.telcoservice_sc42.services/LoginService")
+    @EJB(name = "it.polimi.db2.telcoservice_sc42.ejb.services/LoginService")
     private ClientService clientService;
 
     public CredentialServlet() {

@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "`order`")
-@NamedQuery(name = "Order.rejected", query = "SELECT o FROM Order o WHERE o.status <> it.polimi.db2.telcoservice_sc42.entities.OrderStatus.ACCEPTED")
+@NamedQuery(name = "Order.rejected", query = "SELECT o FROM Order o WHERE o.status <> it.polimi.db2.telcoservice_sc42.ejb.enums.OrderStatus.ACCEPTED")
 public class Order implements Serializable, Representable {
     private static final long serialVersionUID = 1L;
 
@@ -46,7 +46,7 @@ public class Order implements Serializable, Representable {
 
     // an order refers to one validity period, but the same validity
     // period can be assigned to multiple orders.
-    @ManyToOne
+    @ManyToOne (cascade = CascadeType.PERSIST)
     @JoinColumns({
             @JoinColumn(name = "VALIDITY_ID", referencedColumnName = "ID"),
             @JoinColumn(name = "PACKAGE_ID", referencedColumnName = "PACKAGE_ID", updatable = false, insertable = false )
@@ -56,17 +56,17 @@ public class Order implements Serializable, Representable {
 
     // an order refers to a package only, but the same package can be part
     // of multiple orders.
-    @ManyToOne
+    @ManyToOne (cascade = CascadeType.PERSIST)
     @JoinColumn(name = "PACKAGE_ID", referencedColumnName = "ID")
     private ServicePackage servicePackage;
 
 
     // An order has just one client but a client can do different orders.
-    @ManyToOne
+    @ManyToOne (cascade = CascadeType.PERSIST)
     @JoinColumn(name = "CLIENT")
     private Client client;
 
-    @ManyToMany ( fetch = FetchType.EAGER )
+    @ManyToMany ( fetch = FetchType.EAGER, cascade = CascadeType.PERSIST )
     @JoinTable(
             name = "order_optional_composition",
             joinColumns = @JoinColumn(name="ORDER_ID"),

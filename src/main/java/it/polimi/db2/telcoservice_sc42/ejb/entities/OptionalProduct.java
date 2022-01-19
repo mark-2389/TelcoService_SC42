@@ -116,6 +116,14 @@ public class OptionalProduct implements Serializable, Representable {
         return orders;
     }
 
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
+
+    public void addOrder(Order order){
+        getOrders().add(order);
+    }
+
     public List<OrderOptionalSchedule> getOptionalSchedules() {
         return optionalSchedules;
     }

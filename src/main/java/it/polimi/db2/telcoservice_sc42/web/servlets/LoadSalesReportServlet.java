@@ -13,7 +13,7 @@ import java.util.Map;
 @WebServlet(name = "LoadSalesReportServlet", value = "/load_reports")
 public class LoadSalesReportServlet extends HttpServlet {
 
-    @EJB(name = "it.polimi.db2.telcoservice_sc42.services/SalesReportService")
+    @EJB(name = "it.polimi.db2.telcoservice_sc42.ejb.services/SalesReportService")
     SalesReportService salesReportService;
 
     public LoadSalesReportServlet() {

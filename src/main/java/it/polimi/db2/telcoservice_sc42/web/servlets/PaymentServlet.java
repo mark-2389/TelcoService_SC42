@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 @WebServlet(name = "paymentServlet", value = "/Payment")
 public class PaymentServlet extends HttpServlet {
 
-    @EJB(name = "it.polimi.db2.telcoservice_sc42.services/OrderService")
+    @EJB(name = "it.polimi.db2.telcoservice_sc42.ejb.services/OrderService")
     private OrderService orderService;
 
     @Override

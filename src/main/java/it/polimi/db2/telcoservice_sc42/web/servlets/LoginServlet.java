@@ -21,10 +21,10 @@ import java.io.IOException;
 @WebServlet(name = "loginServlet", value = "/login")
 public class LoginServlet extends HttpServlet {
 
-    @EJB(name = "it.polimi.db2.telcoservice_sc42.services/LoginService")
+    @EJB(name = "it.polimi.db2.telcoservice_sc42.ejb.services/LoginService")
     private ClientService clientService;
 
-    @EJB(name = "it.polimi.db2.telcoservice_sc42.services/EmployeeService")
+    @EJB(name = "it.polimi.db2.telcoservice_sc42.ejb.services/EmployeeService")
     private EmployeeService employeeService;
 
     public LoginServlet() {

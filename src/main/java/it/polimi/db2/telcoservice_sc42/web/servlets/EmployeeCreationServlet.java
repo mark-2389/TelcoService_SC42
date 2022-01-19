@@ -30,13 +30,13 @@ import java.util.stream.Collectors;
 
 @WebServlet(name = "employeeCreationServlet", value = "/new")
 public class EmployeeCreationServlet extends HttpServlet {
-    @EJB(name = "it.polimi.db2.telcoservice_sc42.services/OptionalProductService")
+    @EJB(name = "it.polimi.db2.telcoservice_sc42.ejb.services/OptionalProductService")
     OptionalProductService optionalProductService;
 
-    @EJB(name = "it.polimi.db2.telcoservice_sc42.services/ServiceService")
+    @EJB(name = "it.polimi.db2.telcoservice_sc42.ejb.services/ServiceService")
     ServiceService serviceService;
 
-    @EJB(name = "it.polimi.db2.telcoservice_sc42.services/PackageService")
+    @EJB(name = "it.polimi.db2.telcoservice_sc42.ejb.services/PackageService")
     PackageService packageService;
 
 

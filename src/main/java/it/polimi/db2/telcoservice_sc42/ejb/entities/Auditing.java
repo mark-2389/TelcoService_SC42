@@ -13,7 +13,6 @@ import java.sql.Time;
 @NamedQuery(name = "Auditing.allActive", query = "SELECT a FROM Auditing a WHERE a.isActive = true")
 public class Auditing implements Serializable {
     private static final long serialVersionUID = 1L;
-    //todo check for JPA annotations
 
     @Id
     @ManyToOne

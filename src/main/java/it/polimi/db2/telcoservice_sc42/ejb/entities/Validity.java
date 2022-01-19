@@ -35,6 +35,9 @@ public class Validity implements Serializable, Representable {
     @OneToMany(mappedBy="validity", fetch=FetchType.LAZY)
     private List<Order> orders;
 
+    @Column(name = "TOTAL_COST")
+    private BigDecimal totalCost;
+
     public Validity() {
     }
 
@@ -92,6 +95,10 @@ public class Validity implements Serializable, Representable {
 
     public void setOrders(List<Order> orders) {
         this.orders = orders;
+    }
+
+    public void addOrder(Order order){
+        getOrders().add(order);
     }
 
     @Override

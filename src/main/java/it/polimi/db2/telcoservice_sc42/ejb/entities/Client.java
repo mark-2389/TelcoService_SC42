@@ -10,11 +10,9 @@ import java.util.List;
 
 @Entity
 @NamedQuery(name = "Client.withCredentials", query = "SELECT r FROM Client r  WHERE r.username = ?1 and r.password = ?2")
-@NamedQuery(name = "Client.insolvent", query = "SELECT c FROM Client c WHERE c.insolvent = it.polimi.db2.telcoservice_sc42.entities.UserStatus.INSOLVENT" )
+@NamedQuery(name = "Client.insolvent", query = "SELECT c FROM Client c WHERE c.insolvent = it.polimi.db2.telcoservice_sc42.ejb.enums.UserStatus.INSOLVENT" )
 public class Client implements Serializable {
     private static final long serialVersionUID = 1L;
-
-    // TODO: consider adding an id.
 
     @Id
     private String username;
@@ -31,6 +29,9 @@ public class Client implements Serializable {
     // A client can do many orders.
     @OneToMany(mappedBy="client", fetch=FetchType.LAZY)
     private List<Order> orders;
+
+    @OneToMany(mappedBy = "username", fetch = FetchType.EAGER)
+    private List<Auditing> auditings;
 
     public Client() {
         this.numberOfRejections = 0;
@@ -101,10 +102,13 @@ public class Client implements Serializable {
 
     public void addOrder(Order order){
         getOrders().add(order);
-        order.setClient(this);
     }
 
     public void removeOrder(Order order){
         getOrders().remove(order);
+    }
+
+    public List<Auditing> getAuditings() {
+        return auditings;
     }
 }

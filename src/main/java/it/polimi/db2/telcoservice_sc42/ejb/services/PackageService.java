@@ -4,7 +4,6 @@ import it.polimi.db2.telcoservice_sc42.ejb.entities.OptionalProduct;
 import it.polimi.db2.telcoservice_sc42.ejb.entities.Service;
 import it.polimi.db2.telcoservice_sc42.ejb.entities.ServicePackage;
 import it.polimi.db2.telcoservice_sc42.ejb.entities.Validity;
-import it.polimi.db2.telcoservice_sc42.entities.*;
 import it.polimi.db2.telcoservice_sc42.exception.BadParametersException;
 import it.polimi.db2.telcoservice_sc42.exception.InvalidChoiceServiceException;
 import it.polimi.db2.telcoservice_sc42.utils.IndependentValidityPeriod;

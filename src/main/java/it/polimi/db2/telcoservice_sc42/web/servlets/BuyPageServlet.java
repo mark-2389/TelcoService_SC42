@@ -23,11 +23,11 @@ import java.util.stream.Collectors;
 @WebServlet(name = "BuyPageServlet", value = "/BuyPage")
 public class BuyPageServlet extends HttpServlet {
 
-    @EJB(name = "it.polimi.db2.telcoservice_sc42.services/PackageService")
+    @EJB(name = "it.polimi.db2.telcoservice_sc42.ejb.services/PackageService")
     PackageService packageService;
-    @EJB(name = "it.polimi.db2.telcoservice_sc42.services/ValidityService")
+    @EJB(name = "it.polimi.db2.telcoservice_sc42.ejb.services/ValidityService")
     ValidityService validityService;
-    @EJB(name = "it.polimi.db2.telcoservice_sc42.services/OptionalProductService")
+    @EJB(name = "it.polimi.db2.telcoservice_sc42.ejb.services/OptionalProductService")
     OptionalProductService optionalService;
 
     @Override
