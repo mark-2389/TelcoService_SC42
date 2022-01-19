@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "`order`")
-@NamedQuery(name = "Order.rejected", query = "SELECT o FROM Order o WHERE o.status = it.polimi.db2.telcoservice_sc42.entities.OrderStatus.REJECTED")
+@NamedQuery(name = "Order.rejected", query = "SELECT o FROM Order o WHERE o.status <> it.polimi.db2.telcoservice_sc42.entities.OrderStatus.ACCEPTED")
 public class Order implements Serializable, Representable {
     private static final long serialVersionUID = 1L;
 
