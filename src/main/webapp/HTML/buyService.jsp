@@ -36,10 +36,13 @@
 <hr style="height:2px;border-width:0;color:darkblue;background-color:darkblue">
 <br>
 <div>
-    <% Integer packageId = (Integer) request.getSession().getAttribute(BuySessionRegistry.selectedPackage); %>
+    <%
+        Integer packageId = (Integer) request.getSession().getAttribute(BuySessionRegistry.selectedPackage);
+        String packageString = packageId != null ? String.valueOf(packageId) : "";
+    %>
 
     <p>
-        PACKAGE: <%= packageId %>
+        PACKAGE: <%= packageString %>
     </p>
 
     <form action="../BuyPage" method="POST">
