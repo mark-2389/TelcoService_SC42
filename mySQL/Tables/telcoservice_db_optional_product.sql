@@ -6,7 +6,7 @@ DROP TABLE IF EXISTS `optional_product`;
 CREATE TABLE `optional_product` (
 
   `ID` int AUTO_INCREMENT PRIMARY KEY,
-  `NAME` varchar(255),
+  `NAME` varchar(255) CHARACTER SET 'utf8' COLLATE 'utf8_bin',
   `MONTHLY_FEE` decimal(6,2) DEFAULT 0.00,
   `EXPIRATION_DATE` date DEFAULT NULL,  -- NULL = it never expires
 
