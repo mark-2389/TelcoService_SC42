@@ -30,9 +30,6 @@ public class Client implements Serializable {
     @OneToMany(mappedBy="client", fetch=FetchType.LAZY)
     private List<Order> orders;
 
-    @OneToMany (mappedBy = "client", fetch = FetchType.LAZY )
-    private List<OrderServiceSchedule> serviceSchedules;
-
     public Client() {
         this.numberOfRejections = 0;
         this.insolvent = UserStatus.SOLVENT;

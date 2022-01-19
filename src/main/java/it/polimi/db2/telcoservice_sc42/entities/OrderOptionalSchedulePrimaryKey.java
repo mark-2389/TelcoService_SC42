@@ -2,16 +2,16 @@ package it.polimi.db2.telcoservice_sc42.entities;
 
 import java.io.Serializable;
 
-public class OrderServiceSchedulePrimaryKey implements Serializable {
+public class OrderOptionalSchedulePrimaryKey implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @SuppressWarnings({"unused"})
     private Integer order;
 
     @SuppressWarnings({"unused"})
-    private Integer service;
+    private Integer optional;
 
-    public OrderServiceSchedulePrimaryKey() { }
+    public OrderOptionalSchedulePrimaryKey() { }
 
     @Override
     public boolean equals(Object obj) {

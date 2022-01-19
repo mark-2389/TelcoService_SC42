@@ -6,22 +6,22 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "service_schedule")
-@IdClass(OrderServiceSchedulePrimaryKey.class)
-public class OrderServiceSchedule implements Serializable {
+@Table(name = "optional_schedule")
+@IdClass(OrderOptionalSchedulePrimaryKey.class)
+public class OrderOptionalSchedule implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @ManyToOne ( cascade = CascadeType.PERSIST )
+    @ManyToOne( cascade = CascadeType.PERSIST )
     @JoinColumn (name = "ORDER_ID")
     private Order order;
 
     @Id
     @ManyToOne ( cascade = CascadeType.PERSIST )
-    @JoinColumn (name = "SERVICE_ID")
-    private Service service;
+    @JoinColumn (name = "OPTIONAL_PRODUCT_ID")
+    private OptionalProduct optional;
 
-    @Column(name = "username")
+    @Column (name = "USERNAME")
     private String username;
 
     @Column(name = "ACTIVATION_DATE")
@@ -30,19 +30,18 @@ public class OrderServiceSchedule implements Serializable {
     @Column(name = "DEACTIVATION_DATE")
     private Date deactivationDate;
 
-
-    public OrderServiceSchedule() {
+    public OrderOptionalSchedule() {
     }
 
     public Order getOrder() {
         return order;
     }
 
-    public Service getService() {
-        return service;
+    public OptionalProduct getOptional() {
+        return optional;
     }
 
-    public String getClient() {
+    public String getUsername() {
         return username;
     }
 
