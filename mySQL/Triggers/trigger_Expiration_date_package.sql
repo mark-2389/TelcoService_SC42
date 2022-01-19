@@ -13,15 +13,13 @@ BEGIN
                                         FROM service_package SP
                                         WHERE  SP.ID = new.PACKAGE_ID );
 
-	if ( min_date  is not null  AND  package_date > min_date ) THEN
-		update service_package SP
-			SET SP.EXPIRATION_DATE = min_date
-            WHERE ( new.PACKAGE_ID = SP.ID);
-	elseif ( min_date is null AND package_date is null ) THEN
-        update service_package SP
-            SET SP.EXPIRATION_DATE = min_date
-            WHERE ( new.PACKAGE_ID = SP.ID);
-	end if;
+	if ( min_date is not null ) THEN
+        if ( package_date is null OR ( package_date is not null AND package_date > min_date ) ) THEN
+            update service_package SP
+                SET SP.EXPIRATION_DATE = min_date
+                WHERE ( new.PACKAGE_ID = SP.ID);
+        end if;
+    end if;
 END; //
 
 delimiter ;
