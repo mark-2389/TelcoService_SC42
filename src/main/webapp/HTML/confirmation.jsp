@@ -92,7 +92,7 @@
         <form method="get" action="login.jsp">
             <button type="submit"> LOGIN </button>
         </form>
-        <form method="get" action="register.jsp">
+        <form method="get" action="registration.jsp">
             <button type="submit"> REGISTER </button>
         </form>
 <%

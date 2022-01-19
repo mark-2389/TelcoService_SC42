@@ -101,7 +101,8 @@ public class Order implements Serializable, Representable {
         }
 
         BigDecimal bigPeriod = new BigDecimal(validityId.getPeriod());
-
+        // period * monthly fee + (sum(optional_fee) * period)
+        // period * (monthly_fee + sum(optional_fee) )
         this.totalCost = ( validityId.getMonthlyFee().add(optionalsFee) ).multiply(bigPeriod);
         this.optionals = new ArrayList<>(optionals);
     }

@@ -1,13 +1,10 @@
 delimiter //
 
+
 create trigger insolvent_user
 after update on telcoservice_db.order
 for each row
 BEGIN
-	DECLARE insolvent_client varchar(255) default ( SELECT distinct O.CLIENT
-													FROM telcoservice_db.order O
-													WHERE O.client = new.client );
-
 	DECLARE new_client_rejections int;
 	DECLARE old_client_rejections int;
 
@@ -15,7 +12,7 @@ BEGIN
         -- If the first payment is rejected
 		update telcoservice_db.client
 			set insolvent = 'insolvent'
-            where strcmp (username, insolvent_client) = 0;
+            where username = new.CLIENT;
 
 	elseif ( old.IS_VALID = 'REJECTED' and new.IS_VALID = 'ACCEPTED' ) then
 	    -- When the order is finally payed
