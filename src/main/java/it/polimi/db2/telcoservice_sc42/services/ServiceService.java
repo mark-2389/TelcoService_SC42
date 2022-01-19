@@ -2,6 +2,7 @@ package it.polimi.db2.telcoservice_sc42.services;
 
 import it.polimi.db2.telcoservice_sc42.entities.*;
 import it.polimi.db2.telcoservice_sc42.exception.BadParametersException;
+import it.polimi.db2.telcoservice_sc42.enums.ServiceType;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;

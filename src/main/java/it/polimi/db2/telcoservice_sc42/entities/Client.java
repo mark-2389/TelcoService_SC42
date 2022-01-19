@@ -1,6 +1,8 @@
 package it.polimi.db2.telcoservice_sc42.entities;
 
 import java.io.Serializable;
+
+import it.polimi.db2.telcoservice_sc42.enums.UserStatus;
 import jakarta.persistence.*;
 import jakarta.persistence.Enumerated;
 

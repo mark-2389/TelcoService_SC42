@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page import="java.time.LocalDate" %>
-<%@ page import="it.polimi.db2.telcoservice_sc42.entities.ServiceType" %>
+<%@ page import="it.polimi.db2.telcoservice_sc42.enums.ServiceType" %>
 <%@ page import="it.polimi.db2.telcoservice_sc42.utils.SessionAttributeRegistry" %>
 <%@ page import="it.polimi.db2.telcoservice_sc42.utils.BuySessionRegistry" %>
 <%@ page import="it.polimi.db2.telcoservice_sc42.utils.EmployeeSessionRegistry" %>
@@ -99,7 +99,7 @@
             <h4>Validity Period</h4>
 
             <h5>Select Validity Period</h5>
-            <%--@elvariable id="validities" type="List<it.polimi.db2.telcoservice_sc42.entities.IndependentValidityPeriod>"--%>
+            <%--@elvariable id="validities" type="List<it.polimi.db2.telcoservice_sc42.utils.IndependentValidityPeriod>"--%>
             <c:forEach var="e" items="${validities}">
                 <div>
                     <input type="checkbox" id="periods" name="periods" value="${e.getId()}" checked>

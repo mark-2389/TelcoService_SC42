@@ -2,6 +2,7 @@ package it.polimi.db2.telcoservice_sc42.services;
 
 
 import it.polimi.db2.telcoservice_sc42.entities.*;
+import it.polimi.db2.telcoservice_sc42.enums.OrderStatus;
 import jakarta.ejb.EJB;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;

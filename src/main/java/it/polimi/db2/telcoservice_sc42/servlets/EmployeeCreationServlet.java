@@ -1,8 +1,8 @@
 package it.polimi.db2.telcoservice_sc42.servlets;
 
-import it.polimi.db2.telcoservice_sc42.entities.IndependentValidityPeriod;
+import it.polimi.db2.telcoservice_sc42.utils.IndependentValidityPeriod;
 import it.polimi.db2.telcoservice_sc42.entities.ServicePackage;
-import it.polimi.db2.telcoservice_sc42.entities.ServiceType;
+import it.polimi.db2.telcoservice_sc42.enums.ServiceType;
 import it.polimi.db2.telcoservice_sc42.exception.BadParametersException;
 import it.polimi.db2.telcoservice_sc42.exception.BadlyFormattedOptionalProductException;
 import it.polimi.db2.telcoservice_sc42.exception.InvalidChoiceServiceException;

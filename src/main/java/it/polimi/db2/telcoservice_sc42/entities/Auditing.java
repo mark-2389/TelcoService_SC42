@@ -1,5 +1,6 @@
 package it.polimi.db2.telcoservice_sc42.entities;
 
+import it.polimi.db2.telcoservice_sc42.primaryKeys.AuditingPrimaryKey;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -8,7 +9,7 @@ import java.sql.Date;
 import java.sql.Time;
 
 @Entity
-@IdClass(AuditingPK.class)
+@IdClass(AuditingPrimaryKey.class)
 @NamedQuery(name = "Auditing.allActive", query = "SELECT a FROM Auditing a WHERE a.isActive = true")
 public class Auditing implements Serializable {
     private static final long serialVersionUID = 1L;

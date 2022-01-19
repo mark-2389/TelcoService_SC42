@@ -1,6 +1,7 @@
 package it.polimi.db2.telcoservice_sc42.entities;
 
 
+import it.polimi.db2.telcoservice_sc42.enums.ServiceType;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;

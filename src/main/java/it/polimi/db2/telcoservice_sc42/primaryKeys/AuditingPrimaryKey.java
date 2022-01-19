@@ -1,10 +1,10 @@
-package it.polimi.db2.telcoservice_sc42.entities;
+package it.polimi.db2.telcoservice_sc42.primaryKeys;
 
 import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Time;
 
-public class AuditingPK implements Serializable {
+public class AuditingPrimaryKey implements Serializable {
 
     @SuppressWarnings({"unused"})
     private String username;
@@ -20,7 +20,7 @@ public class AuditingPK implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        AuditingPK that = (AuditingPK) o;
+        AuditingPrimaryKey that = (AuditingPrimaryKey) o;
 
         if (username != null ? !username.equals(that.username) : that.username != null) return false;
         if (rejectionDate != null ? !rejectionDate.equals(that.rejectionDate) : that.rejectionDate != null)

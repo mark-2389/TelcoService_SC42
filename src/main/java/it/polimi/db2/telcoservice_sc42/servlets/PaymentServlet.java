@@ -1,7 +1,7 @@
 package it.polimi.db2.telcoservice_sc42.servlets;
 
 import it.polimi.db2.telcoservice_sc42.entities.OptionalProduct;
-import it.polimi.db2.telcoservice_sc42.entities.OrderStatus;
+import it.polimi.db2.telcoservice_sc42.enums.OrderStatus;
 import it.polimi.db2.telcoservice_sc42.entities.ServicePackage;
 import it.polimi.db2.telcoservice_sc42.entities.Validity;
 import it.polimi.db2.telcoservice_sc42.services.OrderService;
