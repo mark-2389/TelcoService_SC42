@@ -75,6 +75,9 @@ public class Order implements Serializable, Representable {
     @OneToMany (mappedBy = "order", fetch = FetchType.LAZY )
     private List<OrderServiceSchedule> serviceSchedules;
 
+    @OneToMany (mappedBy = "order", fetch = FetchType.LAZY )
+    private List<OrderOptionalSchedule> optionalSchedules;
+
     public Order() {
         this.id = 0;
         this.creationDate = java.sql.Date.valueOf(LocalDate.now());

@@ -38,12 +38,8 @@ public class OptionalProduct implements Serializable, Representable {
     private List<ServicePackage> packages;
 
 
-    @ManyToMany
-    @JoinTable
-            (name = "optional_schedule",
-                    joinColumns = @JoinColumn(name="optional_product_id"),
-                    inverseJoinColumns = @JoinColumn(name="username"))
-    private List<Client> clients;
+    @OneToMany(mappedBy = "optional", fetch = FetchType.LAZY)
+    private List<OrderOptionalSchedule> optionalSchedules;
 
     public OptionalProduct() {
         this("");
@@ -120,8 +116,8 @@ public class OptionalProduct implements Serializable, Representable {
         return orders;
     }
 
-    public List<Client> getClients() {
-        return clients;
+    public List<OrderOptionalSchedule> getOptionalSchedules() {
+        return optionalSchedules;
     }
 
     public List<ServicePackage> getPackages() {
