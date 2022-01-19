@@ -4,15 +4,19 @@
              xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
              version="3.0">
     <persistence-unit name="TelcoService_EJB">
+        <class>it.polimi.db2.telcoservice_sc42.entities.Auditing</class>
         <class>it.polimi.db2.telcoservice_sc42.entities.Client</class>
+        <class>it.polimi.db2.telcoservice_sc42.entities.Employee</class>
+        <class>it.polimi.db2.telcoservice_sc42.entities.FixedInternetService</class>
+        <class>it.polimi.db2.telcoservice_sc42.entities.MobileInternetService</class>
+        <class>it.polimi.db2.telcoservice_sc42.entities.MobilePhoneService</class>
+        <class>it.polimi.db2.telcoservice_sc42.entities.OptionalProduct</class>
         <class>it.polimi.db2.telcoservice_sc42.entities.Order</class>
+        <class>it.polimi.db2.telcoservice_sc42.entities.OrderOptionalSchedule</class>
+        <class>it.polimi.db2.telcoservice_sc42.entities.OrderServiceSchedule</class>
         <class>it.polimi.db2.telcoservice_sc42.entities.Service</class>
         <class>it.polimi.db2.telcoservice_sc42.entities.ServicePackage</class>
         <class>it.polimi.db2.telcoservice_sc42.entities.Validity</class>
-        <class>it.polimi.db2.telcoservice_sc42.entities.MobilePhoneService</class>
-        <class>it.polimi.db2.telcoservice_sc42.entities.FixedInternetService</class>
-        <class>it.polimi.db2.telcoservice_sc42.entities.OptionalProduct</class>
-        <class>it.polimi.db2.telcoservice_sc42.entities.Auditing</class>
         <class>it.polimi.db2.telcoservice_sc42.views.AverageOptionalProductsPerPackage</class>
         <class>it.polimi.db2.telcoservice_sc42.views.BestOptionalProduct</class>
         <class>it.polimi.db2.telcoservice_sc42.views.PurchasePerPackage</class>
