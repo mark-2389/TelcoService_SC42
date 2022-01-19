@@ -1,12 +1,11 @@
 package it.polimi.db2.telcoservice_sc42.entities;
 
-import java.io.Serializable;
-import java.sql.Date;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
-
 import it.polimi.db2.telcoservice_sc42.utils.Representable;
 import jakarta.persistence.*;
+
+import java.io.Serializable;
+import java.sql.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "service")
@@ -36,12 +35,8 @@ public class Service implements Serializable, Representable {
     @ManyToMany (mappedBy = "services", fetch = FetchType.LAZY )
     private List<ServicePackage> packages;
 
-    @ManyToMany
-    @JoinTable(
-            name = "service_schedule",
-                    joinColumns = @JoinColumn(name="SERVICE_ID"),
-                    inverseJoinColumns = @JoinColumn(name="USERNAME"))
-    private List<Client> clients;
+    @OneToMany (mappedBy = "service", fetch = FetchType.LAZY )
+    private List<OrderServiceSchedule> serviceSchedules;
 
     public Service() {
 
@@ -80,8 +75,8 @@ public class Service implements Serializable, Representable {
         this.type = type;
     }
 
-    public List<Client> getClients() {
-        return clients;
+    public List<OrderServiceSchedule> getServiceSchedules() {
+        return serviceSchedules;
     }
 
     public List<ServicePackage> getPackages() {

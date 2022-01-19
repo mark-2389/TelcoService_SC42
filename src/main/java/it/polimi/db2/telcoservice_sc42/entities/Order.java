@@ -72,6 +72,9 @@ public class Order implements Serializable, Representable {
             inverseJoinColumns = @JoinColumn(name="OPTIONAL_PRODUCT_ID"))
     private List<OptionalProduct> optionals;
 
+    @OneToMany (mappedBy = "order", fetch = FetchType.LAZY )
+    private List<OrderServiceSchedule> serviceSchedules;
+
     public Order() {
         this.id = 0;
         this.creationDate = java.sql.Date.valueOf(LocalDate.now());
@@ -98,6 +101,11 @@ public class Order implements Serializable, Representable {
         this.totalCost = ( validityId.getMonthlyFee().add(optionalsFee) ).multiply(bigPeriod);
         this.optionals = new ArrayList<>(optionals);
     }
+
+    public List<OrderServiceSchedule> getServiceSchedules() {
+        return serviceSchedules;
+    }
+
     public int getId() {
         return id;
     }
