@@ -6,7 +6,7 @@
 
     <filter>
         <filter-name>ClientLoginFilter</filter-name>
-        <filter-class>it.polimi.db2.telcoservice_sc42.filters.ClientLoginFilter</filter-class>
+        <filter-class>it.polimi.db2.telcoservice_sc42.web.filters.ClientLoginFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>ClientLoginFilter</filter-name>
@@ -14,7 +14,7 @@
     </filter-mapping>
     <filter>
         <filter-name>EmployeeLoginFilter</filter-name>
-        <filter-class>it.polimi.db2.telcoservice_sc42.filters.EmployeeLoginFilter</filter-class>
+        <filter-class>it.polimi.db2.telcoservice_sc42.web.filters.EmployeeLoginFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>EmployeeLoginFilter</filter-name>

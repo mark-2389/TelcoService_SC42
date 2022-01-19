@@ -6,49 +6,49 @@
     <enterprise-beans>
         <session>
             <ejb-name>ClientService</ejb-name>
-            <ejb-class>it.polimi.db2.telcoservice_sc42.services.ClientService</ejb-class>
+            <ejb-class>it.polimi.db2.telcoservice_sc42.ejb.services.ClientService</ejb-class>
             <session-type>Stateless</session-type>
             <transaction-type>Container</transaction-type>
         </session>
         <session>
             <ejb-name>EmployeeService</ejb-name>
-            <ejb-class>it.polimi.db2.telcoservice_sc42.services.EmployeeService</ejb-class>
+            <ejb-class>it.polimi.db2.telcoservice_sc42.ejb.services.EmployeeService</ejb-class>
             <session-type>Stateless</session-type>
             <transaction-type>Container</transaction-type>
         </session>
         <session>
             <ejb-name>OptionalProductService</ejb-name>
-            <ejb-class>it.polimi.db2.telcoservice_sc42.services.OptionalProductService</ejb-class>
+            <ejb-class>it.polimi.db2.telcoservice_sc42.ejb.services.OptionalProductService</ejb-class>
             <session-type>Stateless</session-type>
             <transaction-type>Container</transaction-type>
         </session>
         <session>
             <ejb-name>OrderService</ejb-name>
-            <ejb-class>it.polimi.db2.telcoservice_sc42.services.OrderService</ejb-class>
+            <ejb-class>it.polimi.db2.telcoservice_sc42.ejb.services.OrderService</ejb-class>
             <session-type>Stateless</session-type>
             <transaction-type>Container</transaction-type>
         </session>
         <session>
             <ejb-name>PackageService</ejb-name>
-            <ejb-class>it.polimi.db2.telcoservice_sc42.services.PackageService</ejb-class>
+            <ejb-class>it.polimi.db2.telcoservice_sc42.ejb.services.PackageService</ejb-class>
             <session-type>Stateless</session-type>
             <transaction-type>Container</transaction-type>
         </session>
         <session>
             <ejb-name>SalesReportService</ejb-name>
-            <ejb-class>it.polimi.db2.telcoservice_sc42.services.SalesReportService</ejb-class>
+            <ejb-class>it.polimi.db2.telcoservice_sc42.ejb.services.SalesReportService</ejb-class>
             <session-type>Stateless</session-type>
             <transaction-type>Container</transaction-type>
         </session>
         <session>
             <ejb-name>ServiceService</ejb-name>
-            <ejb-class>it.polimi.db2.telcoservice_sc42.services.ServiceService</ejb-class>
+            <ejb-class>it.polimi.db2.telcoservice_sc42.ejb.services.ServiceService</ejb-class>
             <session-type>Stateless</session-type>
             <transaction-type>Container</transaction-type>
         </session>
         <session>
             <ejb-name>ValidityService</ejb-name>
-            <ejb-class>it.polimi.db2.telcoservice_sc42.services.ValidityService</ejb-class>
+            <ejb-class>it.polimi.db2.telcoservice_sc42.ejb.services.ValidityService</ejb-class>
             <session-type>Stateless</session-type>
             <transaction-type>Container</transaction-type>
         </session>

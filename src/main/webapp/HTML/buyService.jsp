@@ -47,7 +47,7 @@
             <legend>Available Service Packages</legend>
                 <select name="selected" id="selected" required>
                     <option value="">-- Please choose a ServicePackage --</option>
-                    <%--@elvariable id="packages" type="List<it.polimi.db2.telcoservice_sc42.entities.ServicePackage>"--%>
+                    <%--@elvariable id="packages" type="List<it.polimi.db2.telcoservice_sc42.ejb.entities.ServicePackage>"--%>
                     <c:forEach var="p" items="${packages}">
                         <option value="${p.getId()}"
                                 <c:if test="${p.getId() eq selectedPackage}">selected="selected"</c:if>
@@ -64,12 +64,12 @@
             <fieldset>
                 <legend>Selected Service Package</legend>
                 <h4>Included services</h4>
-                <%--@elvariable id="services" type="List<it.polimi.db2.telcoservice_sc42.entities.Service>"--%>
+                <%--@elvariable id="services" type="List<it.polimi.db2.telcoservice_sc42.ejb.entities.Service>"--%>
                 <c:forEach var="s" items="${services}">
                     <p>${s.clientString()}</p>
                 </c:forEach>
                 <h4>Available validity periods</h4>
-                <%--@elvariable id="validities" type="List<it.polimi.db2.telcoservice_sc42.entities.Validity>"--%>
+                <%--@elvariable id="validities" type="List<it.polimi.db2.telcoservice_sc42.ejb.entities.Validity>"--%>
                 <c:forEach var="v" items="${validities}">
                     <div>
                         <input type="radio" id="validity" name="available_validity" value="${v.getId()}" required>
@@ -77,7 +77,7 @@
                     </div>
                 </c:forEach>
                 <h4>Available optional products</h4>
-                <%--@elvariable id="optionals" type="List<it.polimi.db2.telcoservice_sc42.entities.OptionalProduct>"--%>
+                <%--@elvariable id="optionals" type="List<it.polimi.db2.telcoservice_sc42.ejb.entities.OptionalProduct>"--%>
                 <c:forEach var="o" items="${optionals}">
                     <div>
                         <input type="checkbox" id="available_optionals" name="available_optional" value="${o.getId()}" >

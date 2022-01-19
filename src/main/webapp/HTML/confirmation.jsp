@@ -46,7 +46,7 @@
 <div>
     <h4>Selected services</h4>
     <div>
-        <%--@elvariable id="services" type="java.util.List<it.polimi.db2.telcoservice_sc42.entities.Service>"--%>
+        <%--@elvariable id="services" type="java.util.List<it.polimi.db2.telcoservice_sc42.ejb.entities.Service>"--%>
         <c:forEach var="service" items="${services}">
             <c:out value="${service.clientString()}"> </c:out>
         </c:forEach>

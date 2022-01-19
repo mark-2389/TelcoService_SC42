@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page import="java.time.LocalDate" %>
-<%@ page import="it.polimi.db2.telcoservice_sc42.enums.ServiceType" %>
+<%@ page import="it.polimi.db2.telcoservice_sc42.ejb.enums.ServiceType" %>
 <%@ page import="it.polimi.db2.telcoservice_sc42.utils.SessionAttributeRegistry" %>
 <%@ page import="it.polimi.db2.telcoservice_sc42.utils.BuySessionRegistry" %>
 <%@ page import="it.polimi.db2.telcoservice_sc42.utils.EmployeeSessionRegistry" %>
@@ -76,7 +76,7 @@
                        min="<%= LocalDate.now().toString() %>" required >
             </div>
             <h4>Selected Services</h4>
-            <%--@elvariable id="services" type="List<it.polimi.db2.telcoservice_sc42.entities.Service>"--%>
+            <%--@elvariable id="services" type="List<it.polimi.db2.telcoservice_sc42.ejb.entities.Service>"--%>
             <c:forEach var="s" items="${services}">
                 <div>
                     <input type="checkbox" id="services" name="services" value="${s.id}" >
@@ -85,7 +85,7 @@
             </c:forEach>
 
             <h4>Selected optional products</h4>
-            <%--@elvariable id="optionals" type="List<it.polimi.db2.telcoservice_sc42.entities.OptionalProduct>"--%>
+            <%--@elvariable id="optionals" type="List<it.polimi.db2.telcoservice_sc42.ejb.entities.OptionalProduct>"--%>
             <c:forEach var="e" items="${optionals}">
                 <div>
                     <input type="checkbox" id="optionals" name="optionals" value="${e.id}" >

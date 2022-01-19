@@ -1,7 +1,7 @@
 package it.polimi.db2.telcoservice_sc42.utils;
 
-import it.polimi.db2.telcoservice_sc42.entities.ServicePackage;
-import it.polimi.db2.telcoservice_sc42.entities.Validity;
+import it.polimi.db2.telcoservice_sc42.ejb.entities.ServicePackage;
+import it.polimi.db2.telcoservice_sc42.ejb.entities.Validity;
 
 import java.math.BigDecimal;
 import java.sql.Date;

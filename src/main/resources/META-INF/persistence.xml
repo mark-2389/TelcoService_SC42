@@ -4,25 +4,25 @@
              xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
              version="3.0">
     <persistence-unit name="TelcoService_EJB">
-        <class>it.polimi.db2.telcoservice_sc42.entities.Auditing</class>
-        <class>it.polimi.db2.telcoservice_sc42.entities.Client</class>
-        <class>it.polimi.db2.telcoservice_sc42.entities.Employee</class>
-        <class>it.polimi.db2.telcoservice_sc42.entities.FixedInternetService</class>
-        <class>it.polimi.db2.telcoservice_sc42.entities.MobileInternetService</class>
-        <class>it.polimi.db2.telcoservice_sc42.entities.MobilePhoneService</class>
-        <class>it.polimi.db2.telcoservice_sc42.entities.OptionalProduct</class>
-        <class>it.polimi.db2.telcoservice_sc42.entities.Order</class>
-        <class>it.polimi.db2.telcoservice_sc42.entities.OrderOptionalSchedule</class>
-        <class>it.polimi.db2.telcoservice_sc42.entities.OrderServiceSchedule</class>
-        <class>it.polimi.db2.telcoservice_sc42.entities.Service</class>
-        <class>it.polimi.db2.telcoservice_sc42.entities.ServicePackage</class>
-        <class>it.polimi.db2.telcoservice_sc42.entities.Validity</class>
-        <class>it.polimi.db2.telcoservice_sc42.views.AverageOptionalProductsPerPackage</class>
-        <class>it.polimi.db2.telcoservice_sc42.views.BestOptionalProduct</class>
-        <class>it.polimi.db2.telcoservice_sc42.views.PurchasePerPackage</class>
-        <class>it.polimi.db2.telcoservice_sc42.views.PurchasePerPackageValidity</class>
-        <class>it.polimi.db2.telcoservice_sc42.views.ValuePerPackageWithOptionalProduct</class>
-        <class>it.polimi.db2.telcoservice_sc42.views.ValuePerPackageWithoutOp</class>
+        <class>it.polimi.db2.telcoservice_sc42.ejb.entities.Auditing</class>
+        <class>it.polimi.db2.telcoservice_sc42.ejb.entities.Client</class>
+        <class>it.polimi.db2.telcoservice_sc42.ejb.entities.Employee</class>
+        <class>it.polimi.db2.telcoservice_sc42.ejb.entities.FixedInternetService</class>
+        <class>it.polimi.db2.telcoservice_sc42.ejb.entities.MobileInternetService</class>
+        <class>it.polimi.db2.telcoservice_sc42.ejb.entities.MobilePhoneService</class>
+        <class>it.polimi.db2.telcoservice_sc42.ejb.entities.OptionalProduct</class>
+        <class>it.polimi.db2.telcoservice_sc42.ejb.entities.Order</class>
+        <class>it.polimi.db2.telcoservice_sc42.ejb.entities.OrderOptionalSchedule</class>
+        <class>it.polimi.db2.telcoservice_sc42.ejb.entities.OrderServiceSchedule</class>
+        <class>it.polimi.db2.telcoservice_sc42.ejb.entities.Service</class>
+        <class>it.polimi.db2.telcoservice_sc42.ejb.entities.ServicePackage</class>
+        <class>it.polimi.db2.telcoservice_sc42.ejb.entities.Validity</class>
+        <class>it.polimi.db2.telcoservice_sc42.ejb.views.AverageOptionalProductsPerPackage</class>
+        <class>it.polimi.db2.telcoservice_sc42.ejb.views.BestOptionalProduct</class>
+        <class>it.polimi.db2.telcoservice_sc42.ejb.views.PurchasePerPackage</class>
+        <class>it.polimi.db2.telcoservice_sc42.ejb.views.PurchasePerPackageValidity</class>
+        <class>it.polimi.db2.telcoservice_sc42.ejb.views.ValuePerPackageWithOptionalProduct</class>
+        <class>it.polimi.db2.telcoservice_sc42.ejb.views.ValuePerPackageWithoutOp</class>
         <properties>
             <property name="toplink.jdbc.url" value="jdbc:mysql://localhost:3306/telcoservice_db"/>
             <property name="toplink.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
