@@ -28,6 +28,10 @@ begin
             GROUP BY O.CLIENT
         );
 
+        if ( total_value is null ) then
+            set total_value = 0;
+        end if;
+
         update telcoservice_db.auditing A
             set A.AMOUNT = total_value
             where A.USERNAME = new.USERNAME and A.IS_ACTIVE = true;
