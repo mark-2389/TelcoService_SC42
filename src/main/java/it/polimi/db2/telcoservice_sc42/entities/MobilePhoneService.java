@@ -1,9 +1,13 @@
 package it.polimi.db2.telcoservice_sc42.entities;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 
-import java.sql.Date;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.sql.Date;
 
 @Entity
 @Table(name = "mobile_phone_service")
@@ -43,9 +47,9 @@ public class MobilePhoneService extends Service {
     public MobilePhoneService(Date expirationDate, Integer minutes, BigDecimal minutesFee, Integer sms, BigDecimal smsFee) {
         super(ServiceType.MOBILE_PHONE, expirationDate);
         this.minutes = minutes;
-        this.minutesFee = minutesFee;
+        this.minutesFee = minutesFee.setScale(2, RoundingMode.HALF_UP);
         this.sms = sms;
-        this.smsFee = smsFee;
+        this.smsFee = smsFee.setScale(2, RoundingMode.HALF_UP);
     }
 
 

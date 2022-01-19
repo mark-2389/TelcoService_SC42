@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -56,7 +57,7 @@ public class OptionalProduct implements Serializable, Representable {
 
     public OptionalProduct(String name, BigDecimal fee, Date expirationDate) {
         this(name);
-        this.monthlyFee = fee;
+        this.monthlyFee = fee.setScale(2, RoundingMode.HALF_UP);
         this.expirationDate = expirationDate;
     }
 

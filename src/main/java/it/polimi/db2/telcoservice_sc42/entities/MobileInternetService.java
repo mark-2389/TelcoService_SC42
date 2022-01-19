@@ -7,6 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.Date;
 
 @Entity
@@ -41,7 +42,7 @@ public class MobileInternetService extends Service {
     public MobileInternetService(Date expirationDate, Integer gb, BigDecimal gbFee) {
         super(ServiceType.MOBILE_INTERNET, expirationDate);
         this.gigaByte = gb;
-        this.gigaByteFee = gbFee;
+        this.gigaByteFee = gbFee.setScale(2, RoundingMode.HALF_UP);
     }
 
     public Integer getGigaByte() {

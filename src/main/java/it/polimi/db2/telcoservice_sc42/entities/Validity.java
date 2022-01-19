@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 import java.util.List;
 
@@ -39,14 +40,14 @@ public class Validity implements Serializable, Representable {
     public Validity(ServicePackage servicePackage, int period, BigDecimal monthlyFee, Date expirationDate ){
         this.setServicePackage(servicePackage);
         this.period = period;
-        this.monthlyFee = monthlyFee;
+        this.monthlyFee = monthlyFee.setScale(2, RoundingMode.HALF_UP);
         this.expirationDate = expirationDate;
     }
 
     public Validity(ServicePackage servicePackage, int period, BigDecimal monthlyFee ){
         this.setServicePackage(servicePackage);
         this.period = period;
-        this.monthlyFee = monthlyFee;
+        this.monthlyFee = monthlyFee.setScale(2, RoundingMode.HALF_UP);
     }
 
     public int getId() {
