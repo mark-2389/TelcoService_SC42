@@ -87,6 +87,7 @@ public class OrderService {
         servicePackage.addOrder(order); // updates both sides of the relationship
 
         em.persist(order);
+        em.flush();
 
         return order.getId();
     }
