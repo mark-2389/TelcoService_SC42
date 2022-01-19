@@ -6,7 +6,6 @@ import it.polimi.db2.telcoservice_sc42.entities.ServicePackage;
 import it.polimi.db2.telcoservice_sc42.entities.Validity;
 import it.polimi.db2.telcoservice_sc42.services.OrderService;
 import it.polimi.db2.telcoservice_sc42.utils.BuySessionRegistry;
-import it.polimi.db2.telcoservice_sc42.utils.SafeParser;
 import it.polimi.db2.telcoservice_sc42.utils.SessionAttributeRegistry;
 import jakarta.ejb.EJB;
 import jakarta.servlet.annotation.WebServlet;
@@ -59,9 +58,13 @@ public class PaymentServlet extends HttpServlet {
         String msg;
         if ( handleExternalPayment(request) ) {
             // if the payment has been successful mark the order as accepted
-            orderService.setOrderStatus(orderId, OrderStatus.ACCEPTED);
-
-            msg = "Your order has been confirmed. ";
+            if ( orderService.setOrderStatus(orderId, OrderStatus.ACCEPTED) ) {
+                msg = "Your order has been confirmed. ";
+            } else {
+                // if setOrderStatus returns false an error occurred while setting the status thus we
+                // notify the user with an error
+                msg = "The payment has been rejected, try again later. ";
+            }
         } else {
             // if the payment has been unsuccessful, mark the order as rejected.
             // The user is set to insolvent by a trigger.

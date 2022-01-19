@@ -9,7 +9,7 @@ CREATE TABLE `service_schedule` (
   `ACTIVATION_DATE` date NOT NULL,  -- The date of activation of the service
   `DEACTIVATION_DATE` date NOT NULL,  -- The date of deactivation of the service
 
-  PRIMARY KEY (`USERNAME`,`SERVICE_ID`, `ORDER_ID`),
+  PRIMARY KEY (`SERVICE_ID`, `ORDER_ID`),
 
   CONSTRAINT `service_schedule_ibfk_1` FOREIGN KEY (`USERNAME`)
   	REFERENCES `client` (`USERNAME`) 
