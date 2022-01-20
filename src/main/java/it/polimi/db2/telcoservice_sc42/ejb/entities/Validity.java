@@ -42,9 +42,7 @@ public class Validity implements Serializable, Representable {
     }
 
     public Validity(ServicePackage servicePackage, int period, BigDecimal monthlyFee, Date expirationDate ){
-        this.setServicePackage(servicePackage);
-        this.period = period;
-        this.monthlyFee = monthlyFee.setScale(2, RoundingMode.HALF_UP);
+        this(servicePackage, period, monthlyFee);
         this.expirationDate = expirationDate;
     }
 
@@ -52,6 +50,7 @@ public class Validity implements Serializable, Representable {
         this.setServicePackage(servicePackage);
         this.period = period;
         this.monthlyFee = monthlyFee.setScale(2, RoundingMode.HALF_UP);
+        this.totalCost = monthlyFee.multiply(BigDecimal.valueOf(period)).setScale(2, RoundingMode.HALF_UP);
     }
 
     public int getId() {
