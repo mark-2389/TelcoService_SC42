@@ -20,7 +20,7 @@ public class Validity implements Serializable, Representable {
     private Integer id;
 
     @Id
-    @ManyToOne ( cascade = CascadeType.PERSIST )
+    @ManyToOne
     @JoinColumn (name = "PACKAGE_ID")
     private ServicePackage servicePackage;
 

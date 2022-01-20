@@ -9,9 +9,8 @@ CREATE TABLE `validity` (
     `PACKAGE_ID` int,
     `PERIOD` int,
     `MONTHLY_FEE` decimal(6,2) DEFAULT 0.00,
-    `TOTAL_COST` decimal(6,2) GENERATED ALWAYS AS ( `PERIOD` * `MONTHLY_FEE` ),
+    `TOTAL_COST` decimal(6,2),
     `EXPIRATION_DATE` date DEFAULT NULL,  -- NULL = it never expires
-    -- TODO consider adding a VALID field
 
     PRIMARY KEY (`ID`,`PACKAGE_ID`)
 );

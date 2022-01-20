@@ -28,21 +28,21 @@ public class ServicePackage implements Serializable, Representable {
     @OneToMany(mappedBy = "servicePackage", fetch=FetchType.LAZY)
     private List<Order> orders;
 
-    @ManyToMany ( fetch = FetchType.EAGER )
+    @ManyToMany ( fetch = FetchType.EAGER, cascade = CascadeType.PERSIST )
     @JoinTable(
             name = "service_composition",
             joinColumns = @JoinColumn(name="PACKAGE_ID"),
             inverseJoinColumns = @JoinColumn(name="SERVICE_ID"))
     private List<Service> services;
 
-    @ManyToMany ( fetch = FetchType.EAGER )
+    @ManyToMany ( fetch = FetchType.EAGER, cascade = CascadeType.PERSIST )
     @JoinTable
             (name = "optional_product_composition",
                     joinColumns = @JoinColumn(name="package_id"),
                     inverseJoinColumns = @JoinColumn(name="optional_product_id"))
     private List<OptionalProduct> products;
 
-    @OneToMany(mappedBy = "servicePackage", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "servicePackage", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Validity> validities;
 
     public ServicePackage(){
