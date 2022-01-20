@@ -94,8 +94,8 @@ public class PackageService {
         }
 
         // persist to get the save the servicePackage and get its id
-        em.persist(servicePackage);
-        em.flush();
+        //em.persist(servicePackage);
+        //em.flush();
 
         List<Validity> validities = new ArrayList<>();
 
@@ -108,9 +108,10 @@ public class PackageService {
 
         for (Validity v : validities){
             v.setServicePackage(servicePackage);
-            em.persist(v);
+            //em.persist(v);
         }
 
+        em.persist(servicePackage);
         System.out.println(validities);
 
         return servicePackage;
